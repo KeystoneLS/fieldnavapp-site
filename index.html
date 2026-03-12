@@ -354,6 +354,19 @@ const brands = [{
   borderColor: "#5f1e1e",
   controllerTag: "M-NET / MA Controller",
   tabs: ["errors", "commission", "led", "thermistor"]
+}, {
+  id: "lg",
+  name: "LG Multi V",
+  subtitle: "Multi V 5 / IV / S — Error Codes, Commissioning & Function Codes",
+  accent: "#16a34a",
+  accentLight: "#86efac",
+  gradientFrom: "#0a2a14",
+  gradientTo: "#061a0c",
+  bg: "#080f0a",
+  cardBg: "#0f1f14",
+  borderColor: "#1e5f2e",
+  controllerTag: "PREMTB100 / PQRCVSL0",
+  tabs: ["errors", "commission", "field", "thermistor"]
 }];
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -2729,6 +2742,674 @@ const mitsubishiThermistorTables = [{
 }];
 
 // ═══════════════════════════════════════════════════════════════════════════════
+//  LG DATA
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const lgErrorCodes = [
+// ── Indoor Unit ──
+{
+  code: "CH01",
+  category: "Indoor",
+  desc: "Return air or remote wall temperature sensor error",
+  action: "Check wiring and connection on indoor PCB. Check thermistor for open/short. If using remote wall sensor, verify cable."
+}, {
+  code: "CH02",
+  category: "Indoor",
+  desc: "Inlet pipe temperature sensor error",
+  action: "Check inlet pipe thermistor connection on indoor PCB. Check for open/short circuit. Replace if out of range."
+}, {
+  code: "CH03",
+  category: "Indoor",
+  desc: "Communication error between zone controller and indoor unit",
+  action: "Indoor PCB not receiving signal from zone controller. Check wired controller connections."
+}, {
+  code: "CH04",
+  category: "Indoor",
+  desc: "Drain pump error",
+  action: "Drain pump or float switch malfunction. Check drain line for blockage. Verify pump operation and wiring."
+}, {
+  code: "CH05",
+  category: "Indoor",
+  desc: "Communication error between indoor and outdoor unit",
+  action: "Indoor PCB not receiving signal from outdoor unit for >3 min. Check comm cable A/B terminals. Verify auto addressing completed. See CH05 troubleshooting tree."
+}, {
+  code: "CH06",
+  category: "Indoor",
+  desc: "Outlet pipe temperature sensor error",
+  action: "Outlet pipe thermistor disconnected or shorted. Check connection on indoor PCB. Values read <-43°C or >96°C indicate fault."
+}, {
+  code: "CH07",
+  category: "Indoor",
+  desc: "Indoor units not operating in same mode (HP only)",
+  action: "Different operation modes between indoor units on heat pump system. Verify all units are in same mode."
+}, {
+  code: "CH09",
+  category: "Indoor",
+  desc: "Indoor unit EPROM error",
+  action: "Communication error between indoor PCB and option card or EPROM. Check plug-in option card connection. Replace PCB if EPROM data unavailable."
+}, {
+  code: "CH10",
+  category: "Indoor",
+  desc: "BLDC fan motor communication error",
+  action: "Fan motor removed, defective, or not spinning. Check motor connector. On new installs verify packing materials removed from fan discharge."
+},
+// ── Hydro Kit ──
+{
+  code: "CH11",
+  category: "Hydro Kit",
+  desc: "Hydro kit to inverter compressor PCB communication error",
+  action: "Hydro kit not receiving signal from inverter compressor PCB. Check communication wiring."
+}, {
+  code: "CH12",
+  category: "Hydro Kit",
+  desc: "Hydro kit inverter compressor PCB error",
+  action: "Inverter compressor PCB fault in hydro kit. Check and replace PCB."
+}, {
+  code: "CH13",
+  category: "Hydro Kit",
+  desc: "Hydro kit solar heat pipe temperature sensor error",
+  action: "Solar heat pipe thermistor disconnected or shorted. Check connections."
+}, {
+  code: "CH14",
+  category: "Hydro Kit",
+  desc: "Hydro kit flow switch error",
+  action: "Flow switch failed to close. Check water flow rate and flow switch wiring."
+}, {
+  code: "CH15",
+  category: "Hydro Kit",
+  desc: "Hydro kit leaving water temp exceeded 85°C (185°F)",
+  action: "Temperature sensor defective or hot water inflow. Check water flow and sensor."
+}, {
+  code: "CH16",
+  category: "Hydro Kit",
+  desc: "Hydro kit water pipe temp and ambient sensor error",
+  action: "Water inlet/outlet pipe thermistor disconnected or shorted. Check connections."
+}, {
+  code: "CH17",
+  category: "Hydro Kit",
+  desc: "Hydro kit inlet pipe temperature sensor error",
+  action: "Water inlet thermistor disconnected or shorted. Values <-43°C or >96°C. Check connections."
+}, {
+  code: "CH18",
+  category: "Hydro Kit",
+  desc: "Hydro kit outlet pipe temperature sensor error",
+  action: "Outlet pipe thermistor disconnected or short circuited. Check connections."
+},
+// ── Outdoor Unit ──
+{
+  code: "CH21",
+  category: "Outdoor",
+  desc: "Inverter compressor IPM fault — overcurrent",
+  action: "CT sensor detected overcurrent in compressor UVW phases. Check compressor, IPM on inverter board. 208-230V: 143A/3μs trip. 460V: 80A/3μs trip."
+}, {
+  code: "CH22",
+  category: "Outdoor",
+  desc: "Inverter PCB input overcurrent (RMS)",
+  action: "Overcurrent at inverter board. Check for under voltage, defective EEV restriction, or overcharge."
+}, {
+  code: "CH23",
+  category: "Outdoor",
+  desc: "Low or high DC link voltage at inverter",
+  action: "DC link capacitor fault. Shutdown if <50V or >550V (208-230V) / >1000V (460V). Check mains power, DC link wiring, capacitor."
+}, {
+  code: "CH24",
+  category: "Outdoor",
+  desc: "High pressure switch error",
+  action: "System shut down by HP switch. Check refrigerant charge, condenser airflow, and fan operation."
+}, {
+  code: "CH25",
+  category: "Outdoor",
+  desc: "Input voltage too high or too low",
+  action: "Voltage ≤140V or ≥300V (208-230V) or ≤414V / ≥528V (460V). Check mains supply and connections."
+}, {
+  code: "CH26",
+  category: "Outdoor",
+  desc: "Inverter compressor failed to start",
+  action: "Compressor operation error. Check compressor winding resistance, power supply, and inverter board."
+}, {
+  code: "CH29",
+  category: "Outdoor",
+  desc: "Inverter compressor overcurrent",
+  action: "Current draw too high. Check for compressor defect or refrigerant piping restriction."
+}, {
+  code: "CH32",
+  category: "Outdoor",
+  desc: "Compressor discharge temp too high (>115°C)",
+  action: "Discharge pipe >115°C for 10s or dome >105°C for 10s. Check refrigerant charge, EEV, liquid spray valve, discharge thermistor."
+}, {
+  code: "CH33",
+  category: "Outdoor",
+  desc: "Compressor 2 discharge temp too high",
+  action: "Same as CH32 but for second compressor. Check discharge sensor and refrigerant charge."
+}, {
+  code: "CH34",
+  category: "Outdoor",
+  desc: "High pressure safety tripped",
+  action: "HP >4000 kPa (580 psi) for 10s at ≥30Hz. Check HP sensor, fans, refrigerant, EEV, service valve. Check outdoor clearance."
+}, {
+  code: "CH35",
+  category: "Outdoor",
+  desc: "Low pressure below allowable limits",
+  action: "Cooling: LP <400 kPa for 1 min. Heating: LP <230 kPa for 1 min. Check for leaks, low charge, defective EEV."
+}, {
+  code: "CH36",
+  category: "Outdoor",
+  desc: "Low compression ratio",
+  action: "Compression ratio <1.6 for 2-5 min after reversing valve change. Check reversing valve and refrigerant charge."
+}, {
+  code: "CH40",
+  category: "Outdoor",
+  desc: "CT sensor error",
+  action: "Current transducer detection sensor disconnected or shorted. Check CT sensor connections on inverter board."
+}, {
+  code: "CH41",
+  category: "Outdoor",
+  desc: "Compressor 1 discharge pipe temperature sensor error",
+  action: "Thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH42",
+  category: "Outdoor",
+  desc: "Low pressure sensor error",
+  action: "LP sensor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH43",
+  category: "Outdoor",
+  desc: "High pressure sensor error",
+  action: "HP sensor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH44",
+  category: "Outdoor",
+  desc: "Ambient temperature sensor error",
+  action: "Outdoor ambient thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH45",
+  category: "Outdoor",
+  desc: "Heat exchanger pipe temperature sensor error",
+  action: "Check suction sensor (cooling) or hot gas sensor near HX (heating). Thermistor disconnected or shorted."
+}, {
+  code: "CH46",
+  category: "Outdoor",
+  desc: "Suction pipe temperature sensor error",
+  action: "Suction thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH47",
+  category: "Outdoor",
+  desc: "Compressor 2 discharge temperature sensor error",
+  action: "Compressor 2 discharge thermistor disconnected or shorted."
+}, {
+  code: "CH49",
+  category: "Outdoor",
+  desc: "IPM temperature sensor error",
+  action: "IPM (inverter module) thermistor disconnected or shorted."
+}, {
+  code: "CH50",
+  category: "Outdoor",
+  desc: "Three-phase power not connected properly",
+  action: "One or more of R(L1), S(L2), T(L3) input power lines missing. Check all phase connections."
+}, {
+  code: "CH51",
+  category: "System",
+  desc: "Combination ratio out of range",
+  action: "Indoor capacity is <50% or >130% of outdoor capacity. Recalculate system sizing."
+}, {
+  code: "CH52",
+  category: "Outdoor",
+  desc: "Main PCB to inverter PCB communication error",
+  action: "Check CN-29 on main PCB and CN-MAIN COM/RD on inverter PCB. Inspect interconnecting cable."
+}, {
+  code: "CH53",
+  category: "System",
+  desc: "Outdoor to indoor unit communication error",
+  action: "Check outdoor-to-indoor comm cable for disconnection or short. Verify A/B terminal connections."
+}, {
+  code: "CH57",
+  category: "Outdoor",
+  desc: "Main PCB and inverter PCB communication error",
+  action: "Inverter PCB not receiving signal from main PCB. Check cable connections between boards."
+}, {
+  code: "CH60",
+  category: "Outdoor",
+  desc: "Inverter PCB EPROM error",
+  action: "Verify EPROM present and seated correctly. Check all pins. Verify notch aligns with socket arrow."
+}, {
+  code: "CH62",
+  category: "Outdoor",
+  desc: "Inverter heatsink high temperature",
+  action: "System shutdown due to high inverter heatsink temperature. Check heatsink fan and airflow."
+}, {
+  code: "CH65",
+  category: "Outdoor",
+  desc: "Inverter heatsink temperature sensor error",
+  action: "Heatsink thermistor disconnected or shorted. Check connections."
+}, {
+  code: "CH67",
+  category: "Outdoor",
+  desc: "Outdoor fan locked up",
+  action: "Fan not spinning. Check fan motor, blade obstruction, and wiring."
+}, {
+  code: "CH71",
+  category: "Outdoor",
+  desc: "Inverter CT sensor restriction error",
+  action: "Outdoor unit restricted. Check CT sensor and refrigerant flow."
+}, {
+  code: "CH75",
+  category: "Outdoor",
+  desc: "Fan CT sensor error",
+  action: "Fan current detection sensor disconnected or shorted."
+}, {
+  code: "CH77",
+  category: "Outdoor",
+  desc: "Fan overcurrent",
+  action: "Fan current >10A (208-230V) or >5A (460V). Check fan motor and wiring."
+}, {
+  code: "CH79",
+  category: "Outdoor",
+  desc: "Fan operation failure — position sensor",
+  action: "Fan first position sensor failure. Check fan motor and sensor."
+}, {
+  code: "CH86",
+  category: "Outdoor",
+  desc: "Main PCB EPROM error",
+  action: "Verify EPROM present and seated correctly. Check pins and notch alignment."
+}, {
+  code: "CH87",
+  category: "Outdoor",
+  desc: "Fan PCB EPROM error",
+  action: "Communication error between fan MICOM and EPROM. Verify EPROM seated correctly."
+}, {
+  code: "CH104",
+  category: "System",
+  desc: "Communication error between master and slave outdoor units",
+  action: "Master PCB not receiving signals from slave units. Check inter-unit communication wiring."
+}, {
+  code: "CH105",
+  category: "Outdoor",
+  desc: "Fan PCB communication error",
+  action: "Main PCB not receiving signal from fan PCB. Check cable connections."
+}, {
+  code: "CH106",
+  category: "Outdoor",
+  desc: "Fan IPM error — instant overcurrent",
+  action: "Instant overcurrent peak at fan IPM. Check fan motor and IPM board."
+}, {
+  code: "CH107",
+  category: "Outdoor",
+  desc: "Fan DC link low voltage",
+  action: "Fan inverter capacitor fault. DC link voltage <50V for 250μs. Check DC link and capacitor."
+}, {
+  code: "CH113",
+  category: "Outdoor",
+  desc: "Liquid pipe temperature sensor error",
+  action: "Thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH114",
+  category: "Outdoor",
+  desc: "Subcooling inlet temperature sensor error",
+  action: "Thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH115",
+  category: "Outdoor",
+  desc: "Subcooling outlet temperature sensor error",
+  action: "Thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH116",
+  category: "Outdoor",
+  desc: "Low oil level or oil level sensor error",
+  action: "Low oil levels or oil level sensor disconnected/shorted. Check oil sight glass and sensor."
+}, {
+  code: "CH145",
+  category: "System",
+  desc: "Main board to external board communication error",
+  action: "Main board to external board communication failure. Check cable connections."
+}, {
+  code: "CH150",
+  category: "Outdoor",
+  desc: "Compressor discharge superheat not satisfied",
+  action: "Superheat <3°C for ≥5 min during cooling. High probability of liquid floodback. Occurs 3x in 1 hr = Level 1 shutdown."
+}, {
+  code: "CH151",
+  category: "Outdoor",
+  desc: "Operation mode conversion error",
+  action: "Pressure imbalance between outdoor units during mode change."
+}, {
+  code: "CH153",
+  category: "Outdoor",
+  desc: "Upper heat exchanger temperature sensor error",
+  action: "Thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH154",
+  category: "Outdoor",
+  desc: "Lower heat exchanger temperature sensor error",
+  action: "Thermistor disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "CH182",
+  category: "Outdoor",
+  desc: "External board main/sub MICOM communication error",
+  action: "External board main to sub MICOM communication failure. Check board connections."
+}, {
+  code: "CH187",
+  category: "Hydro Kit",
+  desc: "Hydro kit HEX freeze protection error",
+  action: "Water outlet temp <0°C. Prevents HEX from bursting during operation. Check glycol concentration and water flow."
+}, {
+  code: "CH193",
+  category: "Outdoor",
+  desc: "Fan heatsink temperature too high (>95°C)",
+  action: "Fan heatsink temp exceeded limit. Check fan heatsink cooling and airflow."
+}, {
+  code: "CH194",
+  category: "Outdoor",
+  desc: "Fan heatsink temperature sensor error",
+  action: "Fan heatsink thermistor disconnected or short circuit."
+},
+// ── Heat Recovery ──
+{
+  code: "CH200",
+  category: "Heat Recovery",
+  desc: "Heat recovery unit communication or pipe detection error",
+  action: "Displayed on HR unit 7-segment. Check HR unit addressing and pipe detection settings."
+}, {
+  code: "CH230",
+  category: "Indoor",
+  desc: "Refrigerant leak sensor alarm (>6000 ppm)",
+  action: "Refrigerant leak detected. Solenoid valve closes on indoor side. Power reset required to clear. Enable via function code on controller."
+}, {
+  code: "CH237",
+  category: "System",
+  desc: "Indoor comm PCB to outdoor PCB communication error",
+  action: "Indoor comm PCB not receiving signal from outdoor comm PCB for >3 min. Check PCBs."
+}, {
+  code: "CH238",
+  category: "System",
+  desc: "Outdoor comm PCB to outdoor unit communication error",
+  action: "Outdoor comm PCB not receiving signal from outdoor unit for >3 min. Check PCB connections."
+}];
+
+// ── LG CH05 Troubleshooting Tree ──
+const lgCH05Tree = [{
+  step: 1,
+  title: "Do ALL indoor units show CH05?",
+  yes: "Problem is at the outdoor unit or main comm bus — go to Step 2",
+  no: "Problem is isolated to specific indoor unit(s) — go to Step 3"
+}, {
+  step: 2,
+  title: "Is the outdoor unit PCB LED blinking?",
+  yes: "Outdoor PCB is alive — check comm cable connections at outdoor terminal block. Verify A/B polarity.",
+  no: "Check main breaker, input power at outdoor disconnect, and outdoor PCB fuse. Replace PCB if power confirmed good."
+}, {
+  step: 3,
+  title: "Check comm cable at the faulting indoor unit",
+  action: "Measure DC voltage between comm terminals A and B at the indoor unit. Should see -9V to +9V fluctuation. If flat 0V = cable is disconnected or shorted."
+}, {
+  step: 4,
+  title: "Was auto addressing completed successfully?",
+  action: "After auto address, the number of connected indoor units should display on outdoor 7-segment for 30 seconds. If count is wrong, re-run auto addressing."
+}, {
+  step: 5,
+  title: "Still faulting after above checks",
+  action: "Swap indoor unit PCB. If fault follows the PCB, replace it. If fault stays at same location, the communication cable has a problem (check for damage, excessive length, or proximity to power cables)."
+}];
+
+// ── LG Commissioning Steps ──
+const lgCommissioningSteps = [{
+  step: "Pre-Check",
+  title: "Pre-Commissioning Checklist",
+  icon: "📋",
+  items: ["Verify all indoor and outdoor units match design documents and piping layout", "Confirm refrigerant piping is pressure tested with nitrogen (600 psi, 24hr hold) and leak-free", "Triple evacuate to 500 microns — break with dry nitrogen between pulls", "Verify all heat recovery (HR) units are installed with correct branch connections", "All communication wiring connected: A/B comm bus between indoor, outdoor, and HR units", "Condensate drain piping connected, trapped where required, and tested", "All ductwork connected and air filters installed", "Line voltage verified at all disconnects — 208-230V or 460V per nameplate", "Allow 12+ hours of crankcase heater operation before first startup"]
+}, {
+  step: "Step 1",
+  title: "DIP Switch Configuration",
+  icon: "🔧",
+  items: ["Master outdoor unit: verify DIP switch No.5 is ON on sub PCB", "Slave outdoor units: verify DIP switches match master settings where applicable", "HR unit SW02E: set No.1 for auto/manual pipe detection method", "HR unit SW02E: set No.2/3/4 for number of connected branches", "HR unit SW02E: set No.5 for master/slave main PCB selection", "Verify all indoor unit capacity DIP switches match engineering schedule"]
+}, {
+  step: "Step 2",
+  title: "Auto Addressing",
+  icon: "📡",
+  items: ["Power on ALL outdoor, indoor, and HR units — wait minimum 3 minutes", "On master outdoor unit, press RED button (SW01C) and hold for 5 seconds", "7-segment should display '88' — if not, check power and comm cables", "Wait 2-7 minutes depending on number of connected indoor units", "Connected unit count displays on 7-segment for 30 seconds when complete", "Verify each indoor unit shows its address (CH01, CH02, etc.) on wired controller", "If count is wrong: check comm cables, then re-run auto addressing"]
+}, {
+  step: "Step 3",
+  title: "Pipe Detection (Auto)",
+  icon: "🔍",
+  items: ["After auto addressing completes, initiate pipe detection from master outdoor unit", "DIP switch No.5 ON on master sub PCB → navigate to 'Idu' mode", "Select 'Id 6' function → 'StA' (start)", "Select 'Id 5' → 'Atc' if outdoor temp >15°C (59°F) or 'Ath' if <15°C", "7-segment displays '88' — outdoor unit operates for 5-60 minutes", "Unit count displays for 30s on outdoor PCB after unit stops", "If pipe detection fails: check piping connections, retry, or use manual detection", "Pro tip: Pipe detection runs refrigerant through each circuit — mode changing noise is normal"]
+}, {
+  step: "Step 4",
+  title: "Function Code Setup",
+  icon: "⚙️",
+  items: ["Access function codes: DIP switch No.5 ON → use forward/backward buttons to navigate", "Set Fn01 if manual addressing is needed (auto addressing is preferred)", "Set Fn05 for snow removal heater if installed in cold climate", "Set Fn09 to adjust external static pressure for ducted indoor units", "Set Fn15 for oil recovery interval (default is typically adequate)", "Set Fn22 for demand control if utility demand response is required", "Record all function code settings for commissioning documentation"]
+}, {
+  step: "Step 5",
+  title: "Verification & Handover",
+  icon: "🏁",
+  items: ["Run system in COOL and HEAT modes — verify all zones reach setpoint", "Check each HR unit is directing refrigerant correctly (heat recovery systems)", "Verify zone controller operation — on/off, mode, setpoint, fan speed", "Check all drain pumps cycle and condensate flows correctly", "Verify outdoor fan operation and rotation direction", "Monitor LGMV software or BMS for any error codes during test run", "Record all commissioning data, charge amounts, and settings for building owner", "Allow 130 minutes of error-free operation to clear any Level 4 codes"]
+}];
+
+// ── LG Field Settings (Function Codes) ──
+const lgFieldSettings = [{
+  category: "Addressing & Configuration",
+  icon: "📡",
+  settings: [{
+    label: "Auto Address Assignment (Fn01)",
+    fnCode: "Fn01",
+    description: "Automatically assigns addresses to all connected indoor units from the master outdoor unit.",
+    proTip: "Always perform auto addressing after replacing any indoor unit PCB. Wait 3 minutes after power-on before starting. Only runs from master unit.",
+    options: [{
+      value: "Auto",
+      label: "Automatic addressing (press RED button 5s)"
+    }, {
+      value: "Manual",
+      label: "Manual addressing via DIP switches on each unit"
+    }]
+  }]
+}, {
+  category: "Defrost & Snow Removal",
+  icon: "❄️",
+  settings: [{
+    label: "Snow Removal Heater (Fn05)",
+    fnCode: "Fn05",
+    description: "Enables the base pan heater and drain pan heater for outdoor units in heavy snowfall regions.",
+    proTip: "Required for installations where snow accumulation can block outdoor unit airflow or freeze drain pans.",
+    options: [{
+      value: "OFF",
+      label: "Disabled (default)"
+    }, {
+      value: "ON",
+      label: "Enabled — base pan and drain pan heaters active"
+    }]
+  }, {
+    label: "Manual Defrost (Fn18)",
+    fnCode: "Fn18",
+    description: "Forces an immediate defrost cycle on the outdoor unit heat exchanger.",
+    proTip: "Use during commissioning to verify defrost operation. System will automatically defrost during normal heating operation.",
+    options: [{
+      value: "Execute",
+      label: "Trigger manual defrost cycle now"
+    }]
+  }]
+}, {
+  category: "Airflow & Static Pressure",
+  icon: "💨",
+  settings: [{
+    label: "External Static Pressure (Fn09)",
+    fnCode: "Fn09",
+    description: "Adjusts fan speed to overcome ductwork static pressure for ducted indoor units.",
+    proTip: "Measure actual static pressure with a manometer. Match the ESP setting to measured value for optimal airflow and efficiency.",
+    options: [{
+      value: "Low",
+      label: "Low ESP — short duct runs"
+    }, {
+      value: "Mid",
+      label: "Medium ESP — standard duct runs (default)"
+    }, {
+      value: "High",
+      label: "High ESP — long or complex duct runs"
+    }]
+  }]
+}, {
+  category: "Compressor & Oil Management",
+  icon: "🔄",
+  settings: [{
+    label: "Oil Recovery Operation (Fn15)",
+    fnCode: "Fn15",
+    description: "Controls the automatic oil recovery cycle that returns compressor oil from the piping system.",
+    proTip: "Default interval is usually adequate. Shorten interval for very long piping runs (>100m equivalent) or systems with many indoor units.",
+    options: [{
+      value: "Auto",
+      label: "Automatic oil recovery at default interval"
+    }, {
+      value: "Manual",
+      label: "Trigger manual oil recovery cycle"
+    }]
+  }]
+}, {
+  category: "Energy & Demand Control",
+  icon: "⚡",
+  settings: [{
+    label: "Demand Control (Fn22)",
+    fnCode: "Fn22",
+    description: "Limits system capacity for utility demand response programs. Reduces maximum compressor frequency.",
+    proTip: "Use for demand response participation or to limit peak power draw. Setting too aggressive can cause comfort complaints.",
+    options: [{
+      value: "100%",
+      label: "No restriction — full capacity (default)"
+    }, {
+      value: "75%",
+      label: "75% capacity limit"
+    }, {
+      value: "50%",
+      label: "50% capacity limit"
+    }, {
+      value: "0%",
+      label: "System forced off (emergency demand response)"
+    }]
+  }]
+}];
+
+// ── LG Function Code Entry Steps ──
+const lgFnEntrySteps = [{
+  num: 1,
+  text: "Turn ON DIP switch No.5 on master outdoor sub PCB"
+}, {
+  num: 2,
+  text: "Use ◁ (backward) and ▷ (forward) buttons to navigate function menu"
+}, {
+  num: 3,
+  text: "Press ● (confirm) button to select function",
+  sub: "7-segment displays function number"
+}, {
+  num: 4,
+  text: "Use ◁ / ▷ to set the desired value"
+}, {
+  num: 5,
+  text: "Press ● to confirm the setting"
+}, {
+  num: 6,
+  text: "Turn OFF DIP switch No.5 when finished",
+  sub: "Record all changes for commissioning documentation"
+}];
+
+// ── LG Thermistor Resistance Tables ──
+const lgThermistorTables = [{
+  label: "10kΩ NTC — Air Temperature & Suction Sensors",
+  note: "Used for return air (indoor) and suction pipe sensors. Standard 10kΩ at 25°C.",
+  rows: [{
+    temp: -20,
+    resistance: 97.0
+  }, {
+    temp: -10,
+    resistance: 56.0
+  }, {
+    temp: 0,
+    resistance: 33.0
+  }, {
+    temp: 10,
+    resistance: 20.3
+  }, {
+    temp: 20,
+    resistance: 12.6
+  }, {
+    temp: 25,
+    resistance: 10.0
+  }, {
+    temp: 30,
+    resistance: 8.1
+  }, {
+    temp: 40,
+    resistance: 5.3
+  }, {
+    temp: 50,
+    resistance: 3.6
+  }, {
+    temp: 60,
+    resistance: 2.5
+  }]
+}, {
+  label: "5kΩ NTC — Pipe Temperature & Liquid Line Sensors",
+  note: "Used for inlet/outlet pipe, liquid line, and heat exchanger sensors. 5kΩ at 25°C.",
+  rows: [{
+    temp: -20,
+    resistance: 48.5
+  }, {
+    temp: -10,
+    resistance: 28.0
+  }, {
+    temp: 0,
+    resistance: 16.6
+  }, {
+    temp: 10,
+    resistance: 10.1
+  }, {
+    temp: 20,
+    resistance: 6.3
+  }, {
+    temp: 25,
+    resistance: 5.0
+  }, {
+    temp: 30,
+    resistance: 4.1
+  }, {
+    temp: 40,
+    resistance: 2.6
+  }, {
+    temp: 50,
+    resistance: 1.8
+  }, {
+    temp: 60,
+    resistance: 1.2
+  }]
+}, {
+  label: "200kΩ NTC — Compressor Discharge Sensor",
+  note: "High-temp sensor on compressor discharge line. 200kΩ at 25°C. Different curve from pipe sensors.",
+  rows: [{
+    temp: 40,
+    resistance: 80.0
+  }, {
+    temp: 50,
+    resistance: 50.0
+  }, {
+    temp: 60,
+    resistance: 33.0
+  }, {
+    temp: 70,
+    resistance: 22.0
+  }, {
+    temp: 80,
+    resistance: 15.0
+  }, {
+    temp: 90,
+    resistance: 10.5
+  }, {
+    temp: 100,
+    resistance: 7.5
+  }, {
+    temp: 110,
+    resistance: 5.4
+  }, {
+    temp: 120,
+    resistance: 4.0
+  }]
+}];
+
+// ═══════════════════════════════════════════════════════════════════════════════
 //  SHARED STYLES & COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -2818,7 +3499,7 @@ const AppComponent = function VRFNavigator() {
   };
 
   // ── Error codes for current brand ──
-  const currentErrors = activeBrand === "daikin" ? daikinErrorCodes : mitsubishiErrorCodes;
+  const currentErrors = activeBrand === "daikin" ? daikinErrorCodes : activeBrand === "lg" ? lgErrorCodes : mitsubishiErrorCodes;
   const filteredErrors = currentErrors.filter(e => {
     const matchesSearch = e.code.toLowerCase().includes(errorSearch.toLowerCase()) || e.desc.toLowerCase().includes(errorSearch.toLowerCase());
     const matchesFilter = errorFilter === "all" || e.category === errorFilter;
@@ -2853,6 +3534,19 @@ const AppComponent = function VRFNavigator() {
     }, {
       id: "led",
       label: "💡 LED Flash"
+    }, {
+      id: "thermistor",
+      label: "🌡️ Thermistors"
+    }],
+    lg: [{
+      id: "errors",
+      label: "🚨 Fault Codes"
+    }, {
+      id: "commission",
+      label: "🔧 Commissioning"
+    }, {
+      id: "field",
+      label: "⚙️ Function Codes"
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
@@ -2948,7 +3642,7 @@ const AppComponent = function VRFNavigator() {
         fontSize: "14px",
         color: "#5a5a6a"
       }
-    }, "LG Multi V \u2022 Samsung DVM \u2022 Carrier / Toshiba"))));
+    }, "Samsung DVM \u2022 Carrier / Toshiba"))));
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -2990,7 +3684,7 @@ const AppComponent = function VRFNavigator() {
       fontSize: "13px",
       fontFamily: mono
     }
-  }, "\u2190 Brands"), activeBrand === "daikin" && view !== "categories" && activeTab === "field" && /*#__PURE__*/React.createElement("button", {
+  }, "\u2190 Brands"), (activeBrand === "daikin" || activeBrand === "lg") && view !== "categories" && activeTab === "field" && /*#__PURE__*/React.createElement("button", {
     onClick: handleBack,
     style: {
       background: "none",
@@ -3223,7 +3917,7 @@ const AppComponent = function VRFNavigator() {
         alignItems: "center",
         gap: "12px",
         width: "100%",
-        background: sel ? activeBrand === "daikin" ? "#1a3a6b" : "#3b1a1a" : brand.cardBg,
+        background: sel ? activeBrand === "daikin" ? "#1a3a6b" : activeBrand === "lg" ? "#0a2a1a" : "#3b1a1a" : brand.cardBg,
         border: `1px solid ${sel ? brand.accent : brand.borderColor}`,
         borderRadius: "8px",
         padding: "10px 12px",
@@ -3588,7 +4282,48 @@ const AppComponent = function VRFNavigator() {
       color: "#cbd5e1",
       lineHeight: "1.5"
     }
-  }, item))))))), activeTab === "errors" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("input", {
+  }, item))))))), activeTab === "errors" && /*#__PURE__*/React.createElement(React.Fragment, null, activeBrand === "lg" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "LG ERROR CODE SYSTEM"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#b0bec5",
+      lineHeight: "1.7"
+    }
+  }, "Last digit = unit: ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "1"), "=Master, ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "2"), "=Slave1, ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "3"), "=Slave2.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#ef4444"
+    }
+  }, "Level 1"), ": Immediate shutdown (manual restart required) \u2022", " ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#f59e0b"
+    }
+  }, "Level 3"), ": Auto-restart up to 9x, then Level 1 \u2022", " ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#3b82f6"
+    }
+  }, "Level 2"), ": Comm errors (auto-clear) \u2022", " ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#8b95a8"
+    }
+  }, "Level 4"), ": Notify and continue")), /*#__PURE__*/React.createElement("input", {
     placeholder: "Search code or description...",
     value: errorSearch,
     onChange: e => setErrorSearch(e.target.value),
@@ -3629,7 +4364,7 @@ const AppComponent = function VRFNavigator() {
     key: e.code,
     style: {
       ...S.card,
-      borderLeft: `3px solid ${e.category === "Indoor" ? "#ef4444" : e.category === "Outdoor" ? "#f59e0b" : e.category === "System" ? "#8b5cf6" : e.category === "Charge" ? "#22c55e" : e.category === "BS Box" ? "#06b6d4" : e.category === "City Multi" ? "#ef4444" : e.category === "K-Control" ? "#f59e0b" : e.category === "P-Series K" ? "#a78bfa" : e.category === "PWFY" ? "#06b6d4" : brand.accent}`
+      borderLeft: `3px solid ${e.category === "Indoor" ? "#ef4444" : e.category === "Outdoor" ? "#f59e0b" : e.category === "System" ? "#8b5cf6" : e.category === "Charge" ? "#22c55e" : e.category === "BS Box" ? "#06b6d4" : e.category === "City Multi" ? "#ef4444" : e.category === "K-Control" ? "#f59e0b" : e.category === "P-Series K" ? "#a78bfa" : e.category === "PWFY" ? "#06b6d4" : e.category === "Hydro Kit" ? "#06b6d4" : e.category === "Heat Recovery" ? "#a78bfa" : brand.accent}`
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3640,18 +4375,18 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: activeBrand === "daikin" ? "#2a1515" : "#1f0a0a",
-      border: `1px solid ${activeBrand === "daikin" ? "#ef4444" : "#b91c1c"}`,
+      background: activeBrand === "lg" ? "#0a1f15" : activeBrand === "daikin" ? "#2a1515" : "#1f0a0a",
+      border: `1px solid ${activeBrand === "lg" ? "#16a34a" : activeBrand === "daikin" ? "#ef4444" : "#b91c1c"}`,
       borderRadius: "4px",
       padding: "3px 8px",
       fontSize: "15px",
       fontWeight: "700",
-      color: activeBrand === "daikin" ? "#fca5a5" : "#fca5a5"
+      color: activeBrand === "lg" ? "#86efac" : "#fca5a5"
     }
   }, e.code), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#f1a0a0"
+      color: activeBrand === "lg" ? "#86efac" : "#f1a0a0"
     }
   }, e.desc)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3795,6 +4530,393 @@ const AppComponent = function VRFNavigator() {
       lineHeight: "1.5"
     }
   }, "Measure thermistor resistance with multimeter and compare to expected values. Disconnect thermistor from PCB before measuring.")), mitsubishiThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
+    key: idx,
+    style: {
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.card,
+      borderLeft: `3px solid ${brand.accent}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600",
+      color: "#fff",
+      marginBottom: "4px"
+    }
+  }, table.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#8b95a8"
+    }
+  }, table.note)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "8px",
+      padding: "8px 16px",
+      background: brand.gradientTo,
+      border: `1px solid ${brand.accent}`,
+      fontSize: "11px",
+      color: brand.accentLight,
+      letterSpacing: "1px",
+      fontWeight: "700"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, "TEMP (\xB0C)"), /*#__PURE__*/React.createElement("div", null, "RESISTANCE (k\u03A9)")), table.rows.map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "8px",
+      padding: "8px 16px",
+      background: i % 2 === 0 ? brand.cardBg : brand.bg,
+      border: `1px solid ${brand.borderColor}`,
+      borderTop: "none",
+      borderRadius: i === table.rows.length - 1 ? "0 0 8px 8px" : "0",
+      fontSize: "13px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#fff"
+    }
+  }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#fbbf24",
+      fontWeight: "600"
+    }
+  }, r.resistance, " k\u03A9")))))), activeBrand === "lg" && activeTab === "commission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      background: brand.bg,
+      marginBottom: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "MULTI V COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#8b95a8",
+      lineHeight: "1.6"
+    }
+  }, "Based on LG Multi V 5 / IV / S commissioning procedures. Tap each step to expand.")), lgCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
+    key: idx,
+    style: {
+      marginBottom: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setExpandedStep(expandedStep === idx ? null : idx),
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      width: "100%",
+      background: expandedStep === idx ? brand.gradientFrom : brand.cardBg,
+      border: `1px solid ${expandedStep === idx ? brand.accent : brand.borderColor}`,
+      borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
+      padding: "12px 14px",
+      cursor: "pointer",
+      color: "#e2e8f0",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "20px"
+    }
+  }, s.icon), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      color: brand.accentLight,
+      letterSpacing: "1px"
+    }
+  }, s.step), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600"
+    }
+  }, s.title)), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: brand.accent,
+      fontSize: "18px"
+    }
+  }, expandedStep === idx ? "▾" : "›")), expandedStep === idx && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: brand.bg,
+      border: `1px solid ${brand.accent}`,
+      borderTop: "none",
+      borderRadius: "0 0 8px 8px",
+      padding: "12px 14px"
+    }
+  }, s.items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: "flex",
+      gap: "10px",
+      marginBottom: "9px",
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "20px",
+      height: "20px",
+      borderRadius: "3px",
+      background: brand.borderColor,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "11px",
+      color: brand.accentLight,
+      fontWeight: "700",
+      flexShrink: 0,
+      marginTop: "1px"
+    }
+  }, i + 1), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#cbd5e1",
+      lineHeight: "1.5"
+    }
+  }, item)))))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "24px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "CH05 TROUBLESHOOTING TREE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#8b95a8",
+      lineHeight: "1.6"
+    }
+  }, "#1 service call for LG Multi V systems. Follow these diagnostic steps.")), lgCH05Tree.map((t, idx) => /*#__PURE__*/React.createElement("div", {
+    key: idx,
+    style: {
+      ...S.card,
+      borderLeft: `3px solid ${brand.accent}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: "10px",
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "28px",
+      height: "28px",
+      borderRadius: "50%",
+      background: brand.accent,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "14px",
+      fontWeight: "700",
+      color: "#fff",
+      flexShrink: 0
+    }
+  }, t.step), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600",
+      color: "#fff",
+      marginBottom: "6px"
+    }
+  }, t.title), t.yes && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#86efac",
+      marginBottom: "4px"
+    }
+  }, /*#__PURE__*/React.createElement("strong", null, "YES \u2192"), " ", t.yes), t.no && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#fca5a5",
+      marginBottom: "4px"
+    }
+  }, /*#__PURE__*/React.createElement("strong", null, "NO \u2192"), " ", t.no), t.action && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#fbbf24"
+    }
+  }, "\u2192 ", t.action))))))), activeBrand === "lg" && activeTab === "field" && /*#__PURE__*/React.createElement(React.Fragment, null, view === "categories" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "HOW TO ACCESS FUNCTION CODES"), lgFnEntrySteps.map(s => /*#__PURE__*/React.createElement("div", {
+    key: s.num,
+    style: {
+      display: "flex",
+      gap: "10px",
+      marginBottom: "9px",
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "22px",
+      height: "22px",
+      borderRadius: "50%",
+      background: brand.accent,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "12px",
+      fontWeight: "700",
+      color: "#fff",
+      flexShrink: 0
+    }
+  }, s.num), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px"
+    }
+  }, s.text), s.sub && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      color: "#8b95a8",
+      marginTop: "2px"
+    }
+  }, s.sub))))), /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "SELECT CATEGORY"), lgFieldSettings.map(cat => /*#__PURE__*/React.createElement("button", {
+    key: cat.category,
+    onClick: () => {
+      setSelectedCategory(cat);
+      setView("settings");
+    },
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      width: "100%",
+      ...S.card,
+      cursor: "pointer",
+      color: "#e2e8f0",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "20px"
+    }
+  }, cat.icon), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600"
+    }
+  }, cat.category), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#8b95a8",
+      marginTop: "2px"
+    }
+  }, cat.settings.length, " ", cat.settings.length === 1 ? "setting" : "settings")), /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: "auto",
+      color: brand.accent,
+      fontSize: "16px"
+    }
+  }, "\u203A")))), view === "settings" && selectedCategory && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, selectedCategory.icon, " ", selectedCategory.category.toUpperCase()), selectedCategory.settings.map(setting => /*#__PURE__*/React.createElement("div", {
+    key: setting.label,
+    style: {
+      ...S.card,
+      borderLeft: `3px solid ${brand.accent}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600",
+      color: "#fff",
+      marginBottom: "4px"
+    }
+  }, setting.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "inline-block",
+      background: brand.gradientTo,
+      border: `1px solid ${brand.accent}`,
+      borderRadius: "4px",
+      padding: "2px 8px",
+      fontSize: "13px",
+      fontWeight: "700",
+      color: brand.accentLight,
+      marginBottom: "6px"
+    }
+  }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#8b95a8",
+      marginBottom: "6px"
+    }
+  }, setting.description), setting.proTip && /*#__PURE__*/React.createElement("div", {
+    style: S.tip
+  }, "\u26A1 ", setting.proTip), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: brand.accentLight,
+      letterSpacing: "1px",
+      marginBottom: "6px"
+    }
+  }, "OPTIONS"), setting.options.map(opt => /*#__PURE__*/React.createElement("div", {
+    key: opt.value,
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+      marginBottom: "4px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "50px",
+      background: brand.gradientTo,
+      border: `1px solid ${brand.borderColor}`,
+      borderRadius: "4px",
+      padding: "3px 8px",
+      fontSize: "13px",
+      fontWeight: "700",
+      color: "#fff",
+      textAlign: "center"
+    }
+  }, opt.value), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#cbd5e1"
+    }
+  }, opt.label)))))))), activeBrand === "lg" && activeTab === "thermistor" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#b0bec5",
+      lineHeight: "1.5"
+    }
+  }, "LG Multi V uses three sensor types: 10k\u03A9 (air/suction), 5k\u03A9 (pipe/liquid), and 200k\u03A9 (discharge). Disconnect from PCB before measuring.")), /*#__PURE__*/React.createElement("div", {
+    style: S.warn
+  }, "\u26A0\uFE0F Last digit of error code = unit number: 1=Master, 2=Slave1, 3=Slave2. Example: CH211 = Error 21 on Master."), lgThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
     key: idx,
     style: {
       marginBottom: "20px"
