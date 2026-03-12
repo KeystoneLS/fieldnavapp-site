@@ -5616,20 +5616,21 @@ const AppComponent = function VRFNavigator() {
     }, "Select equipment manufacturer"), /*#__PURE__*/React.createElement("button", {
       onClick: () => setDarkMode(!darkMode),
       style: {
-        background: darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
-        border: `1px solid ${t.subtleBorder}`,
-        borderRadius: "20px",
-        padding: "6px 16px",
+        background: darkMode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.05)",
+        border: `2px solid ${darkMode ? "#475569" : "#94a3b8"}`,
+        borderRadius: "24px",
+        padding: "8px 20px",
         cursor: "pointer",
-        fontSize: "14px",
-        color: t.textSecondary,
+        fontSize: "15px",
+        color: t.text,
         fontFamily: mono,
         marginBottom: "30px",
         display: "inline-flex",
         alignItems: "center",
-        gap: "6px"
+        gap: "8px",
+        fontWeight: "600"
       }
-    }, darkMode ? "\u{1F319} Dark" : "\u{2600}\u{FE0F} Light"), brands.map(b => /*#__PURE__*/React.createElement("button", {
+    }, darkMode ? "\u{1F319} Dark Mode" : "\u{2600}\u{FE0F} Light Mode"), brands.map(b => /*#__PURE__*/React.createElement("button", {
       key: b.id,
       onClick: () => {
         setActiveBrand(b.id);
@@ -5750,12 +5751,12 @@ const AppComponent = function VRFNavigator() {
     onClick: () => setDarkMode(!darkMode),
     style: {
       marginLeft: "auto",
-      background: "rgba(255,255,255,0.15)",
-      border: `1px solid ${brand.accent}`,
-      borderRadius: "4px",
-      padding: "4px 8px",
+      background: "rgba(255,255,255,0.2)",
+      border: `1px solid rgba(255,255,255,0.4)`,
+      borderRadius: "6px",
+      padding: "6px 10px",
       cursor: "pointer",
-      fontSize: "14px",
+      fontSize: "18px",
       color: "#fff",
       fontFamily: mono,
       lineHeight: 1
