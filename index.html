@@ -5658,7 +5658,7 @@ const AppComponent = function VRFNavigator() {
         borderRadius: "12px",
         marginBottom: "16px",
         cursor: "pointer",
-        color: t.textStrong,
+        color: "#fff",
         textAlign: "left",
         fontFamily: mono
       }
@@ -5671,7 +5671,7 @@ const AppComponent = function VRFNavigator() {
     }, b.name), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "14px",
-        color: b.accentLight,
+        color: darkMode ? b.accentLight : "rgba(255,255,255,0.85)",
         lineHeight: "1.5"
       }
     }, b.subtitle))), /*#__PURE__*/React.createElement("div", {
@@ -5728,8 +5728,8 @@ const AppComponent = function VRFNavigator() {
     },
     style: {
       background: "none",
-      border: `1px solid ${brand.accent}`,
-      color: brand.accentLight,
+      border: `1px solid rgba(255,255,255,0.4)`,
+      color: "rgba(255,255,255,0.9)",
       padding: "5px 10px",
       borderRadius: "4px",
       cursor: "pointer",
@@ -5740,8 +5740,8 @@ const AppComponent = function VRFNavigator() {
     onClick: handleBack,
     style: {
       background: "none",
-      border: `1px solid ${brand.accent}`,
-      color: brand.accentLight,
+      border: `1px solid rgba(255,255,255,0.4)`,
+      color: "rgba(255,255,255,0.9)",
       padding: "5px 10px",
       borderRadius: "4px",
       cursor: "pointer",
@@ -5751,14 +5751,14 @@ const AppComponent = function VRFNavigator() {
   }, "\u2190 Back"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "11px",
-      color: brand.accentLight,
+      color: "rgba(255,255,255,0.8)",
       letterSpacing: "3px"
     }
   }, "KLS // ", brand.name.toUpperCase()), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "17px",
       fontWeight: "700",
-      color: t.textStrong
+      color: "#fff"
     }
   }, "Field Navigator")), /*#__PURE__*/React.createElement("button", {
     onClick: () => setDarkMode(!darkMode),
@@ -5793,9 +5793,9 @@ const AppComponent = function VRFNavigator() {
   }, darkMode ? "\u{1F319}" : "\u{2600}\u{FE0F}")), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "11px",
-      color: brand.accentLight,
-      background: brand.gradientTo,
-      border: `1px solid ${brand.accent}`,
+      color: "rgba(255,255,255,0.85)",
+      background: "rgba(0,0,0,0.2)",
+      border: `1px solid rgba(255,255,255,0.3)`,
       borderRadius: "4px",
       padding: "3px 8px"
     }
@@ -6968,7 +6968,7 @@ const AppComponent = function VRFNavigator() {
       padding: "2px 8px",
       fontSize: "13px",
       fontWeight: "700",
-      color: brand.accentLight,
+      color: "#fff",
       marginBottom: "6px"
     }
   }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
@@ -7284,7 +7284,7 @@ const AppComponent = function VRFNavigator() {
       padding: "2px 8px",
       fontSize: "13px",
       fontWeight: "700",
-      color: brand.accentLight,
+      color: "#fff",
       marginBottom: "6px"
     }
   }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
@@ -7598,7 +7598,7 @@ const AppComponent = function VRFNavigator() {
       padding: "2px 8px",
       fontSize: "13px",
       fontWeight: "700",
-      color: brand.accentLight,
+      color: "#fff",
       marginBottom: "6px"
     }
   }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
