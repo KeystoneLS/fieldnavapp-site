@@ -328,72 +328,171 @@ window.onerror = function(msg, url, line, col, err) {
 try {
 const { useState } = React;
 // ── BRAND CONFIG ─────────────────────────────────────────────────────────────
-const brands = [{
+const brandsRaw = [{
   id: "daikin",
   name: "Daikin VRV",
   subtitle: "VRV III / IV Field Settings, Commissioning & Fault Codes",
   accent: "#2a5298",
-  accentLight: "#7eb3ff",
-  gradientFrom: "#1a2744",
-  gradientTo: "#0d1f3c",
-  bg: "#0f1117",
-  cardBg: "#141b2d",
-  borderColor: "#1e3a5f",
   controllerTag: "BRC1E62/72/73",
-  tabs: ["errors", "commission", "field", "thermistor"]
+  tabs: ["errors", "commission", "field", "thermistor"],
+  dark: {
+    accentLight: "#7eb3ff",
+    gradientFrom: "#1a2744",
+    gradientTo: "#0d1f3c",
+    bg: "#0f1117",
+    cardBg: "#141b2d",
+    borderColor: "#1e3a5f",
+    badgeBg: "#2a1515",
+    badgeBorder: "#ef4444",
+    badgeText: "#fca5a5",
+    descText: "#f1a0a0"
+  },
+  light: {
+    accentLight: "#1e3a6b",
+    gradientFrom: "#2a5298",
+    gradientTo: "#1a3a6b",
+    bg: "#f0f4fa",
+    cardBg: "#ffffff",
+    borderColor: "#c5d5e8",
+    badgeBg: "#fef2f2",
+    badgeBorder: "#dc2626",
+    badgeText: "#991b1b",
+    descText: "#1e3a5f"
+  }
 }, {
   id: "mitsubishi",
   name: "Mitsubishi Electric",
   subtitle: "City Multi / Mr Slim / P-Series / K-Series / PWFY",
   accent: "#b91c1c",
-  accentLight: "#fca5a5",
-  gradientFrom: "#3b1111",
-  gradientTo: "#1f0a0a",
-  bg: "#110808",
-  cardBg: "#1f1010",
-  borderColor: "#5f1e1e",
   controllerTag: "M-NET / MA Controller",
-  tabs: ["errors", "commission", "led", "thermistor"]
+  tabs: ["errors", "commission", "led", "thermistor"],
+  dark: {
+    accentLight: "#fca5a5",
+    gradientFrom: "#3b1111",
+    gradientTo: "#1f0a0a",
+    bg: "#110808",
+    cardBg: "#1f1010",
+    borderColor: "#5f1e1e",
+    badgeBg: "#1f0a0a",
+    badgeBorder: "#b91c1c",
+    badgeText: "#fca5a5",
+    descText: "#f1a0a0"
+  },
+  light: {
+    accentLight: "#7f1d1d",
+    gradientFrom: "#b91c1c",
+    gradientTo: "#7f1d1d",
+    bg: "#fef5f5",
+    cardBg: "#ffffff",
+    borderColor: "#e8c5c5",
+    badgeBg: "#fef2f2",
+    badgeBorder: "#b91c1c",
+    badgeText: "#7f1d1d",
+    descText: "#7f1d1d"
+  }
 }, {
   id: "lg",
   name: "LG Multi V",
   subtitle: "Multi V 5 / IV / S — Error Codes, Commissioning & Function Codes",
   accent: "#16a34a",
-  accentLight: "#86efac",
-  gradientFrom: "#0a2a14",
-  gradientTo: "#061a0c",
-  bg: "#080f0a",
-  cardBg: "#0f1f14",
-  borderColor: "#1e5f2e",
   controllerTag: "PREMTB100 / PQRCVSL0",
-  tabs: ["errors", "commission", "field", "thermistor"]
+  tabs: ["errors", "commission", "field", "thermistor"],
+  dark: {
+    accentLight: "#86efac",
+    gradientFrom: "#0a2a14",
+    gradientTo: "#061a0c",
+    bg: "#080f0a",
+    cardBg: "#0f1f14",
+    borderColor: "#1e5f2e",
+    badgeBg: "#0a1f15",
+    badgeBorder: "#16a34a",
+    badgeText: "#86efac",
+    descText: "#86efac"
+  },
+  light: {
+    accentLight: "#14532d",
+    gradientFrom: "#16a34a",
+    gradientTo: "#14532d",
+    bg: "#f0faf4",
+    cardBg: "#ffffff",
+    borderColor: "#c5e8d0",
+    badgeBg: "#f0fdf4",
+    badgeBorder: "#16a34a",
+    badgeText: "#14532d",
+    descText: "#14532d"
+  }
 }, {
   id: "samsung",
   name: "Samsung DVM",
   subtitle: "DVM S / S2 / Plus III — Error Codes, Commissioning & Configuration",
   accent: "#6366f1",
-  accentLight: "#a5b4fc",
-  gradientFrom: "#1a1a3e",
-  gradientTo: "#0d0d24",
-  bg: "#0a0a14",
-  cardBg: "#12122a",
-  borderColor: "#2e2e6f",
   controllerTag: "MWR-WE13N / SNET Pro",
-  tabs: ["errors", "commission", "field", "thermistor"]
+  tabs: ["errors", "commission", "field", "thermistor"],
+  dark: {
+    accentLight: "#a5b4fc",
+    gradientFrom: "#1a1a3e",
+    gradientTo: "#0d0d24",
+    bg: "#0a0a14",
+    cardBg: "#12122a",
+    borderColor: "#2e2e6f",
+    badgeBg: "#1a1a3e",
+    badgeBorder: "#6366f1",
+    badgeText: "#a5b4fc",
+    descText: "#a5b4fc"
+  },
+  light: {
+    accentLight: "#3730a3",
+    gradientFrom: "#6366f1",
+    gradientTo: "#4338ca",
+    bg: "#f0f0ff",
+    cardBg: "#ffffff",
+    borderColor: "#c7c7f0",
+    badgeBg: "#eef2ff",
+    badgeBorder: "#6366f1",
+    badgeText: "#3730a3",
+    descText: "#3730a3"
+  }
 }, {
   id: "carrier",
   name: "Carrier VRF",
   subtitle: "38VMA / 38VMR — Error Codes, Commissioning & Configuration",
   accent: "#eab308",
-  accentLight: "#fde047",
-  gradientFrom: "#2a2400",
-  gradientTo: "#1a1600",
-  bg: "#12100a",
-  cardBg: "#1f1c0f",
-  borderColor: "#5f5520",
   controllerTag: "CCM01 / Touch Pilot",
-  tabs: ["errors", "commission", "field", "thermistor"]
+  tabs: ["errors", "commission", "field", "thermistor"],
+  dark: {
+    accentLight: "#fde047",
+    gradientFrom: "#2a2400",
+    gradientTo: "#1a1600",
+    bg: "#12100a",
+    cardBg: "#1f1c0f",
+    borderColor: "#5f5520",
+    badgeBg: "#1f1c0a",
+    badgeBorder: "#eab308",
+    badgeText: "#fde047",
+    descText: "#fde047"
+  },
+  light: {
+    accentLight: "#854d0e",
+    gradientFrom: "#eab308",
+    gradientTo: "#a16207",
+    bg: "#fefcf0",
+    cardBg: "#ffffff",
+    borderColor: "#e8dfc0",
+    badgeBg: "#fefce8",
+    badgeBorder: "#ca8a04",
+    badgeText: "#854d0e",
+    descText: "#854d0e"
+  }
 }];
+
+// Resolve brand colors based on theme — called inside component
+function resolveBrand(raw, dark) {
+  const mode = dark ? raw.dark : raw.light;
+  return {
+    ...raw,
+    ...mode
+  };
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 //  DAIKIN DATA
@@ -5222,55 +5321,10 @@ const carrierThermistorTables = [{
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const mono = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
-function getStyles(brand) {
-  const b = brands.find(x => x.id === brand) || brands[0];
-  return {
-    card: {
-      background: b.cardBg,
-      border: `1px solid ${b.borderColor}`,
-      borderRadius: "8px",
-      padding: "14px 16px",
-      marginBottom: "8px"
-    },
-    cardAccent: {
-      background: b.cardBg,
-      border: `1px solid ${b.accent}`,
-      borderRadius: "8px",
-      padding: "14px 16px",
-      marginBottom: "12px"
-    },
-    label: {
-      fontSize: "12px",
-      color: b.accentLight,
-      letterSpacing: "1.5px",
-      marginBottom: "10px"
-    },
-    tip: {
-      fontSize: "13px",
-      color: "#f59e0b",
-      marginTop: "6px"
-    },
-    success: {
-      background: "#0a2a1a",
-      border: "2px solid #22c55e",
-      borderRadius: "8px",
-      padding: "16px",
-      marginTop: "20px"
-    },
-    warn: {
-      background: "#2a1a0a",
-      border: "1px solid #f59e0b",
-      borderRadius: "6px",
-      padding: "8px 10px",
-      marginTop: "12px",
-      fontSize: "13px",
-      color: "#fbbf24"
-    }
-  };
-}
 const AppComponent = function VRFNavigator() {
   const [activeBrand, setActiveBrand] = useState(null); // null = brand selector
   const [tab, setTab] = useState(null);
+  const [darkMode, setDarkMode] = useState(false); // false = light mode default
   // Daikin state
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSetting, setSelectedSetting] = useState(null);
@@ -5282,8 +5336,142 @@ const AppComponent = function VRFNavigator() {
   const [errorFilter, setErrorFilter] = useState("all");
   // Mitsubishi LED search
   const [ledSearch, setLedSearch] = useState("");
+
+  // ── Theme-resolved brands ──
+  const brands = brandsRaw.map(r => resolveBrand(r, darkMode));
   const brand = brands.find(b => b.id === activeBrand) || brands[0];
-  const S = getStyles(activeBrand || "daikin");
+
+  // ── Centralized theme colors ──
+  const t = darkMode ? {
+    text: "#e2e8f0",
+    textSecondary: "#8b95a8",
+    textTertiary: "#b0bec5",
+    textMuted: "#cbd5e1",
+    textStrong: "#fff",
+    globalBg: "#0a0a0f",
+    subtleBorder: "#1e293b",
+    inputBg: "#141418",
+    inputBorder: "#2a2a35",
+    successBg: "#0a2a1a",
+    successBorder: "#22c55e",
+    successText: "#22c55e",
+    successSubBg: "#0d2d1a",
+    successSubBorder: "#22c55e",
+    successDetailText: "#86efac",
+    warnBg: "#2a1a0a",
+    warnBorder: "#f59e0b",
+    warnText: "#fbbf24",
+    tipColor: "#f59e0b",
+    actionText: "#86efac",
+    golden: "#fbbf24",
+    comingSoonBg: "#141418",
+    comingSoonBorder: "#2a2a35",
+    comingSoonText: "#5a5a6a",
+    filterActiveBg: "rgba(255,255,255,0.1)",
+    filterInactiveBg: "transparent",
+    selectBg: "#1a3a6b",
+    ledGreen: "#4ade80",
+    ledRed: "#f87171",
+    errLvl1: "#ef4444",
+    errLvl2: "#3b82f6",
+    errLvl3: "#f59e0b",
+    errLvl4: "#8b95a8",
+    noText: "#fca5a5",
+    catIndoor: "#ef4444",
+    catOutdoor: "#f59e0b",
+    catSystem: "#8b5cf6",
+    catCharge: "#22c55e",
+    catBSBox: "#06b6d4",
+    catPSeries: "#a78bfa",
+    thermResColor: "#fbbf24"
+  } : {
+    text: "#1e293b",
+    textSecondary: "#475569",
+    textTertiary: "#64748b",
+    textMuted: "#334155",
+    textStrong: "#0f172a",
+    globalBg: "#f1f5f9",
+    subtleBorder: "#cbd5e1",
+    inputBg: "#ffffff",
+    inputBorder: "#d1d5db",
+    successBg: "#f0fdf4",
+    successBorder: "#22c55e",
+    successText: "#15803d",
+    successSubBg: "#dcfce7",
+    successSubBorder: "#22c55e",
+    successDetailText: "#15803d",
+    warnBg: "#fffbeb",
+    warnBorder: "#d97706",
+    warnText: "#92400e",
+    tipColor: "#d97706",
+    actionText: "#15803d",
+    golden: "#92400e",
+    comingSoonBg: "#e2e8f0",
+    comingSoonBorder: "#cbd5e1",
+    comingSoonText: "#64748b",
+    filterActiveBg: "rgba(0,0,0,0.08)",
+    filterInactiveBg: "transparent",
+    selectBg: "#dbeafe",
+    ledGreen: "#16a34a",
+    ledRed: "#dc2626",
+    errLvl1: "#dc2626",
+    errLvl2: "#2563eb",
+    errLvl3: "#d97706",
+    errLvl4: "#64748b",
+    noText: "#b91c1c",
+    catIndoor: "#dc2626",
+    catOutdoor: "#d97706",
+    catSystem: "#7c3aed",
+    catCharge: "#16a34a",
+    catBSBox: "#0891b2",
+    catPSeries: "#7c3aed",
+    thermResColor: "#92400e"
+  };
+
+  // ── Style helpers ──
+  const S = {
+    card: {
+      background: brand.cardBg,
+      border: `1px solid ${brand.borderColor}`,
+      borderRadius: "8px",
+      padding: "14px 16px",
+      marginBottom: "8px"
+    },
+    cardAccent: {
+      background: brand.cardBg,
+      border: `1px solid ${brand.accent}`,
+      borderRadius: "8px",
+      padding: "14px 16px",
+      marginBottom: "12px"
+    },
+    label: {
+      fontSize: "12px",
+      color: brand.accentLight,
+      letterSpacing: "1.5px",
+      marginBottom: "10px"
+    },
+    tip: {
+      fontSize: "13px",
+      color: t.tipColor,
+      marginTop: "6px"
+    },
+    success: {
+      background: t.successBg,
+      border: `2px solid ${t.successBorder}`,
+      borderRadius: "8px",
+      padding: "16px",
+      marginTop: "20px"
+    },
+    warn: {
+      background: t.warnBg,
+      border: `1px solid ${t.warnBorder}`,
+      borderRadius: "6px",
+      padding: "8px 10px",
+      marginTop: "12px",
+      fontSize: "13px",
+      color: t.warnText
+    }
+  };
   const resetBrandState = () => {
     setTab(null);
     setSelectedCategory(null);
@@ -5394,9 +5582,9 @@ const AppComponent = function VRFNavigator() {
     return /*#__PURE__*/React.createElement("div", {
       style: {
         minHeight: "100vh",
-        background: "#0a0a0f",
+        background: t.globalBg,
         fontFamily: mono,
-        color: "#e2e8f0"
+        color: t.text
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
@@ -5408,7 +5596,7 @@ const AppComponent = function VRFNavigator() {
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "12px",
-        color: "#8b95a8",
+        color: t.textSecondary,
         letterSpacing: "4px",
         marginBottom: "6px"
       }
@@ -5416,16 +5604,33 @@ const AppComponent = function VRFNavigator() {
       style: {
         fontSize: "24px",
         fontWeight: "700",
-        color: "#fff",
+        color: t.textStrong,
         marginBottom: "4px"
       }
     }, "VRF Field Navigator"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "14px",
-        color: "#8b95a8",
-        marginBottom: "40px"
+        color: t.textSecondary,
+        marginBottom: "20px"
       }
-    }, "Select equipment manufacturer"), brands.map(b => /*#__PURE__*/React.createElement("button", {
+    }, "Select equipment manufacturer"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => setDarkMode(!darkMode),
+      style: {
+        background: darkMode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.05)",
+        border: `2px solid ${darkMode ? "#475569" : "#94a3b8"}`,
+        borderRadius: "24px",
+        padding: "8px 20px",
+        cursor: "pointer",
+        fontSize: "15px",
+        color: t.text,
+        fontFamily: mono,
+        marginBottom: "30px",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "8px",
+        fontWeight: "600"
+      }
+    }, darkMode ? "\u{1F319} Dark Mode" : "\u{2600}\u{FE0F} Light Mode"), brands.map(b => /*#__PURE__*/React.createElement("button", {
       key: b.id,
       onClick: () => {
         setActiveBrand(b.id);
@@ -5440,7 +5645,7 @@ const AppComponent = function VRFNavigator() {
         borderRadius: "12px",
         marginBottom: "16px",
         cursor: "pointer",
-        color: "#fff",
+        color: t.textStrong,
         textAlign: "left",
         fontFamily: mono
       }
@@ -5460,21 +5665,21 @@ const AppComponent = function VRFNavigator() {
       style: {
         marginTop: "30px",
         padding: "14px",
-        background: "#141418",
-        border: "1px solid #2a2a35",
+        background: t.comingSoonBg,
+        border: `1px solid ${t.comingSoonBorder}`,
         borderRadius: "8px"
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "12px",
-        color: "#8b95a8",
+        color: t.textSecondary,
         letterSpacing: "2px",
         marginBottom: "6px"
       }
     }, "COMING SOON"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "14px",
-        color: "#5a5a6a"
+        color: t.comingSoonText
       }
     }, "Toshiba \u2022 Bosch \u2022 Fujitsu"))));
   }
@@ -5489,7 +5694,7 @@ const AppComponent = function VRFNavigator() {
       minHeight: "100vh",
       background: brand.bg,
       fontFamily: mono,
-      color: "#e2e8f0"
+      color: t.text
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -5540,11 +5745,24 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "17px",
       fontWeight: "700",
-      color: "#fff"
+      color: t.textStrong
     }
-  }, "Field Navigator")), /*#__PURE__*/React.createElement("div", {
+  }, "Field Navigator")), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setDarkMode(!darkMode),
     style: {
       marginLeft: "auto",
+      background: "rgba(255,255,255,0.2)",
+      border: `1px solid rgba(255,255,255,0.4)`,
+      borderRadius: "6px",
+      padding: "6px 10px",
+      cursor: "pointer",
+      fontSize: "18px",
+      color: "#fff",
+      fontFamily: mono,
+      lineHeight: 1
+    }
+  }, darkMode ? "\u{1F319}" : "\u{2600}\u{FE0F}"), /*#__PURE__*/React.createElement("div", {
+    style: {
       fontSize: "11px",
       color: brand.accentLight,
       background: brand.gradientTo,
@@ -5558,22 +5776,22 @@ const AppComponent = function VRFNavigator() {
       borderBottom: `1px solid ${brand.borderColor}`,
       background: brand.bg
     }
-  }, currentTabs.map(t => /*#__PURE__*/React.createElement("button", {
-    key: t.id,
-    onClick: () => setTab(t.id),
+  }, currentTabs.map(tb => /*#__PURE__*/React.createElement("button", {
+    key: tb.id,
+    onClick: () => setTab(tb.id),
     style: {
       flex: 1,
       padding: "10px 4px",
       background: "none",
       border: "none",
-      borderBottom: activeTab === t.id ? `2px solid ${brand.accent}` : "2px solid transparent",
-      color: activeTab === t.id ? brand.accentLight : "#8b95a8",
+      borderBottom: activeTab === tb.id ? `2px solid ${brand.accent}` : "2px solid transparent",
+      color: activeTab === tb.id ? brand.accentLight : t.textSecondary,
       cursor: "pointer",
       fontSize: "13px",
       fontFamily: mono,
-      fontWeight: activeTab === t.id ? "700" : "400"
+      fontWeight: activeTab === tb.id ? "700" : "400"
     }
-  }, t.label))), /*#__PURE__*/React.createElement("div", {
+  }, tb.label))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "16px",
       maxWidth: "600px",
@@ -5605,7 +5823,7 @@ const AppComponent = function VRFNavigator() {
       justifyContent: "center",
       fontSize: "12px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       flexShrink: 0
     }
   }, s.num), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -5615,7 +5833,7 @@ const AppComponent = function VRFNavigator() {
   }, s.text), s.sub && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "12px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, s.sub))))), /*#__PURE__*/React.createElement("div", {
@@ -5633,7 +5851,7 @@ const AppComponent = function VRFNavigator() {
       width: "100%",
       ...S.card,
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -5648,7 +5866,7 @@ const AppComponent = function VRFNavigator() {
   }, cat.category), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, cat.settings.length, " settings")), /*#__PURE__*/React.createElement("span", {
@@ -5670,7 +5888,7 @@ const AppComponent = function VRFNavigator() {
       width: "100%",
       ...S.card,
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -5681,7 +5899,7 @@ const AppComponent = function VRFNavigator() {
   }, setting.label), setting.description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "3px"
     }
   }, setting.description), setting.proTip && /*#__PURE__*/React.createElement("div", {
@@ -5697,7 +5915,7 @@ const AppComponent = function VRFNavigator() {
   }, selectedSetting.label), selectedSetting.description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#b0bec5"
+      color: t.textTertiary
     }
   }, selectedSetting.description), selectedSetting.proTip && /*#__PURE__*/React.createElement("div", {
     style: S.tip
@@ -5737,7 +5955,7 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "26px",
       fontWeight: "700",
-      color: "#fff"
+      color: t.textStrong
     }
   }, value)))), /*#__PURE__*/React.createElement("div", {
     style: S.label
@@ -5751,13 +5969,13 @@ const AppComponent = function VRFNavigator() {
         alignItems: "center",
         gap: "12px",
         width: "100%",
-        background: sel ? activeBrand === "daikin" ? "#1a3a6b" : activeBrand === "lg" ? "#0a2a1a" : activeBrand === "samsung" ? "#1a1a4b" : "#3b1a1a" : brand.cardBg,
+        background: sel ? t.selectBg : brand.cardBg,
         border: `1px solid ${sel ? brand.accent : brand.borderColor}`,
         borderRadius: "8px",
         padding: "10px 12px",
         marginBottom: "6px",
         cursor: "pointer",
-        color: "#e2e8f0",
+        color: t.text,
         textAlign: "left"
       }
     }, /*#__PURE__*/React.createElement("div", {
@@ -5771,7 +5989,7 @@ const AppComponent = function VRFNavigator() {
         justifyContent: "center",
         fontSize: "16px",
         fontWeight: "700",
-        color: "#fff",
+        color: t.textStrong,
         border: `1px solid ${brand.accent}`,
         flexShrink: 0
       }
@@ -5783,7 +6001,7 @@ const AppComponent = function VRFNavigator() {
     }, opt.label), sel && /*#__PURE__*/React.createElement("span", {
       style: {
         marginLeft: "auto",
-        color: "#22c55e"
+        color: t.successText
       }
     }, "\u2713"));
   }), selectedOption && /*#__PURE__*/React.createElement("div", {
@@ -5791,7 +6009,7 @@ const AppComponent = function VRFNavigator() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "12px",
-      color: "#22c55e",
+      color: t.successText,
       letterSpacing: "2px",
       marginBottom: "10px"
     }
@@ -5817,8 +6035,8 @@ const AppComponent = function VRFNavigator() {
   }) => /*#__PURE__*/React.createElement("div", {
     key: label,
     style: {
-      background: "#0d2d1a",
-      border: "1px solid #22c55e",
+      background: t.successSubBg,
+      border: `1px solid ${t.successSubBorder}`,
       borderRadius: "6px",
       padding: "8px",
       textAlign: "center"
@@ -5826,7 +6044,7 @@ const AppComponent = function VRFNavigator() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "11px",
-      color: "#22c55e",
+      color: t.successText,
       letterSpacing: "2px",
       marginBottom: "3px"
     }
@@ -5834,25 +6052,25 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "20px",
       fontWeight: "700",
-      color: "#fff"
+      color: t.textStrong
     }
   }, value)))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#86efac",
+      color: t.actionText,
       lineHeight: "1.9"
     }
   }, "1. Wake screen \u2192 Hold CANCEL 4s", /*#__PURE__*/React.createElement("br", null), "2. Field Settings \u2192 MENU/OK", /*#__PURE__*/React.createElement("br", null), "3. Mode ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, selectedSetting.mode), " \u2192 MENU/OK", /*#__PURE__*/React.createElement("br", null), "4. First Code ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, selectedSetting.firstCode), " \u2192 MENU/OK", /*#__PURE__*/React.createElement("br", null), "5. Second Code ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, selectedOption.secondCode), " \u2192 MENU/OK", /*#__PURE__*/React.createElement("br", null), "6. Hold CANCEL 4s to exit"), /*#__PURE__*/React.createElement("div", {
     style: S.warn
@@ -5867,7 +6085,7 @@ const AppComponent = function VRFNavigator() {
   }, "VRVIII COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       lineHeight: "1.6"
     }
   }, "Based on Daikin VRVIII Commissioning training material. Tap each step to expand.")), daikinCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
@@ -5887,7 +6105,7 @@ const AppComponent = function VRFNavigator() {
       borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
       padding: "12px 14px",
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -5948,7 +6166,7 @@ const AppComponent = function VRFNavigator() {
   }, i + 1), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#cbd5e1",
+      color: t.textMuted,
       lineHeight: "1.5"
     }
   }, item))))))), activeBrand === "daikin" && activeTab === "thermistor" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -5961,7 +6179,7 @@ const AppComponent = function VRFNavigator() {
   }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.5"
     }
   }, "Measure thermistor resistance with multimeter and compare to expected values. Disconnect thermistor from PCB before measuring.")), daikinThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
@@ -5978,13 +6196,13 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, table.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8"
+      color: t.textSecondary
     }
   }, table.note)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6014,11 +6232,11 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fbbf24",
+      color: t.golden,
       fontWeight: "600"
     }
   }, r.resistance, " k\u03A9")))))), activeBrand === "mitsubishi" && activeTab === "commission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -6032,7 +6250,7 @@ const AppComponent = function VRFNavigator() {
   }, "CITY MULTI COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       lineHeight: "1.6"
     }
   }, "Based on Mitsubishi Electric City Multi commissioning procedures. Tap each step to expand.")), mitsubishiCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
@@ -6052,7 +6270,7 @@ const AppComponent = function VRFNavigator() {
       borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
       padding: "12px 14px",
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -6113,7 +6331,7 @@ const AppComponent = function VRFNavigator() {
   }, i + 1), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#cbd5e1",
+      color: t.textMuted,
       lineHeight: "1.5"
     }
   }, item))))))), activeTab === "errors" && /*#__PURE__*/React.createElement(React.Fragment, null, activeBrand === "samsung" && /*#__PURE__*/React.createElement("div", {
@@ -6126,28 +6344,28 @@ const AppComponent = function VRFNavigator() {
   }, "SAMSUNG DVM ERROR CODE SYSTEM"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.7"
     }
   }, /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "E1xx"), "=Indoor \u2022", " ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "E2xx"), "=Comm/Sensors \u2022", " ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "E3xx-E5xx"), "=Outdoor \u2022", " ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "E7xx"), "=EEV early detect \u2022", " ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "E9xx"), "=Hydro Kit", /*#__PURE__*/React.createElement("br", null), "Use SNET Pro 2 service tool for real-time diagnostics and error history.")), activeBrand === "lg" && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6159,36 +6377,36 @@ const AppComponent = function VRFNavigator() {
   }, "LG ERROR CODE SYSTEM"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.7"
     }
   }, "Last digit = unit: ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "1"), "=Master, ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "2"), "=Slave1, ", /*#__PURE__*/React.createElement("strong", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, "3"), "=Slave2.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#ef4444"
+      color: t.errLvl1
     }
   }, "Level 1"), ": Immediate shutdown (manual restart required) \u2022", " ", /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#f59e0b"
+      color: t.errLvl3
     }
   }, "Level 3"), ": Auto-restart up to 9x, then Level 1 \u2022", " ", /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#3b82f6"
+      color: t.errLvl2
     }
   }, "Level 2"), ": Comm errors (auto-clear) \u2022", " ", /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#8b95a8"
+      color: t.textSecondary
     }
   }, "Level 4"), ": Notify and continue")), /*#__PURE__*/React.createElement("input", {
     placeholder: "Search code or description...",
@@ -6200,7 +6418,7 @@ const AppComponent = function VRFNavigator() {
       border: `1px solid ${brand.accent}`,
       borderRadius: "6px",
       padding: "10px 12px",
-      color: "#e2e8f0",
+      color: t.text,
       fontFamily: mono,
       fontSize: "13px",
       marginBottom: "10px",
@@ -6219,7 +6437,7 @@ const AppComponent = function VRFNavigator() {
     style: {
       background: errorFilter === cat ? brand.accent : brand.cardBg,
       border: `1px solid ${errorFilter === cat ? brand.accentLight : brand.borderColor}`,
-      color: errorFilter === cat ? "#fff" : "#8b95a8",
+      color: errorFilter === cat ? t.textStrong : t.textSecondary,
       borderRadius: "4px",
       padding: "5px 12px",
       fontSize: "12px",
@@ -6231,7 +6449,7 @@ const AppComponent = function VRFNavigator() {
     key: e.code,
     style: {
       ...S.card,
-      borderLeft: `3px solid ${e.category === "Indoor" ? "#ef4444" : e.category === "Outdoor" ? "#f59e0b" : e.category === "System" ? "#8b5cf6" : e.category === "Charge" ? "#22c55e" : e.category === "BS Box" ? "#06b6d4" : e.category === "City Multi" ? "#ef4444" : e.category === "K-Control" ? "#f59e0b" : e.category === "P-Series K" ? "#a78bfa" : e.category === "PWFY" ? "#06b6d4" : e.category === "Hydro Kit" ? "#06b6d4" : e.category === "Heat Recovery" ? "#a78bfa" : brand.accent}`
+      borderLeft: `3px solid ${e.category === "Indoor" ? t.catIndoor : e.category === "Outdoor" ? t.catOutdoor : e.category === "System" ? t.catSystem : e.category === "Charge" ? t.catCharge : e.category === "BS Box" ? t.catBSBox : e.category === "City Multi" ? t.catIndoor : e.category === "K-Control" ? t.catOutdoor : e.category === "P-Series K" ? t.catPSeries : e.category === "PWFY" ? t.catBSBox : e.category === "Hydro Kit" ? t.catBSBox : e.category === "Heat Recovery" ? t.catPSeries : brand.accent}`
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6242,35 +6460,35 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: activeBrand === "lg" ? "#0a1f15" : activeBrand === "samsung" ? "#1a1a3e" : activeBrand === "carrier" ? "#1f1c0a" : activeBrand === "daikin" ? "#2a1515" : "#1f0a0a",
-      border: `1px solid ${activeBrand === "lg" ? "#16a34a" : activeBrand === "samsung" ? "#6366f1" : activeBrand === "carrier" ? "#eab308" : activeBrand === "daikin" ? "#ef4444" : "#b91c1c"}`,
+      background: brand.badgeBg,
+      border: `1px solid ${brand.badgeBorder}`,
       borderRadius: "4px",
       padding: "3px 8px",
       fontSize: "15px",
       fontWeight: "700",
-      color: activeBrand === "lg" ? "#86efac" : activeBrand === "samsung" ? "#a5b4fc" : activeBrand === "carrier" ? "#fde047" : "#fca5a5"
+      color: brand.badgeText
     }
   }, e.code), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: activeBrand === "lg" ? "#86efac" : activeBrand === "samsung" ? "#a5b4fc" : activeBrand === "carrier" ? "#fde047" : "#f1a0a0"
+      color: brand.descText
     }
   }, e.desc)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#86efac",
+      color: t.actionText,
       lineHeight: "1.5"
     }
   }, "\u2192 ", e.action), e.subcodes && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: "8px",
       paddingTop: "8px",
-      borderTop: "1px solid #1e293b"
+      borderTop: `1px solid ${t.subtleBorder}`
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "11px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       letterSpacing: "1px",
       marginBottom: "4px"
     }
@@ -6286,19 +6504,19 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "13px",
       fontWeight: "700",
-      color: "#fbbf24",
+      color: t.golden,
       minWidth: "90px",
       flexShrink: 0
     }
   }, s.code), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: "13px",
-      color: "#b0bec5"
+      color: t.textTertiary
     }
   }, s.desc)))))), filteredErrors.length === 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "center",
-      color: "#8b95a8",
+      color: t.textSecondary,
       fontSize: "14px",
       marginTop: "40px"
     }
@@ -6312,7 +6530,7 @@ const AppComponent = function VRFNavigator() {
   }, "P-SERIES (A) LED FLASH \u2192 CITY MULTI CODE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.5"
     }
   }, "Count LED flashes on the outdoor unit PCB to cross-reference City Multi fault codes when no central controller is available.")), /*#__PURE__*/React.createElement("input", {
@@ -6325,7 +6543,7 @@ const AppComponent = function VRFNavigator() {
       border: `1px solid ${brand.accent}`,
       borderRadius: "6px",
       padding: "10px 12px",
-      color: "#e2e8f0",
+      color: t.text,
       fontFamily: mono,
       fontSize: "13px",
       marginBottom: "14px",
@@ -6361,25 +6579,25 @@ const AppComponent = function VRFNavigator() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontWeight: "700",
-      color: "#fff"
+      color: t.textStrong
     }
   }, l.pCode), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#4ade80"
+      color: t.ledGreen
     }
   }, l.led1), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#f87171"
+      color: t.ledRed
     }
   }, l.led2), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: l.cityMulti === "—" ? "#8b95a8" : "#fbbf24",
+      color: l.cityMulti === "—" ? t.textSecondary : t.golden,
       fontWeight: "600"
     }
   }, l.cityMulti))), filteredLed.length === 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "center",
-      color: "#8b95a8",
+      color: t.textSecondary,
       fontSize: "14px",
       marginTop: "40px"
     }
@@ -6393,7 +6611,7 @@ const AppComponent = function VRFNavigator() {
   }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.5"
     }
   }, "Measure thermistor resistance with multimeter and compare to expected values. Disconnect thermistor from PCB before measuring.")), mitsubishiThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
@@ -6410,13 +6628,13 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, table.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8"
+      color: t.textSecondary
     }
   }, table.note)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6446,11 +6664,11 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fbbf24",
+      color: t.golden,
       fontWeight: "600"
     }
   }, r.resistance, " k\u03A9")))))), activeBrand === "lg" && activeTab === "commission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -6464,7 +6682,7 @@ const AppComponent = function VRFNavigator() {
   }, "MULTI V COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       lineHeight: "1.6"
     }
   }, "Based on LG Multi V 5 / IV / S commissioning procedures. Tap each step to expand.")), lgCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
@@ -6484,7 +6702,7 @@ const AppComponent = function VRFNavigator() {
       borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
       padding: "12px 14px",
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -6545,7 +6763,7 @@ const AppComponent = function VRFNavigator() {
   }, i + 1), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#cbd5e1",
+      color: t.textMuted,
       lineHeight: "1.5"
     }
   }, item)))))), /*#__PURE__*/React.createElement("div", {
@@ -6562,10 +6780,10 @@ const AppComponent = function VRFNavigator() {
   }, "CH05 TROUBLESHOOTING TREE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       lineHeight: "1.6"
     }
-  }, "#1 service call for LG Multi V systems. Follow these diagnostic steps.")), lgCH05Tree.map((t, idx) => /*#__PURE__*/React.createElement("div", {
+  }, "#1 service call for LG Multi V systems. Follow these diagnostic steps.")), lgCH05Tree.map((node, idx) => /*#__PURE__*/React.createElement("div", {
     key: idx,
     style: {
       ...S.card,
@@ -6588,10 +6806,10 @@ const AppComponent = function VRFNavigator() {
       justifyContent: "center",
       fontSize: "14px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       flexShrink: 0
     }
-  }, t.step), /*#__PURE__*/React.createElement("div", {
+  }, node.step), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1
     }
@@ -6599,27 +6817,27 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "6px"
     }
-  }, t.title), t.yes && /*#__PURE__*/React.createElement("div", {
+  }, node.title), node.yes && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#86efac",
+      color: t.actionText,
       marginBottom: "4px"
     }
-  }, /*#__PURE__*/React.createElement("strong", null, "YES \u2192"), " ", t.yes), t.no && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("strong", null, "YES \u2192"), " ", node.yes), node.no && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#fca5a5",
+      color: t.noText,
       marginBottom: "4px"
     }
-  }, /*#__PURE__*/React.createElement("strong", null, "NO \u2192"), " ", t.no), t.action && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("strong", null, "NO \u2192"), " ", node.no), node.action && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#fbbf24"
+      color: t.golden
     }
-  }, "\u2192 ", t.action))))))), activeBrand === "lg" && activeTab === "field" && /*#__PURE__*/React.createElement(React.Fragment, null, view === "categories" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "\u2192 ", node.action))))))), activeBrand === "lg" && activeTab === "field" && /*#__PURE__*/React.createElement(React.Fragment, null, view === "categories" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
       ...S.cardAccent,
       marginBottom: "20px"
@@ -6645,7 +6863,7 @@ const AppComponent = function VRFNavigator() {
       justifyContent: "center",
       fontSize: "12px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       flexShrink: 0
     }
   }, s.num), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -6655,7 +6873,7 @@ const AppComponent = function VRFNavigator() {
   }, s.text), s.sub && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "12px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, s.sub))))), /*#__PURE__*/React.createElement("div", {
@@ -6673,7 +6891,7 @@ const AppComponent = function VRFNavigator() {
       width: "100%",
       ...S.card,
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -6688,7 +6906,7 @@ const AppComponent = function VRFNavigator() {
   }, cat.category), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, cat.settings.length, " ", cat.settings.length === 1 ? "setting" : "settings")), /*#__PURE__*/React.createElement("span", {
@@ -6709,7 +6927,7 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, setting.label), /*#__PURE__*/React.createElement("div", {
@@ -6727,7 +6945,7 @@ const AppComponent = function VRFNavigator() {
   }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginBottom: "6px"
     }
   }, setting.description), setting.proTip && /*#__PURE__*/React.createElement("div", {
@@ -6760,13 +6978,13 @@ const AppComponent = function VRFNavigator() {
       padding: "3px 8px",
       fontSize: "13px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       textAlign: "center"
     }
   }, opt.value), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#cbd5e1"
+      color: t.textMuted
     }
   }, opt.label)))))))), activeBrand === "lg" && activeTab === "thermistor" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6778,7 +6996,7 @@ const AppComponent = function VRFNavigator() {
   }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.5"
     }
   }, "LG Multi V uses three sensor types: 10k\u03A9 (air/suction), 5k\u03A9 (pipe/liquid), and 200k\u03A9 (discharge). Disconnect from PCB before measuring.")), /*#__PURE__*/React.createElement("div", {
@@ -6797,13 +7015,13 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, table.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8"
+      color: t.textSecondary
     }
   }, table.note)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -6833,11 +7051,11 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fbbf24",
+      color: t.golden,
       fontWeight: "600"
     }
   }, r.resistance, " k\u03A9")))))), activeBrand === "samsung" && activeTab === "commission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -6851,7 +7069,7 @@ const AppComponent = function VRFNavigator() {
   }, "DVM S COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       lineHeight: "1.6"
     }
   }, "Based on Samsung DVM S / S2 commissioning procedures. Tap each step to expand.")), samsungCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
@@ -6871,7 +7089,7 @@ const AppComponent = function VRFNavigator() {
       borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
       padding: "12px 14px",
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -6932,7 +7150,7 @@ const AppComponent = function VRFNavigator() {
   }, i + 1), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#cbd5e1",
+      color: t.textMuted,
       lineHeight: "1.5"
     }
   }, item))))))), activeBrand === "samsung" && activeTab === "field" && /*#__PURE__*/React.createElement(React.Fragment, null, view === "categories" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -6961,7 +7179,7 @@ const AppComponent = function VRFNavigator() {
       justifyContent: "center",
       fontSize: "12px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       flexShrink: 0
     }
   }, s.num), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -6971,7 +7189,7 @@ const AppComponent = function VRFNavigator() {
   }, s.text), s.sub && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "12px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, s.sub))))), /*#__PURE__*/React.createElement("div", {
@@ -6989,7 +7207,7 @@ const AppComponent = function VRFNavigator() {
       width: "100%",
       ...S.card,
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -7004,7 +7222,7 @@ const AppComponent = function VRFNavigator() {
   }, cat.category), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, cat.settings.length, " ", cat.settings.length === 1 ? "setting" : "settings")), /*#__PURE__*/React.createElement("span", {
@@ -7025,7 +7243,7 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, setting.label), /*#__PURE__*/React.createElement("div", {
@@ -7043,7 +7261,7 @@ const AppComponent = function VRFNavigator() {
   }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginBottom: "6px"
     }
   }, setting.description), setting.proTip && /*#__PURE__*/React.createElement("div", {
@@ -7076,13 +7294,13 @@ const AppComponent = function VRFNavigator() {
       padding: "3px 8px",
       fontSize: "13px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       textAlign: "center"
     }
   }, opt.value), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#cbd5e1"
+      color: t.textMuted
     }
   }, opt.label)))))))), activeBrand === "samsung" && activeTab === "thermistor" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -7094,7 +7312,7 @@ const AppComponent = function VRFNavigator() {
   }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.5"
     }
   }, "Samsung DVM uses 10k\u03A9 NTC for most sensors. Disconnect from PCB before measuring. Error codes reference which sensor failed (E121=room air, E122=EVA IN, etc.).")), samsungThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
@@ -7111,13 +7329,13 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, table.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8"
+      color: t.textSecondary
     }
   }, table.note)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -7147,11 +7365,11 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fbbf24",
+      color: t.golden,
       fontWeight: "600"
     }
   }, r.resistance, " k\u03A9")))))), activeBrand === "carrier" && activeTab === "commission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -7165,7 +7383,7 @@ const AppComponent = function VRFNavigator() {
   }, "CARRIER VRF COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       lineHeight: "1.6"
     }
   }, "Based on Carrier 38VMA / 38VMR commissioning procedures. Tap each step to expand.")), carrierCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
@@ -7185,7 +7403,7 @@ const AppComponent = function VRFNavigator() {
       borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
       padding: "12px 14px",
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -7246,7 +7464,7 @@ const AppComponent = function VRFNavigator() {
   }, i + 1), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#cbd5e1",
+      color: t.textMuted,
       lineHeight: "1.5"
     }
   }, item))))))), activeBrand === "carrier" && activeTab === "field" && /*#__PURE__*/React.createElement(React.Fragment, null, view === "categories" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -7275,7 +7493,7 @@ const AppComponent = function VRFNavigator() {
       justifyContent: "center",
       fontSize: "12px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       flexShrink: 0
     }
   }, s.num), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -7285,7 +7503,7 @@ const AppComponent = function VRFNavigator() {
   }, s.text), s.sub && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "12px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, s.sub))))), /*#__PURE__*/React.createElement("div", {
@@ -7303,7 +7521,7 @@ const AppComponent = function VRFNavigator() {
       width: "100%",
       ...S.card,
       cursor: "pointer",
-      color: "#e2e8f0",
+      color: t.text,
       textAlign: "left"
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -7318,7 +7536,7 @@ const AppComponent = function VRFNavigator() {
   }, cat.category), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginTop: "2px"
     }
   }, cat.settings.length, " ", cat.settings.length === 1 ? "setting" : "settings")), /*#__PURE__*/React.createElement("span", {
@@ -7339,7 +7557,7 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, setting.label), /*#__PURE__*/React.createElement("div", {
@@ -7357,7 +7575,7 @@ const AppComponent = function VRFNavigator() {
   }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8",
+      color: t.textSecondary,
       marginBottom: "6px"
     }
   }, setting.description), setting.proTip && /*#__PURE__*/React.createElement("div", {
@@ -7390,13 +7608,13 @@ const AppComponent = function VRFNavigator() {
       padding: "3px 8px",
       fontSize: "13px",
       fontWeight: "700",
-      color: "#fff",
+      color: t.textStrong,
       textAlign: "center"
     }
   }, opt.value), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#cbd5e1"
+      color: t.textMuted
     }
   }, opt.label)))))))), activeBrand === "carrier" && activeTab === "thermistor" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -7408,7 +7626,7 @@ const AppComponent = function VRFNavigator() {
   }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: "#b0bec5",
+      color: t.textTertiary,
       lineHeight: "1.5"
     }
   }, "Carrier VRF uses 10k\u03A9 NTC for most sensors (TA, TC, TE, TL, TO) and 50k\u03A9 NTC for discharge (TD). Disconnect from PCB before measuring.")), carrierThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
@@ -7425,13 +7643,13 @@ const AppComponent = function VRFNavigator() {
     style: {
       fontSize: "15px",
       fontWeight: "600",
-      color: "#fff",
+      color: t.textStrong,
       marginBottom: "4px"
     }
   }, table.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "13px",
-      color: "#8b95a8"
+      color: t.textSecondary
     }
   }, table.note)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -7461,11 +7679,11 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fff"
+      color: t.textStrong
     }
   }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#fbbf24",
+      color: t.golden,
       fontWeight: "600"
     }
   }, r.resistance, " k\u03A9"))))))));
