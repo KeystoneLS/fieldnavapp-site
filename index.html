@@ -4218,27 +4218,37 @@ const samsungThermistorTables = [{
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const carrierErrorCodes = [
-// ── Indoor Unit ──
+// ── Communication Errors (E-Series) ──
 {
   code: "E01",
   category: "Indoor",
-  desc: "Controller receives no communication from indoor unit",
-  action: "Check communication wiring between controller and indoor unit. Verify wiring polarity and connections at terminal block. Check for cable damage."
+  desc: "No communication between remote controller and indoor unit",
+  action: "Check communication wiring between controller and indoor unit. Verify wiring polarity and connections at terminal block. Check for cable damage or shorts."
 }, {
   code: "E02",
   category: "Indoor",
   desc: "Local controller failure — unable to transmit",
-  action: "Power cycle indoor controller. Check PCB fuse. If persists, replace indoor PCB."
+  action: "Power cycle indoor controller. Check PCB fuse. If persists, replace indoor PCB. Verify 12V supply to controller."
 }, {
   code: "E03",
   category: "Indoor",
-  desc: "Indoor unit receives no data from controller",
-  action: "Check communication cable routing. Verify controller is powered. Check for address conflicts."
+  desc: "Master indoor unit receives no data on A-B communication bus",
+  action: "Check A-B communication cable routing between master and outdoor. Verify wiring connections and polarity at both ends."
 }, {
   code: "E04",
   category: "Indoor",
   desc: "Indoor unit receives no communication from outdoor unit",
-  action: "Check F1/F2 communication wiring between indoor and outdoor. Verify outdoor unit is running. Check cable shield grounding."
+  action: "Check F1/F2 communication wiring between indoor and outdoor. Verify outdoor unit is running. Check cable shield grounding at outdoor unit only."
+}, {
+  code: "E06",
+  category: "System",
+  desc: "Communication error between outdoor units in multi-system",
+  action: "Check inter-outdoor communication cable. Verify all outdoor units are powered. Check cable routing and shield grounding."
+}, {
+  code: "E07",
+  category: "System",
+  desc: "Communication error — outdoor cannot detect all connected indoor units",
+  action: "Run auto-addressing again. Verify indoor unit count matches system design. Check for disconnected communication cables."
 }, {
   code: "E08",
   category: "Indoor",
@@ -4247,48 +4257,110 @@ const carrierErrorCodes = [
 }, {
   code: "E09",
   category: "System",
-  desc: "Two controllers configured as master on same system",
+  desc: "Two controllers configured as master on same group",
   action: "Only one controller per group can be master. Set others to slave. Check DIP switch S1-1 on controllers."
 }, {
   code: "E10",
   category: "Indoor",
-  desc: "Indoor PCB failure — internal communication error",
+  desc: "Indoor PCB failure — internal communication IC error",
   action: "Power cycle indoor unit. Check for loose ribbon cable connectors on PCB. Replace indoor PCB if error persists."
+}, {
+  code: "E12",
+  category: "System",
+  desc: "Central controller communication error — TCC-Link failure",
+  action: "Check central controller wiring. Verify BACnet/Modbus gateway settings. Check communication protocol DIP switches."
+}, {
+  code: "E15",
+  category: "System",
+  desc: "Auto addressing failed — fewer indoor units detected than expected",
+  action: "Check all indoor units are powered. Verify communication cables connected. Re-run auto addressing sequence."
+}, {
+  code: "E16",
+  category: "System",
+  desc: "Auto addressing failed — more indoor units detected than expected",
+  action: "Verify system design matches actual installed count. Check for cross-connected communication between adjacent systems."
+}, {
+  code: "E17",
+  category: "System",
+  desc: "Group control wiring error — master not sending signal to sub units",
+  action: "Check group wiring between master and slave indoor units. Verify master DIP switch settings. Re-address group."
 }, {
   code: "E18",
   category: "System",
-  desc: "Communication failure between master and slave units",
+  desc: "Communication failure between master and slave indoor units",
   action: "Check inter-unit communication wiring. Verify master/slave addressing. Check for EMI interference on comm lines."
 }, {
+  code: "E19",
+  category: "System",
+  desc: "Communication error on sub-communication bus",
+  action: "Check sub-communication wiring between related indoor units. Verify termination resistors are installed correctly."
+}, {
+  code: "E20",
+  category: "System",
+  desc: "Other system line detected during auto addressing",
+  action: "Communication lines from different refrigerant systems may be crossed. Verify each system has separate F1/F2 wiring."
+}, {
+  code: "E23",
+  category: "Outdoor",
+  desc: "Sending error between outdoor units in multi-module system",
+  action: "Check communication cable between outdoor modules. Verify master/slave outdoor settings. Power cycle all outdoor units."
+}, {
+  code: "E25",
+  category: "Outdoor",
+  desc: "Duplicate follower outdoor unit address",
+  action: "Each outdoor module needs unique address. Check rotary switch settings. Only one master outdoor per refrigerant circuit."
+}, {
+  code: "E26",
+  category: "System",
+  desc: "Number of connected outdoor units decreased during operation",
+  action: "Check power to all outdoor units. Verify communication cables. Check for tripped breakers on individual outdoor modules."
+}, {
+  code: "E28",
+  category: "System",
+  desc: "Communication error between BS (branch selector) box and outdoor",
+  action: "Check BS box communication cable. Verify BS box is powered. Check for address conflicts between BS boxes."
+}, {
+  code: "E31",
+  category: "System",
+  desc: "Communication IC error on main outdoor PCB",
+  action: "Power cycle outdoor unit. Check for PCB damage or burnt components. Replace outdoor main PCB if error persists."
+},
+// ── Sensor Errors (F-Series) ──
+{
   code: "F01",
   category: "Indoor",
-  desc: "Indoor coil temperature sensor (TCJ) error — open or short",
+  desc: "Indoor coil liquid temperature sensor (TCJ) error — open or short",
   action: "Check TCJ thermistor connector on indoor PCB. Measure resistance: 10kΩ at 25°C. Replace sensor if out of range."
 }, {
   code: "F02",
   category: "Indoor",
-  desc: "Indoor coil outlet temperature sensor (TC2) error",
-  action: "Check TC2 thermistor wiring and connector. Measure resistance: 10kΩ at 25°C. Check for pinched wire."
+  desc: "Indoor coil vapor temperature sensor (TC2) error",
+  action: "Check TC2 thermistor wiring and connector. Measure resistance: 10kΩ at 25°C. Check for pinched wire at coil."
 }, {
   code: "F04",
   category: "Outdoor",
-  desc: "Outdoor discharge temperature sensor (TD) error",
-  action: "Check TD thermistor on compressor discharge line. Measure resistance. Verify connector on outdoor main PCB."
+  desc: "Compressor discharge temperature sensor (TD) error",
+  action: "Check TD thermistor on compressor discharge line. Measure resistance (50kΩ NTC). Verify connector on outdoor main PCB."
+}, {
+  code: "F05",
+  category: "Outdoor",
+  desc: "Outdoor ambient temperature sensor error",
+  action: "Check outdoor ambient sensor located behind condenser coil. Measure resistance: 10kΩ at 25°C. Check for direct sunlight exposure."
 }, {
   code: "F06",
   category: "Outdoor",
-  desc: "Outdoor coil temperature sensor (TE/TS) error",
+  desc: "Outdoor coil temperature sensor (TE) error — open or short",
   action: "Check TE sensor mounted on outdoor coil. Measure resistance: 10kΩ at 25°C. Replace if open/short."
 }, {
   code: "F07",
   category: "Outdoor",
   desc: "Outdoor liquid temperature sensor (TL) error",
-  action: "Check TL thermistor on liquid line. Measure resistance. Verify wiring to outdoor main PCB."
+  action: "Check TL thermistor on liquid line. Measure resistance: 10kΩ at 25°C. Verify wiring to outdoor main PCB."
 }, {
   code: "F08",
   category: "Outdoor",
-  desc: "Outdoor suction temperature sensor (TO) error",
-  action: "Verify TO thermistor on suction line. Measure resistance value. Check connector at outdoor PCB."
+  desc: "Outdoor suction/ambient temperature sensor (TO) error",
+  action: "Verify TO thermistor on suction line or ambient location. Measure resistance. Check connector at outdoor PCB."
 }, {
   code: "F10",
   category: "Indoor",
@@ -4297,8 +4369,8 @@ const carrierErrorCodes = [
 }, {
   code: "F12",
   category: "Outdoor",
-  desc: "Outdoor suction gas sensor (TS) error",
-  action: "Check TS sensor on suction line. Measure resistance. Replace if reading is open circuit or shorted."
+  desc: "Outdoor suction gas temperature sensor (TS) error",
+  action: "Check TS sensor on suction line. Measure resistance: 10kΩ at 25°C. Replace if reading is open circuit or shorted."
 }, {
   code: "F13",
   category: "System",
@@ -4307,13 +4379,23 @@ const carrierErrorCodes = [
 }, {
   code: "F15",
   category: "Outdoor",
-  desc: "Outdoor TE/TS sensor error on IPDU",
-  action: "Check IPDU-specific temperature sensors. Verify wiring between IPDU and main outdoor PCB."
+  desc: "IPDU coil/suction sensor (TE/TS) error",
+  action: "Check IPDU-specific temperature sensors. Verify wiring between IPDU and main outdoor PCB connector."
+}, {
+  code: "F16",
+  category: "Outdoor",
+  desc: "IPDU discharge sensor error",
+  action: "Check IPDU discharge thermistor. Measure resistance at current temperature. Verify connector is secure."
 }, {
   code: "F23",
   category: "Outdoor",
-  desc: "High-pressure sensor (PS) error",
-  action: "Check PS pressure transducer connector. Verify 5V supply to sensor. Measure output: 0.5-4.5V DC."
+  desc: "High-pressure transducer (PS) sensor error",
+  action: "Check PS pressure transducer connector. Verify 5V supply to sensor. Measure output signal: 0.5-4.5V DC range."
+}, {
+  code: "F24",
+  category: "Outdoor",
+  desc: "Low-pressure transducer sensor error",
+  action: "Check LP transducer wiring and connector. Verify 5V supply. Measure signal output. Replace transducer if faulty."
 }, {
   code: "F29",
   category: "Indoor",
@@ -4322,133 +4404,216 @@ const carrierErrorCodes = [
 }, {
   code: "F31",
   category: "Outdoor",
-  desc: "Outdoor PCB EEPROM error",
-  action: "Power cycle outdoor unit completely (all phases). If persists, replace outdoor main PCB. Record model/serial for warranty."
-}, {
+  desc: "Outdoor PCB EEPROM error — stored data corrupted",
+  action: "Power cycle outdoor unit completely (all phases off 30 sec). If persists, replace outdoor main PCB. Record model/serial."
+},
+// ── Compressor / Current Errors (H-Series) ──
+{
   code: "H01",
   category: "Outdoor",
-  desc: "Inverter compressor overcurrent detected",
-  action: "Check compressor winding resistance (phase-to-phase balanced within 3%). Check for liquid slugging. Verify refrigerant charge."
+  desc: "Inverter compressor overcurrent detected during operation",
+  action: "Check compressor winding resistance (phase-to-phase balanced within 3%). Check for liquid slugging. Verify refrigerant charge level."
 }, {
   code: "H02",
   category: "Outdoor",
-  desc: "Overcurrent detected shortly after compressor startup",
-  action: "Check compressor windings for short. Verify correct voltage supply. Check for mechanical seizure — attempt manual rotation."
+  desc: "Master outdoor overcurrent detected shortly after startup",
+  action: "Check compressor windings for short to ground. Verify correct voltage supply. Check for mechanical seizure — try manual rotation at shaft."
 }, {
   code: "H03",
   category: "Outdoor",
-  desc: "Current detected on outdoor unit while idle",
-  action: "Check for current leakage on compressor windings to ground. Verify inverter board. Check wiring for shorts."
+  desc: "Current detected on outdoor unit while compressor is idle",
+  action: "Check for current leakage on compressor windings to ground (megger test >1MΩ). Verify inverter board. Check wiring for shorts."
 }, {
   code: "H04",
   category: "Outdoor",
-  desc: "Case thermostat operation — compressor overheating",
-  action: "Check for loss of charge causing overheating. Verify proper airflow over outdoor coil. Clean coil if needed."
+  desc: "Compressor case thermostat operation — overheating",
+  action: "Check for loss of charge causing compressor overheating. Verify proper airflow over outdoor coil. Clean coil if dirty."
 }, {
   code: "H06",
   category: "Outdoor",
   desc: "Low pressure detected by PS sensor (below 0.02 MPa)",
-  action: "Check refrigerant charge — likely low. Check for leaks at flare connections. Verify expansion valve operation."
+  action: "Check refrigerant charge — likely low or leaked out. Check for leaks at flare connections and joints. Verify EEV operation."
 }, {
+  code: "H07",
+  category: "Outdoor",
+  desc: "Compressor motor abnormality — position detection failure",
+  action: "Check compressor power wiring U/V/W connections. Verify inverter board output. Check for open winding."
+}, {
+  code: "H08",
+  category: "Outdoor",
+  desc: "Compressor overcurrent at CT sensor — sustained high amps",
+  action: "Check CT current transformer on compressor lead. Verify compressor current vs nameplate. Check for mechanical load issue."
+}, {
+  code: "H14",
+  category: "Outdoor",
+  desc: "Suction gas superheat abnormality — too low or too high",
+  action: "Check EEV operation and opening. Verify refrigerant charge. Check suction temp sensor accuracy. May indicate valve issue."
+}, {
+  code: "H16",
+  category: "Outdoor",
+  desc: "Compressor locked rotor — motor cannot start",
+  action: "Check for mechanical seizure. Verify voltage at compressor terminals during start attempt. Check capacitor if applicable. May need compressor replacement."
+},
+// ── Address / System Errors (L-Series) ──
+{
   code: "L03",
   category: "System",
   desc: "Duplicate master indoor unit addresses in group",
-  action: "Verify only one indoor unit is set as group master. Check DIP switch and rotary settings on all indoor units."
+  action: "Verify only one indoor unit is set as group master. Check DIP switch and rotary settings on all indoor units in group."
+}, {
+  code: "L04",
+  category: "System",
+  desc: "Indoor unit capacity setting does not match connected outdoor",
+  action: "Verify indoor capacity DIP switches match installation design. Total connected indoor capacity should be within 50-130% of outdoor."
+}, {
+  code: "L06",
+  category: "System",
+  desc: "Priority indoor unit detected fault — system lockout",
+  action: "Check the indoor unit designated as priority. Resolve its fault first. Other units display L06 until priority unit fault clears."
+}, {
+  code: "L07",
+  category: "Indoor",
+  desc: "Indoor unit previously addressed as single now detected in group",
+  action: "Re-run auto-addressing to properly register group configuration. Check master/slave DIP switch settings."
 }, {
   code: "L08",
   category: "System",
-  desc: "Indoor unit address not set",
-  action: "Set indoor unit address using rotary switches. Each unit needs unique address. Power cycle after setting."
+  desc: "Indoor unit address not set — rotary switches at 000",
+  action: "Set indoor unit address using rotary switches (001-064). Each unit needs unique address. Power cycle after setting."
 }, {
   code: "L09",
   category: "System",
-  desc: "Indoor unit capacity not set or mismatched",
-  action: "Verify capacity DIP switch settings match actual indoor unit model. Refer to installation manual for correct settings."
+  desc: "Indoor unit capacity not set or mismatched with model",
+  action: "Verify capacity DIP switch settings match actual indoor unit model. Refer to installation manual for correct DIP positions."
 }, {
   code: "L10",
   category: "System",
-  desc: "Service PCB jumper not set",
-  action: "Check jumper positions on service board. Refer to wiring diagram for correct jumper configuration."
+  desc: "Service PCB jumper not set correctly",
+  action: "Check jumper positions on service board. Refer to wiring diagram for correct jumper configuration per model."
+}, {
+  code: "L28",
+  category: "System",
+  desc: "BS (branch selector) box capacity setting error",
+  action: "Verify BS box capacity settings match connected indoor units. Check BS box DIP switch configuration."
 }, {
   code: "L29",
   category: "System",
   desc: "IPDU error — number of detected units reduced",
   action: "Check all IPDU communication connections. Power cycle entire system. Verify each IPDU is addressed correctly."
 }, {
+  code: "L30",
+  category: "Indoor",
+  desc: "External input on CN80 circuit active for more than 1 minute",
+  action: "Check external contact input on indoor PCB CN80. Verify wiring to external thermostat or interlock device."
+}, {
   code: "L31",
   category: "Outdoor",
   desc: "Outdoor PCB communication IC error",
-  action: "Inspect outdoor PCB for damage. Check power supply voltages. Replace outdoor PCB if error persists."
-}, {
+  action: "Inspect outdoor PCB for damage. Check power supply voltages on PCB. Replace outdoor PCB if error persists."
+},
+// ── Protection / Performance Errors (P-Series) ──
+{
   code: "P01",
   category: "Indoor",
   desc: "Indoor fan motor error — no rotation detected",
-  action: "Check fan motor connector. Measure motor winding resistance. Check for physical obstruction. Verify PCB fan output."
+  action: "Check fan motor connector. Measure motor winding resistance. Check for physical obstruction. Verify PCB fan output voltage."
 }, {
   code: "P03",
   category: "Outdoor",
   desc: "High discharge temperature — TD1 exceeded 115°C",
-  action: "Check refrigerant charge level. Verify outdoor airflow. Clean condenser coil. Check for non-condensables in system."
+  action: "Check refrigerant charge level. Verify outdoor airflow. Clean condenser coil. Check for non-condensables. Verify EEV opening."
 }, {
   code: "P04",
   category: "Outdoor",
-  desc: "High-pressure switch activated",
-  action: "Check condenser coil cleanliness. Verify outdoor fan operation. Check for overcharge. Inspect expansion valve."
+  desc: "High-pressure switch activated — system shutdown",
+  action: "Check condenser coil cleanliness. Verify outdoor fan operation. Check for overcharge. Inspect EEV. Check for restrictions in liquid line."
 }, {
   code: "P05",
   category: "Outdoor",
-  desc: "Open phase or power supply voltage error",
-  action: "Check all 3 phases at outdoor disconnect. Verify phase sequence. Check for voltage imbalance (max 2%). Verify breaker sizing."
+  desc: "Open phase or power supply voltage imbalance",
+  action: "Check all 3 phases at outdoor disconnect. Verify phase sequence (R-S-T). Check for voltage imbalance (max 2%). Verify breaker sizing."
 }, {
   code: "P07",
   category: "Outdoor",
-  desc: "Heat sink overtemperature — PCB temperature over 90°C",
-  action: "Check outdoor unit airflow — remove obstructions. Clean heat sink fins. Verify outdoor fans are running."
+  desc: "Inverter heat sink overtemperature — PCB temp over 90°C",
+  action: "Check outdoor unit airflow — remove obstructions. Clean heat sink fins on inverter board. Verify outdoor fans are running at proper speed."
 }, {
   code: "P10",
   category: "Indoor",
-  desc: "Float switch activated — condensate overflow",
+  desc: "Float switch activated — condensate overflow detected",
   action: "Check condensate drain for blockage. Clean drain pan. Verify condensate pump operation if equipped. Check float switch wiring."
 }, {
   code: "P12",
   category: "Indoor",
-  desc: "Indoor fan motor error — detected by feedback circuit",
-  action: "Check fan motor Hall sensor feedback. Verify motor winding resistance. Replace motor if feedback circuit is faulty."
+  desc: "Indoor fan motor error — Hall sensor feedback abnormality",
+  action: "Check fan motor Hall sensor feedback wiring. Verify motor winding resistance. Replace motor if feedback circuit is faulty."
+}, {
+  code: "P13",
+  category: "Outdoor",
+  desc: "Compressor oil level abnormality",
+  action: "Check oil level through sight glass if equipped. Verify oil return piping. Check for refrigerant flood-back causing oil dilution."
 }, {
   code: "P15",
   category: "Outdoor",
-  desc: "Outdoor TD/TS sensor error during operation",
-  action: "Check discharge and suction temperature sensors while unit is running. Compare readings to gauge manifold."
+  desc: "Outdoor TD/TS sensor error during compressor operation",
+  action: "Check discharge and suction temperature sensors while unit is running. Compare readings to gauge manifold values."
+}, {
+  code: "P17",
+  category: "Outdoor",
+  desc: "Subcooling abnormality — condenser outlet temperature too high",
+  action: "Check refrigerant charge. Verify condenser fan operation. Check for air or non-condensables in system. Clean outdoor coil."
 }, {
   code: "P19",
   category: "Outdoor",
-  desc: "4-way valve error — wrong temperature change direction",
-  action: "Check 4-way valve coil voltage. Verify valve is shifting by checking suction/discharge temps. Replace valve coil or valve if stuck."
+  desc: "4-way valve error — suction/discharge temperatures indicate valve stuck",
+  action: "Check 4-way valve coil voltage (220V AC). Verify valve is shifting by touching pipe temperatures. Replace valve coil or body if stuck."
 }, {
   code: "P20",
   category: "Outdoor",
-  desc: "High pressure protective operation activated",
-  action: "Similar to P04. Check condenser, fan, charge level. Also check TL sensor reading vs actual liquid line temperature."
+  desc: "High pressure protective operation — approaching HPS limit",
+  action: "Similar to P04 but softer protection. Check condenser airflow, fan operation, charge level. Verify TL sensor reading vs actual liquid temp."
 }, {
   code: "P22",
   category: "Outdoor",
-  desc: "Outdoor fan motor IPDU error",
-  action: "Check IPDU fan motor connector and wiring. Verify motor resistance. Check IPDU board fan output."
+  desc: "Outdoor fan motor IPDU error — fan not running",
+  action: "Check IPDU fan motor connector and wiring. Verify motor winding resistance. Check IPDU board fan output."
 }, {
   code: "P26",
   category: "Outdoor",
-  desc: "Compressor driving element short circuit (IGBT)",
+  desc: "Inverter IGBT short circuit — compressor driving element failure",
   action: "Check inverter board for burnt components. Measure compressor winding insulation resistance to ground (>1MΩ). Replace inverter PCB."
 }, {
   code: "P29",
   category: "Outdoor",
-  desc: "Compressor error detected by feedback circuit",
-  action: "Check compressor wiring connections. Measure winding resistance. Check for mechanical failure. May need compressor replacement."
+  desc: "Compressor error detected by speed feedback circuit",
+  action: "Check compressor wiring connections U/V/W. Measure winding resistance (should be balanced). Check for mechanical failure."
+}, {
+  code: "P30",
+  category: "System",
+  desc: "Group control follower unit error — slave reports fault",
+  action: "Check the specific slave indoor unit showing the fault. Resolve slave unit error. Master displays P30 as relay indicator."
 }, {
   code: "P31",
   category: "Indoor",
-  desc: "Indoor PCB communication or component error",
-  action: "Power cycle indoor unit. Check PCB for visible damage. Verify all connectors seated properly. Replace PCB if needed."
+  desc: "Indoor PCB hardware fault — component error",
+  action: "Power cycle indoor unit. Check PCB for visible damage or burnt components. Verify all connectors seated properly. Replace PCB if needed."
+},
+// ── Central Control Errors (C-Series) ──
+{
+  code: "C05",
+  category: "System",
+  desc: "Central control sending error on TCC-Link bus",
+  action: "Check TCC-Link wiring from central controller. Verify termination resistors. Check for cable damage or EMI interference."
+}, {
+  code: "C06",
+  category: "System",
+  desc: "Central control receive error on TCC-Link bus",
+  action: "Check TCC-Link communication cable. Verify central controller power supply. Check gateway settings if using BACnet/Modbus."
+}, {
+  code: "C12",
+  category: "System",
+  desc: "General purpose equipment interface batch alarm",
+  action: "Check external equipment connected via interface. Verify interface board settings. Check external device status."
 }];
 
 // ── Carrier Commissioning Steps ──
@@ -4698,6 +4863,221 @@ const carrierFieldSettings = [{
     }, {
       value: "OFF",
       label: "External input disabled (default)"
+    }]
+  }, {
+    label: "Crankcase Heater Operation",
+    fnCode: "DIP SW5",
+    description: "Control crankcase heater behavior during standby",
+    proTip: "Always leave ON — prevents liquid refrigerant migration to compressor crankcase",
+    options: [{
+      value: "ON",
+      label: "Heater active during standby (default)"
+    }, {
+      value: "OFF",
+      label: "Heater disabled — NOT recommended"
+    }]
+  }, {
+    label: "High Pressure Protection Level",
+    fnCode: "DIP SW6",
+    description: "Adjust high-pressure protection threshold for altitude or special conditions",
+    options: [{
+      value: "Standard",
+      label: "3.83 MPa cutoff (default)"
+    }, {
+      value: "Low",
+      label: "3.45 MPa cutoff — for high altitude"
+    }]
+  }]
+}, {
+  category: "Piping & Refrigerant",
+  icon: "🔩",
+  settings: [{
+    label: "Refrigerant Pipe Length Compensation",
+    fnCode: "Func 20",
+    description: "Adjust EEV opening to compensate for long refrigerant pipe runs",
+    proTip: "Must be set for pipe lengths over 30m — affects subcooling and superheat targets",
+    options: [{
+      value: "0-30m",
+      label: "No compensation needed (default)"
+    }, {
+      value: "30-75m",
+      label: "Medium pipe length compensation"
+    }, {
+      value: "75-165m",
+      label: "Long pipe length compensation"
+    }]
+  }, {
+    label: "Refrigerant Charge Calculation Base",
+    fnCode: "Func 21",
+    description: "Factory charge covers first 30m of liquid pipe — add charge beyond that",
+    options: [{
+      value: "R-410A",
+      label: "Add 20g per meter of liquid pipe beyond 30m (6.35mm)"
+    }, {
+      value: "R-410A",
+      label: "Add 60g per meter of liquid pipe beyond 30m (9.52mm)"
+    }, {
+      value: "R-410A",
+      label: "Add 120g per meter of liquid pipe beyond 30m (12.7mm)"
+    }]
+  }, {
+    label: "Height Difference Compensation",
+    fnCode: "Func 22",
+    description: "Adjust for height difference between outdoor and indoor units",
+    proTip: "Max height diff: 50m outdoor above indoor, 40m outdoor below indoor",
+    options: [{
+      value: "0-15m",
+      label: "Standard — no compensation needed"
+    }, {
+      value: "15-30m",
+      label: "Moderate height difference"
+    }, {
+      value: "30-50m",
+      label: "Maximum height difference"
+    }]
+  }, {
+    label: "Oil Return Cycle",
+    fnCode: "Func 25",
+    description: "Force oil return operation at set interval to prevent compressor oil starvation",
+    options: [{
+      value: "8 hr",
+      label: "Standard interval (default)"
+    }, {
+      value: "4 hr",
+      label: "Shorter interval — for long piping"
+    }, {
+      value: "2 hr",
+      label: "Frequent — for complex piping layouts"
+    }]
+  }]
+}, {
+  category: "Scheduling & Energy",
+  icon: "⏰",
+  settings: [{
+    label: "Weekly Timer Operation",
+    fnCode: "Func 30",
+    description: "Enable programmable weekly schedule for automatic on/off",
+    options: [{
+      value: "OFF",
+      label: "Timer disabled (default)"
+    }, {
+      value: "ON",
+      label: "Timer enabled — set schedule on controller"
+    }]
+  }, {
+    label: "Setback Temperature — Unoccupied",
+    fnCode: "Func 31",
+    description: "Automatic setpoint adjustment when zone is unoccupied",
+    proTip: "Saves energy while preventing frozen pipes or extreme temperatures",
+    options: [{
+      value: "OFF",
+      label: "No setback (default)"
+    }, {
+      value: "±2°C",
+      label: "Mild setback — 2°C offset"
+    }, {
+      value: "±4°C",
+      label: "Aggressive setback — 4°C offset"
+    }]
+  }, {
+    label: "Demand Response Input",
+    fnCode: "Func 33",
+    description: "Configure response to utility demand signal via external contact",
+    options: [{
+      value: "OFF",
+      label: "Demand response disabled (default)"
+    }, {
+      value: "70%",
+      label: "Limit to 70% capacity on demand signal"
+    }, {
+      value: "50%",
+      label: "Limit to 50% capacity on demand signal"
+    }]
+  }, {
+    label: "Energy Monitoring Output",
+    fnCode: "Func 35",
+    description: "Enable kWh pulse output for building energy management system",
+    options: [{
+      value: "OFF",
+      label: "Pulse output disabled (default)"
+    }, {
+      value: "1 pulse/kWh",
+      label: "Standard resolution"
+    }, {
+      value: "10 pulse/kWh",
+      label: "High resolution metering"
+    }]
+  }]
+}, {
+  category: "Controller Lockouts",
+  icon: "🔒",
+  settings: [{
+    label: "User Mode Lock",
+    fnCode: "Func 40",
+    description: "Prevent users from changing operating mode (cool/heat/auto)",
+    options: [{
+      value: "OFF",
+      label: "User can change mode (default)"
+    }, {
+      value: "Cool",
+      label: "Lock to cooling only"
+    }, {
+      value: "Heat",
+      label: "Lock to heating only"
+    }, {
+      value: "Auto",
+      label: "Lock to auto mode only"
+    }]
+  }, {
+    label: "Fan Speed Lock",
+    fnCode: "Func 41",
+    description: "Prevent users from changing fan speed",
+    options: [{
+      value: "OFF",
+      label: "User can change fan speed (default)"
+    }, {
+      value: "Auto",
+      label: "Lock to auto fan speed"
+    }, {
+      value: "Low",
+      label: "Lock to low fan speed"
+    }]
+  }, {
+    label: "Temperature Setpoint Lock",
+    fnCode: "Func 42",
+    description: "Lock temperature setpoint to prevent user adjustment",
+    proTip: "Commonly used in hotels and offices to prevent energy waste",
+    options: [{
+      value: "OFF",
+      label: "User can adjust setpoint (default)"
+    }, {
+      value: "Lock",
+      label: "Lock current setpoint — no user changes"
+    }, {
+      value: "Range",
+      label: "Allow adjustment within ±2°C of set value"
+    }]
+  }, {
+    label: "Remote Controller On/Off Lock",
+    fnCode: "Func 43",
+    description: "Prevent on/off control from local remote — central control only",
+    options: [{
+      value: "OFF",
+      label: "User can turn unit on/off (default)"
+    }, {
+      value: "ON",
+      label: "On/off locked — central control only"
+    }]
+  }, {
+    label: "Service Menu Password",
+    fnCode: "Func 49",
+    description: "Set installer password to protect service menu access",
+    options: [{
+      value: "0000",
+      label: "Default password (no protection)"
+    }, {
+      value: "Custom",
+      label: "Set 4-digit custom password"
     }]
   }]
 }];
