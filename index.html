@@ -367,6 +367,19 @@ const brands = [{
   borderColor: "#1e5f2e",
   controllerTag: "PREMTB100 / PQRCVSL0",
   tabs: ["errors", "commission", "field", "thermistor"]
+}, {
+  id: "samsung",
+  name: "Samsung DVM",
+  subtitle: "DVM S / S2 / Plus III — Error Codes, Commissioning & Configuration",
+  accent: "#6366f1",
+  accentLight: "#a5b4fc",
+  gradientFrom: "#1a1a3e",
+  gradientTo: "#0d0d24",
+  bg: "#0a0a14",
+  cardBg: "#12122a",
+  borderColor: "#2e2e6f",
+  controllerTag: "MWR-WE13N / SNET Pro",
+  tabs: ["errors", "commission", "field", "thermistor"]
 }];
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -3410,6 +3423,784 @@ const lgThermistorTables = [{
 }];
 
 // ═══════════════════════════════════════════════════════════════════════════════
+//  SAMSUNG DATA
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const samsungErrorCodes = [
+// ── Indoor Unit ──
+{
+  code: "E101",
+  category: "Indoor",
+  desc: "Indoor unit communication error — no data from outdoor unit",
+  action: "Check communication cable between indoor and outdoor. Verify cable polarity (F1/F2). Check for cable damage or shorts."
+}, {
+  code: "E102",
+  category: "Indoor",
+  desc: "Communication failure between indoor and outdoor units",
+  action: "Check communication wiring, connectors, and cable shield. Verify outdoor unit is powered."
+}, {
+  code: "E108",
+  category: "Indoor",
+  desc: "Repeated address setting error",
+  action: "Two or more indoor units have same address. Verify MCU rotary switch settings. Each indoor must have unique address."
+}, {
+  code: "E121",
+  category: "Indoor",
+  desc: "Indoor room temperature sensor error (short/open)",
+  action: "Check return air thermistor resistance. 10kΩ at 25°C. Check connector on indoor PCB."
+}, {
+  code: "E122",
+  category: "Indoor",
+  desc: "EVA IN (evaporator inlet) sensor error",
+  action: "Check evaporator inlet pipe thermistor for open/short. Verify connector on indoor PCB."
+}, {
+  code: "E123",
+  category: "Indoor",
+  desc: "EVA OUT (evaporator outlet) sensor error",
+  action: "Check evaporator outlet pipe thermistor for open/short. Verify connector on indoor PCB."
+}, {
+  code: "E128",
+  category: "Indoor",
+  desc: "EVA IN temperature sensor detached from pipe",
+  action: "Reattach thermistor securely to evaporator inlet pipe. Use thermal paste and insulation tape."
+}, {
+  code: "E129",
+  category: "Indoor",
+  desc: "EVA OUT temperature sensor detached from pipe",
+  action: "Reattach thermistor securely to evaporator outlet pipe. Use thermal paste and insulation tape."
+}, {
+  code: "E130",
+  category: "Indoor",
+  desc: "Heat exchanger sensor detachment",
+  action: "Reattach sensor to heat exchanger. Secure with clamp and insulation."
+}, {
+  code: "E135",
+  category: "Indoor",
+  desc: "Indoor cleaning fan RPM feedback failure",
+  action: "Check fan motor connector and wiring. Verify fan blade rotates freely. Replace motor if faulty."
+}, {
+  code: "E151",
+  category: "Indoor",
+  desc: "EEV opening error (2nd detection)",
+  action: "Electronic expansion valve failed to open. Check EEV coil resistance and wiring. Replace EEV if faulty."
+}, {
+  code: "E152",
+  category: "Indoor",
+  desc: "EEV closing error (2nd detection)",
+  action: "Electronic expansion valve failed to close. Check EEV coil and wiring. Check for debris in valve."
+}, {
+  code: "E153",
+  category: "Indoor",
+  desc: "Float switch error — condensate overflow (2nd detection)",
+  action: "Check condensate drain line for blockage. Verify float switch operation. Check drain pump if equipped."
+}, {
+  code: "E154",
+  category: "Indoor",
+  desc: "Indoor fan RPM feedback error",
+  action: "Fan motor not spinning or RPM signal lost. Check motor connector, wiring, and blade obstruction."
+}, {
+  code: "E161",
+  category: "Indoor",
+  desc: "Mixed operation mode conflict (cool/heat)",
+  action: "Indoor units on same refrigerant circuit requesting different modes. Verify system mode settings."
+}, {
+  code: "E162",
+  category: "Indoor",
+  desc: "MICOM EEPROM physical failure",
+  action: "Indoor PCB EEPROM damaged. Replace indoor unit PCB."
+}, {
+  code: "E163",
+  category: "Indoor",
+  desc: "Remote controller option setting incorrect",
+  action: "Verify wired controller DIP switch and option settings match indoor unit configuration."
+}, {
+  code: "E180",
+  category: "Indoor",
+  desc: "Simultaneous cooling/heating solenoid valve opening (1st)",
+  action: "Both solenoid valves energized simultaneously. Check valve wiring and indoor PCB."
+}, {
+  code: "E185",
+  category: "Indoor",
+  desc: "Cross-wiring between communication and power cables",
+  action: "Communication and power cables swapped. Rewire correctly — comm cable to F1/F2, power to L/N."
+}, {
+  code: "E186",
+  category: "Indoor",
+  desc: "SPI connection problem",
+  action: "Internal PCB serial communication fault. Check PCB connectors. Replace PCB if persistent."
+}, {
+  code: "E190",
+  category: "Indoor",
+  desc: "No temperature change during pipe inspection",
+  action: "EVA IN temp didn't change during auto pipe pairing. Check refrigerant piping and EEV operation."
+}, {
+  code: "E191",
+  category: "Indoor",
+  desc: "No EVA OUT temperature change during pipe inspection",
+  action: "EVA OUT temp didn't change during auto pipe pairing. Check refrigerant piping connections."
+}, {
+  code: "E198",
+  category: "Indoor",
+  desc: "Thermal fuse disconnection",
+  action: "Indoor unit thermal fuse open. Check for overheating condition. Replace fuse after finding root cause."
+},
+// ── Communication / System ──
+{
+  code: "E201",
+  category: "System",
+  desc: "Communication error between indoor and outdoor units",
+  action: "Installation number mismatch or cable fault. Verify MCU address settings. Check comm cable F1/F2 connections at all units."
+}, {
+  code: "E202",
+  category: "System",
+  desc: "All indoor units communication failure",
+  action: "Complete communication loss. Check main comm bus, outdoor unit PCB, and power supply to outdoor unit."
+}, {
+  code: "E203",
+  category: "System",
+  desc: "Main and sub outdoor unit communication error",
+  action: "Master-slave outdoor comm failure. Check inter-unit communication cable. Verify address settings."
+}, {
+  code: "E205",
+  category: "System",
+  desc: "C-Box PBA communication cable error",
+  action: "Branch selector box communication fault. Check wiring between outdoor unit and branch selector box."
+}, {
+  code: "E206",
+  category: "System",
+  desc: "HUB, FAN, or INV PBA communication error",
+  action: "Internal outdoor PCB communication failure. Check ribbon cables and connectors between PCBs."
+}, {
+  code: "E211",
+  category: "System",
+  desc: "Single indoor unit using non-series MCU ports",
+  action: "MCU port configuration mismatch. Verify MCU port switch matches physical installation."
+}, {
+  code: "E212",
+  category: "System",
+  desc: "MCU address rotary switch duplicated (3+ same)",
+  action: "Three or more MCUs with identical address. Reset rotary switches to unique values."
+}, {
+  code: "E213",
+  category: "System",
+  desc: "Indoor unit assignment mismatch / pipe pairing incomplete",
+  action: "Auto pipe pairing not completed or failed. Re-run auto pipe pairing (K2 button x13). E213 = pairing not done."
+}, {
+  code: "E215",
+  category: "System",
+  desc: "Multiple MCUs with identical address values",
+  action: "Duplicate MCU addresses detected. Verify each MCU has unique rotary switch setting."
+}, {
+  code: "E216",
+  category: "System",
+  desc: "MCU port switch ON but no indoor unit installed",
+  action: "MCU port enabled for a non-existent indoor unit. Turn OFF unused MCU port switches."
+}, {
+  code: "E217",
+  category: "System",
+  desc: "Indoor unit installed but MCU port switch OFF",
+  action: "MCU port not enabled for connected indoor unit. Turn ON the corresponding MCU port switch."
+},
+// ── Outdoor Sensors ──
+{
+  code: "E221",
+  category: "Outdoor",
+  desc: "Outdoor ambient temperature sensor error",
+  action: "Outdoor temp thermistor disconnected or shorted. Check connector on outdoor main PCB."
+}, {
+  code: "E231",
+  category: "Outdoor",
+  desc: "Condenser outlet temperature sensor error",
+  action: "COND OUT thermistor fault. Check connection on outdoor PCB."
+}, {
+  code: "E241",
+  category: "Outdoor",
+  desc: "Condenser outlet sensor detached from pipe",
+  action: "Reattach COND OUT sensor to pipe. Secure with clamp and insulation."
+}, {
+  code: "E251",
+  category: "Outdoor",
+  desc: "Compressor 1 discharge temperature sensor error",
+  action: "Discharge thermistor disconnected or shorted. Check connector on outdoor PCB."
+}, {
+  code: "E257",
+  category: "Outdoor",
+  desc: "Compressor 2 discharge temperature sensor error",
+  action: "Second compressor discharge thermistor fault. Check connector on outdoor PCB."
+}, {
+  code: "E262",
+  category: "Outdoor",
+  desc: "Compressor 1 discharge sensor detached",
+  action: "Reattach discharge thermistor to compressor discharge pipe. Secure firmly."
+}, {
+  code: "E263",
+  category: "Outdoor",
+  desc: "Compressor 2 discharge sensor detached",
+  action: "Reattach comp 2 discharge thermistor. Secure with clamp and insulation."
+}, {
+  code: "E276",
+  category: "Outdoor",
+  desc: "Compressor 1 top (dome) sensor error",
+  action: "Comp 1 dome thermistor disconnected or shorted. Check connection on PCB."
+}, {
+  code: "E277",
+  category: "Outdoor",
+  desc: "Compressor 2 top (dome) sensor error",
+  action: "Comp 2 dome thermistor disconnected or shorted. Check connection on PCB."
+}, {
+  code: "E291",
+  category: "Outdoor",
+  desc: "High pressure sensor error or refrigerant leakage",
+  action: "HP transducer fault or pressure reading indicates leak. Check sensor wiring and verify refrigerant charge."
+}, {
+  code: "E296",
+  category: "Outdoor",
+  desc: "Low pressure sensor error or refrigerant leakage",
+  action: "LP transducer fault or pressure reading indicates leak. Check sensor wiring and verify refrigerant charge."
+}, {
+  code: "E308",
+  category: "Outdoor",
+  desc: "Suction temperature sensor error",
+  action: "Suction pipe thermistor disconnected or shorted. Check connector on outdoor PCB."
+}, {
+  code: "E311",
+  category: "Outdoor",
+  desc: "Double layer / liquid pipe sensor error",
+  action: "Liquid pipe thermistor (10kΩ) disconnected or shorted. Check connection on outdoor PCB."
+}, {
+  code: "E321",
+  category: "Outdoor",
+  desc: "EVI (ESC) inlet temperature sensor error",
+  action: "Economizer inlet thermistor fault. Check connection on outdoor PCB."
+}, {
+  code: "E322",
+  category: "Outdoor",
+  desc: "EVI (ESC) outlet temperature sensor error",
+  action: "Economizer outlet thermistor fault. Check connection on outdoor PCB."
+},
+// ── Outdoor Fan ──
+{
+  code: "E346",
+  category: "Outdoor",
+  desc: "Fan 2 operation failure",
+  action: "Outdoor fan 2 not operating. Check motor, wiring, and blade obstruction."
+}, {
+  code: "E347",
+  category: "Outdoor",
+  desc: "Fan 2 motor wire disconnection",
+  action: "Fan 2 motor wiring disconnected. Check connector and wire harness."
+}, {
+  code: "E348",
+  category: "Outdoor",
+  desc: "Fan 2 lock error",
+  action: "Fan 2 mechanically locked. Check for ice, debris, or bearing failure."
+}, {
+  code: "E353",
+  category: "Outdoor",
+  desc: "Fan 2 motor overheating",
+  action: "Fan 2 motor temp exceeded limit. Check motor and airflow path."
+}, {
+  code: "E355",
+  category: "Outdoor",
+  desc: "Fan 2 IPM overheating",
+  action: "Fan 2 inverter module overheating. Check heatsink and airflow."
+}, {
+  code: "E446",
+  category: "Outdoor",
+  desc: "Fan 1 operation failure",
+  action: "Outdoor fan 1 not operating. Check motor, wiring, and blade obstruction."
+}, {
+  code: "E447",
+  category: "Outdoor",
+  desc: "Fan 1 motor wire disconnection",
+  action: "Fan 1 motor wiring disconnected. Check connector and wire harness."
+}, {
+  code: "E448",
+  category: "Outdoor",
+  desc: "Fan 1 lock error",
+  action: "Fan 1 mechanically locked. Check for ice, debris, or bearing failure."
+}, {
+  code: "E453",
+  category: "Outdoor",
+  desc: "Fan 1 motor overheating",
+  action: "Fan 1 motor temp exceeded limit. Check motor and airflow path."
+}, {
+  code: "E455",
+  category: "Outdoor",
+  desc: "Fan 1 IPM overheating",
+  action: "Fan 1 inverter module overheating. Check heatsink and airflow."
+}, {
+  code: "E478",
+  category: "Outdoor",
+  desc: "Fan 1 overcurrent error",
+  action: "Fan 1 current draw excessive. Check motor windings and power supply."
+},
+// ── Compressor / Inverter ──
+{
+  code: "E361",
+  category: "Outdoor",
+  desc: "Inverter compressor 2 operation failure",
+  action: "Comp 2 failed to start after 5 attempts. Check compressor windings, power, and inverter board."
+}, {
+  code: "E364",
+  category: "Outdoor",
+  desc: "Inverter compressor 2 overcurrent",
+  action: "Comp 2 DC peak overcurrent. Check compressor and inverter PBA2."
+}, {
+  code: "E366",
+  category: "Outdoor",
+  desc: "Inverter PBA2 voltage error (over/low)",
+  action: "DC link voltage out of range on inverter 2. Check mains power. Under 150V or over 410V triggers fault."
+}, {
+  code: "E461",
+  category: "Outdoor",
+  desc: "Inverter compressor 1 operation failure",
+  action: "Comp 1 failed to start after 5 attempts. Check compressor windings, power, and inverter board."
+}, {
+  code: "E462",
+  category: "Outdoor",
+  desc: "Full current control / low current detection (CT2)",
+  action: "Compressor tripped by input current control. Check CT sensor and compressor draw."
+}, {
+  code: "E464",
+  category: "Outdoor",
+  desc: "Inverter compressor 1 overcurrent (DC peak)",
+  action: "Comp 1 DC peak overcurrent detected. Check compressor, inverter PBA1, and power supply."
+}, {
+  code: "E465",
+  category: "Outdoor",
+  desc: "Compressor 1 V-limit error",
+  action: "Voltage limit exceeded on comp 1 inverter output. Check inverter board and compressor."
+}, {
+  code: "E466",
+  category: "Outdoor",
+  desc: "Inverter PBA1 DC link voltage error",
+  action: "DC link under 150V or over 410V. Check mains power supply, input wiring, and capacitors."
+}, {
+  code: "E467",
+  category: "Outdoor",
+  desc: "Compressor 1 wire disconnection / abnormal rotation",
+  action: "Compressor wiring fault. Check UVW connections at comp terminals and inverter board."
+}, {
+  code: "E468",
+  category: "Outdoor",
+  desc: "Inverter PBA1 output current sensor error",
+  action: "CT sensor on inverter board 1 faulty. Check sensor connections. Replace inverter PBA if needed."
+}, {
+  code: "E469",
+  category: "Outdoor",
+  desc: "Inverter PBA1 DC voltage sensor error",
+  action: "DC link voltage sensor fault. Check sensor connections on inverter PBA1."
+}, {
+  code: "E474",
+  category: "Outdoor",
+  desc: "Inverter PBA1 heatsink temperature sensor error",
+  action: "Heatsink thermistor disconnected or shorted. Check connector on inverter board."
+}, {
+  code: "E485",
+  category: "Outdoor",
+  desc: "Inverter 1 input current sensor error",
+  action: "Input current sensor fault. Check CT sensor wiring on main PBA."
+}, {
+  code: "E500",
+  category: "Outdoor",
+  desc: "IPM (inverter module) overheating",
+  action: "Inverter power module overheated. Check heatsink fan, airflow, and ambient temp."
+},
+// ── Protection ──
+{
+  code: "E407",
+  category: "Outdoor",
+  desc: "High pressure protection shutdown",
+  action: "HP switch or sensor tripped. Check refrigerant charge, condenser airflow, fan operation. Check for restrictions."
+}, {
+  code: "E410",
+  category: "Outdoor",
+  desc: "Low pressure protection / refrigerant leakage",
+  action: "LP below threshold. Check for leaks, low charge, restricted liquid line, or frozen evaporator."
+}, {
+  code: "E416",
+  category: "Outdoor",
+  desc: "Discharge temperature protection shutdown",
+  action: "Compressor discharge temp exceeded limit. Check charge, EEV operation, and discharge sensor."
+}, {
+  code: "E425",
+  category: "Outdoor",
+  desc: "Phase reversal / failure — 3-phase wiring error",
+  action: "Input power phase sequence wrong or missing phase. Swap any two phases at disconnect. Check all 3 phases present."
+}, {
+  code: "E428",
+  category: "Outdoor",
+  desc: "Abnormal compression ratio",
+  action: "Compression ratio out of acceptable range. Check refrigerant charge and system restrictions."
+}, {
+  code: "E438",
+  category: "Outdoor",
+  desc: "EVI (economizer) EEV leakage",
+  action: "Economizer expansion valve leaking internally. Check EEV and intercooler for internal leakage."
+}, {
+  code: "E439",
+  category: "Outdoor",
+  desc: "Refrigerant leakage detected",
+  action: "System detected significant refrigerant loss. Perform leak test on all joints. Check charge."
+}, {
+  code: "E440",
+  category: "Outdoor",
+  desc: "Heating mode restricted — outdoor temp >30°C",
+  action: "Outdoor temp too high for heating operation. Normal protection. Will resume when conditions allow."
+}, {
+  code: "E441",
+  category: "Outdoor",
+  desc: "Cooling mode restricted — outdoor temp <-10°C",
+  action: "Outdoor temp too low for standard cooling. Normal low-ambient protection."
+}, {
+  code: "E452",
+  category: "Outdoor",
+  desc: "ZPC detection circuit or power failure",
+  action: "Zero-point crossing detection failure. Check power supply quality and PCB."
+},
+// ── EEPROM / Config ──
+{
+  code: "E503",
+  category: "Outdoor",
+  desc: "Service valve closure check alert",
+  action: "Service valve may be closed. Verify liquid and gas service valves are fully open."
+}, {
+  code: "E504",
+  category: "Outdoor",
+  desc: "Compressor operation self-diagnosis error",
+  action: "Compressor failed self-test. Check compressor windings and power connections."
+}, {
+  code: "E505",
+  category: "Outdoor",
+  desc: "High pressure sensor self-diagnosis error",
+  action: "HP sensor failed self-test. Check sensor wiring and calibration."
+}, {
+  code: "E506",
+  category: "Outdoor",
+  desc: "Low pressure sensor self-diagnosis error",
+  action: "LP sensor failed self-test. Check sensor wiring and calibration."
+}, {
+  code: "E554",
+  category: "Outdoor",
+  desc: "Complete refrigerant leakage from outdoor unit",
+  action: "System has lost all refrigerant. Major leak. Locate and repair leak, evacuate, and recharge."
+}, {
+  code: "E560",
+  category: "System",
+  desc: "Outdoor unit option switch setting error",
+  action: "DIP switch or option setting incorrect on outdoor PCB. Verify settings per installation manual."
+}, {
+  code: "E563",
+  category: "System",
+  desc: "Old firmware indoor unit in module installation",
+  action: "Indoor unit MICOM firmware too old for module config. Update firmware to v161222 or later."
+},
+// ── EEV (early detection) ──
+{
+  code: "E702",
+  category: "Indoor",
+  desc: "EEV closing error (1st detection)",
+  action: "EEV closing issue detected on first check. May self-correct. If E152 follows, replace EEV."
+}, {
+  code: "E703",
+  category: "Indoor",
+  desc: "EEV opening error (1st detection)",
+  action: "EEV opening issue detected on first check. May self-correct. If E151 follows, replace EEV."
+},
+// ── Hydro Kit (EHS) ──
+{
+  code: "E901",
+  category: "Hydro Kit",
+  desc: "EHS water inlet sensor error",
+  action: "Water inlet thermistor disconnected or shorted. Check connection on hydro kit PCB."
+}, {
+  code: "E902",
+  category: "Hydro Kit",
+  desc: "EHS water outlet sensor error",
+  action: "Water outlet thermistor disconnected or shorted. Check connection on hydro kit PCB."
+}, {
+  code: "E904",
+  category: "Hydro Kit",
+  desc: "EHS water tank sensor error",
+  action: "Storage tank thermistor fault. Check sensor and wiring."
+}, {
+  code: "E907",
+  category: "Hydro Kit",
+  desc: "EHS freezing protection error",
+  action: "Water temp approaching freezing. Check glycol concentration and water flow rate."
+}, {
+  code: "E911",
+  category: "Hydro Kit",
+  desc: "EHS flow switch error",
+  action: "Water flow switch not closing. Check water flow rate, pump, and flow switch wiring."
+}, {
+  code: "E913",
+  category: "Hydro Kit",
+  desc: "EHS flow switch error (non-reoperatable)",
+  action: "Persistent flow switch failure. Requires manual restart after fixing flow issue."
+}];
+
+// ── Samsung Commissioning Steps ──
+const samsungCommissioningSteps = [{
+  step: "Pre-Check",
+  title: "Pre-Commissioning Checklist",
+  icon: "📋",
+  items: ["Verify all indoor and outdoor units match design documents", "Confirm refrigerant piping is pressure tested (600 psi nitrogen, 24hr hold) and leak-free", "Triple evacuate to 500 microns — break with dry nitrogen between pulls", "Verify all MCU (Multi Connection Unit) boxes are installed and wired", "All communication wiring connected: F1/F2 comm bus between all units", "Condensate drain piping connected, trapped where required, and tested", "All ductwork connected and air filters installed", "Line voltage verified at all disconnects — 208-230V or 460V per nameplate", "Allow 8+ hours of crankcase heater operation before first startup"]
+}, {
+  step: "Step 1",
+  title: "MCU Address & DIP Switch Setup",
+  icon: "🔧",
+  items: ["Set MCU rotary switches — each MCU must have a unique address (01-16)", "Set MCU port DIP switches ON for each connected indoor unit port", "Verify OFF for unused MCU ports (E216 if port ON but no unit)", "Set master outdoor unit address as 00 (factory default)", "Set slave outdoor units to sequential addresses (01, 02, etc.)", "Verify branch selector box (C-Box) DIP switch settings if heat recovery", "Double-check: no duplicate addresses anywhere in the system"]
+}, {
+  step: "Step 2",
+  title: "Auto Pipe Pairing",
+  icon: "📡",
+  items: ["Power on ALL outdoor, indoor, and MCU units — wait 5 minutes", "On master outdoor unit, press K2 button on main PBA 13 times", "7-segment display will indicate pipe pairing has started", "Operation takes 25-55 minutes depending on indoor unit count (max 2 hours)", "Each indoor unit will cycle through refrigerant to map piping connections", "When complete, verify all indoor units are paired — check SNET Pro if available", "If E213 displays: pairing failed or incomplete — re-run after checking piping", "Pro tip: Hold K2 for 2 seconds or more to save settings after pairing"]
+}, {
+  step: "Step 3",
+  title: "System Configuration",
+  icon: "⚙️",
+  items: ["Use SNET Pro 2 service tool or wired controller for configuration", "Set indoor unit operation modes (cool only, heat only, or auto changeover)", "Configure group control if multiple indoor units share a zone", "Set temperature range limits per zone controller", "Configure demand control settings if utility demand response required", "Set schedule timers if applicable", "Verify all wired/wireless controller addresses are correct"]
+}, {
+  step: "Step 4",
+  title: "Installation Test Operation",
+  icon: "🧪",
+  items: ["Run installation test operation from outdoor unit or SNET Pro", "System checks all connected units and verifies communication", "If E199 displays: test operation not yet performed — must complete before normal use", "Monitor for any error codes during test operation", "Verify all indoor units respond to commands (on/off, mode change, fan speed)", "Check refrigerant pressures match expected values for ambient conditions"]
+}, {
+  step: "Step 5",
+  title: "Verification & Handover",
+  icon: "🏁",
+  items: ["Run system in COOL and HEAT modes — verify all zones reach setpoint", "Check branch selector operation for heat recovery systems", "Verify zone controller operation — on/off, mode change, setpoint, fan speed", "Check all drain pumps cycle and condensate flows correctly", "Verify outdoor fan operation and rotation direction", "Monitor SNET Pro for any error codes during test run", "Record all commissioning data, charge amounts, and settings for building owner", "Provide E503 check: verify all service valves are fully open"]
+}];
+
+// ── Samsung Field Settings / Configuration ──
+const samsungFieldSettings = [{
+  category: "MCU Configuration",
+  icon: "📡",
+  settings: [{
+    label: "MCU Address Assignment",
+    fnCode: "Rotary SW",
+    description: "Each MCU (Multi Connection Unit) requires a unique address via rotary switch on the MCU board.",
+    proTip: "Duplicate addresses cause E212/E215. Always verify each MCU has a unique address before powering on. Valid range: 01-16.",
+    options: [{
+      value: "01-16",
+      label: "Set unique address per MCU via rotary switch"
+    }]
+  }, {
+    label: "MCU Port Switch Configuration",
+    fnCode: "DIP SW",
+    description: "Each MCU port DIP switch must match the physical indoor unit connections.",
+    proTip: "Port ON but no unit = E216. Unit connected but port OFF = E217. Always match switches to actual installation.",
+    options: [{
+      value: "ON",
+      label: "Port has indoor unit connected"
+    }, {
+      value: "OFF",
+      label: "Port is unused (no indoor unit)"
+    }]
+  }]
+}, {
+  category: "Auto Pipe Pairing",
+  icon: "🔍",
+  settings: [{
+    label: "Auto Pipe Pairing (K2 Button)",
+    fnCode: "K2 x13",
+    description: "Maps indoor unit connections to outdoor unit refrigerant circuits. Required before normal operation.",
+    proTip: "Press K2 button 13 times on master outdoor main PBA. Takes 25-55 min. E213 means pairing incomplete. Indoor MICOM firmware must be v161222 or later.",
+    options: [{
+      value: "Start",
+      label: "Press K2 button 13 times to initiate"
+    }, {
+      value: "Save",
+      label: "Hold K2 for 2+ seconds to save results"
+    }]
+  }]
+}, {
+  category: "Operation Mode Settings",
+  icon: "🌡️",
+  settings: [{
+    label: "Operation Mode Selection",
+    fnCode: "Controller",
+    description: "Configure system operation mode via wired controller or SNET Pro.",
+    proTip: "E161 = indoor units requesting different modes on same circuit. Heat pump: all units must agree. Heat recovery: simultaneous cool/heat allowed via branch selector.",
+    options: [{
+      value: "Cool",
+      label: "Cooling only mode"
+    }, {
+      value: "Heat",
+      label: "Heating only mode"
+    }, {
+      value: "Auto",
+      label: "Auto changeover (system selects based on demand)"
+    }]
+  }]
+}, {
+  category: "Protection & Limits",
+  icon: "🛡️",
+  settings: [{
+    label: "Temperature Range Restrictions",
+    fnCode: "Auto",
+    description: "System automatically restricts operation based on outdoor ambient temperature.",
+    proTip: "E440 = heating blocked above 30°C outdoor. E441 = cooling blocked below -10°C outdoor. These are normal protections, not faults.",
+    options: [{
+      value: "E440",
+      label: "Heating restricted when outdoor >30°C"
+    }, {
+      value: "E441",
+      label: "Cooling restricted when outdoor <-10°C"
+    }, {
+      value: "E442",
+      label: "Refrigerant charging restricted in heating >15°C"
+    }]
+  }, {
+    label: "Service Valve Check (E503)",
+    fnCode: "Self-diag",
+    description: "System monitors for closed service valves that would restrict refrigerant flow.",
+    proTip: "E503 appears if system detects possible closed service valve. Always verify liquid AND gas service valves are fully open on every outdoor unit.",
+    options: [{
+      value: "Check",
+      label: "Verify all service valves fully open"
+    }]
+  }]
+}, {
+  category: "SNET Pro Service Tool",
+  icon: "💻",
+  settings: [{
+    label: "SNET Pro 2 Configuration",
+    fnCode: "Software",
+    description: "Samsung's service software for commissioning, monitoring, and configuring DVM systems.",
+    proTip: "SNET Pro connects via USB to the outdoor unit main PBA. Provides real-time sensor data, error history, and configuration access. Essential for complex troubleshooting.",
+    options: [{
+      value: "Monitor",
+      label: "Real-time sensor readings and system status"
+    }, {
+      value: "Config",
+      label: "System configuration and option settings"
+    }, {
+      value: "History",
+      label: "Error code history and frequency"
+    }]
+  }]
+}];
+
+// ── Samsung Field Settings Entry Steps ──
+const samsungEntrySteps = [{
+  num: 1,
+  text: "Connect SNET Pro 2 via USB to outdoor unit main PBA"
+}, {
+  num: 2,
+  text: "Or use wired controller: press SET for 5 seconds to enter installer mode",
+  sub: "Default installer password may be required"
+}, {
+  num: 3,
+  text: "Navigate menus with ▲/▼ buttons, confirm with SET"
+}, {
+  num: 4,
+  text: "For MCU/outdoor settings: use DIP switches and rotary switches directly on hardware"
+}, {
+  num: 5,
+  text: "For auto pipe pairing: press K2 button 13 times on master outdoor main PBA"
+}, {
+  num: 6,
+  text: "Record all changes for commissioning documentation",
+  sub: "Hold K2 for 2s to save settings"
+}];
+
+// ── Samsung Thermistor Resistance Tables ──
+const samsungThermistorTables = [{
+  label: "10kΩ NTC — Room Air, Pipe Temperature, and Liquid Line Sensors",
+  note: "Standard 10kΩ at 25°C. Used for room air (E121), EVA IN/OUT (E122/E123), condenser out, suction, and liquid pipe sensors.",
+  rows: [{
+    temp: -20,
+    resistance: 97.0
+  }, {
+    temp: -10,
+    resistance: 56.0
+  }, {
+    temp: 0,
+    resistance: 33.0
+  }, {
+    temp: 10,
+    resistance: 20.3
+  }, {
+    temp: 20,
+    resistance: 12.6
+  }, {
+    temp: 25,
+    resistance: 10.0
+  }, {
+    temp: 30,
+    resistance: 8.1
+  }, {
+    temp: 40,
+    resistance: 5.3
+  }, {
+    temp: 50,
+    resistance: 3.6
+  }, {
+    temp: 60,
+    resistance: 2.5
+  }]
+}, {
+  label: "Compressor Discharge Temperature Sensor (E251/E257)",
+  note: "High-temp NTC on compressor discharge pipe. Different curve from standard pipe sensors. Triggers E416 if temp exceeds limit.",
+  rows: [{
+    temp: 40,
+    resistance: 58.3
+  }, {
+    temp: 50,
+    resistance: 41.0
+  }, {
+    temp: 60,
+    resistance: 29.5
+  }, {
+    temp: 70,
+    resistance: 21.6
+  }, {
+    temp: 80,
+    resistance: 16.1
+  }, {
+    temp: 90,
+    resistance: 12.2
+  }, {
+    temp: 100,
+    resistance: 9.4
+  }, {
+    temp: 110,
+    resistance: 7.3
+  }, {
+    temp: 120,
+    resistance: 5.7
+  }]
+}, {
+  label: "Inverter Heatsink Temperature Sensor (E474)",
+  note: "Mounted on inverter PBA heatsink. Triggers E500 (IPM overheat) if temp is excessive.",
+  rows: [{
+    temp: 0,
+    resistance: 181
+  }, {
+    temp: 10,
+    resistance: 105
+  }, {
+    temp: 20,
+    resistance: 64
+  }, {
+    temp: 25,
+    resistance: 50
+  }, {
+    temp: 30,
+    resistance: 39
+  }, {
+    temp: 40,
+    resistance: 26
+  }, {
+    temp: 50,
+    resistance: 17
+  }]
+}];
+
+// ═══════════════════════════════════════════════════════════════════════════════
 //  SHARED STYLES & COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -3499,7 +4290,7 @@ const AppComponent = function VRFNavigator() {
   };
 
   // ── Error codes for current brand ──
-  const currentErrors = activeBrand === "daikin" ? daikinErrorCodes : activeBrand === "lg" ? lgErrorCodes : mitsubishiErrorCodes;
+  const currentErrors = activeBrand === "daikin" ? daikinErrorCodes : activeBrand === "lg" ? lgErrorCodes : activeBrand === "samsung" ? samsungErrorCodes : mitsubishiErrorCodes;
   const filteredErrors = currentErrors.filter(e => {
     const matchesSearch = e.code.toLowerCase().includes(errorSearch.toLowerCase()) || e.desc.toLowerCase().includes(errorSearch.toLowerCase());
     const matchesFilter = errorFilter === "all" || e.category === errorFilter;
@@ -3547,6 +4338,19 @@ const AppComponent = function VRFNavigator() {
     }, {
       id: "field",
       label: "⚙️ Function Codes"
+    }, {
+      id: "thermistor",
+      label: "🌡️ Thermistors"
+    }],
+    samsung: [{
+      id: "errors",
+      label: "🚨 Fault Codes"
+    }, {
+      id: "commission",
+      label: "🔧 Commissioning"
+    }, {
+      id: "field",
+      label: "⚙️ Configuration"
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
@@ -3642,7 +4446,7 @@ const AppComponent = function VRFNavigator() {
         fontSize: "14px",
         color: "#5a5a6a"
       }
-    }, "Samsung DVM \u2022 Carrier / Toshiba"))));
+    }, "Carrier / Toshiba \u2022 Bosch \u2022 Fujitsu"))));
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -3684,7 +4488,7 @@ const AppComponent = function VRFNavigator() {
       fontSize: "13px",
       fontFamily: mono
     }
-  }, "\u2190 Brands"), (activeBrand === "daikin" || activeBrand === "lg") && view !== "categories" && activeTab === "field" && /*#__PURE__*/React.createElement("button", {
+  }, "\u2190 Brands"), (activeBrand === "daikin" || activeBrand === "lg" || activeBrand === "samsung") && view !== "categories" && activeTab === "field" && /*#__PURE__*/React.createElement("button", {
     onClick: handleBack,
     style: {
       background: "none",
@@ -3917,7 +4721,7 @@ const AppComponent = function VRFNavigator() {
         alignItems: "center",
         gap: "12px",
         width: "100%",
-        background: sel ? activeBrand === "daikin" ? "#1a3a6b" : activeBrand === "lg" ? "#0a2a1a" : "#3b1a1a" : brand.cardBg,
+        background: sel ? activeBrand === "daikin" ? "#1a3a6b" : activeBrand === "lg" ? "#0a2a1a" : activeBrand === "samsung" ? "#1a1a4b" : "#3b1a1a" : brand.cardBg,
         border: `1px solid ${sel ? brand.accent : brand.borderColor}`,
         borderRadius: "8px",
         padding: "10px 12px",
@@ -4282,7 +5086,40 @@ const AppComponent = function VRFNavigator() {
       color: "#cbd5e1",
       lineHeight: "1.5"
     }
-  }, item))))))), activeTab === "errors" && /*#__PURE__*/React.createElement(React.Fragment, null, activeBrand === "lg" && /*#__PURE__*/React.createElement("div", {
+  }, item))))))), activeTab === "errors" && /*#__PURE__*/React.createElement(React.Fragment, null, activeBrand === "samsung" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "12px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "SAMSUNG DVM ERROR CODE SYSTEM"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#b0bec5",
+      lineHeight: "1.7"
+    }
+  }, /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "E1xx"), "=Indoor \u2022", " ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "E2xx"), "=Comm/Sensors \u2022", " ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "E3xx-E5xx"), "=Outdoor \u2022", " ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "E7xx"), "=EEV early detect \u2022", " ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: "#fff"
+    }
+  }, "E9xx"), "=Hydro Kit", /*#__PURE__*/React.createElement("br", null), "Use SNET Pro 2 service tool for real-time diagnostics and error history.")), activeBrand === "lg" && /*#__PURE__*/React.createElement("div", {
     style: {
       ...S.cardAccent,
       marginBottom: "12px"
@@ -4375,18 +5212,18 @@ const AppComponent = function VRFNavigator() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: activeBrand === "lg" ? "#0a1f15" : activeBrand === "daikin" ? "#2a1515" : "#1f0a0a",
-      border: `1px solid ${activeBrand === "lg" ? "#16a34a" : activeBrand === "daikin" ? "#ef4444" : "#b91c1c"}`,
+      background: activeBrand === "lg" ? "#0a1f15" : activeBrand === "samsung" ? "#1a1a3e" : activeBrand === "daikin" ? "#2a1515" : "#1f0a0a",
+      border: `1px solid ${activeBrand === "lg" ? "#16a34a" : activeBrand === "samsung" ? "#6366f1" : activeBrand === "daikin" ? "#ef4444" : "#b91c1c"}`,
       borderRadius: "4px",
       padding: "3px 8px",
       fontSize: "15px",
       fontWeight: "700",
-      color: activeBrand === "lg" ? "#86efac" : "#fca5a5"
+      color: activeBrand === "lg" ? "#86efac" : activeBrand === "samsung" ? "#a5b4fc" : "#fca5a5"
     }
   }, e.code), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: "14px",
-      color: activeBrand === "lg" ? "#86efac" : "#f1a0a0"
+      color: activeBrand === "lg" ? "#86efac" : activeBrand === "samsung" ? "#a5b4fc" : "#f1a0a0"
     }
   }, e.desc)), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -4917,6 +5754,320 @@ const AppComponent = function VRFNavigator() {
   }, "LG Multi V uses three sensor types: 10k\u03A9 (air/suction), 5k\u03A9 (pipe/liquid), and 200k\u03A9 (discharge). Disconnect from PCB before measuring.")), /*#__PURE__*/React.createElement("div", {
     style: S.warn
   }, "\u26A0\uFE0F Last digit of error code = unit number: 1=Master, 2=Slave1, 3=Slave2. Example: CH211 = Error 21 on Master."), lgThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
+    key: idx,
+    style: {
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.card,
+      borderLeft: `3px solid ${brand.accent}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600",
+      color: "#fff",
+      marginBottom: "4px"
+    }
+  }, table.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#8b95a8"
+    }
+  }, table.note)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "8px",
+      padding: "8px 16px",
+      background: brand.gradientTo,
+      border: `1px solid ${brand.accent}`,
+      fontSize: "11px",
+      color: brand.accentLight,
+      letterSpacing: "1px",
+      fontWeight: "700"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, "TEMP (\xB0C)"), /*#__PURE__*/React.createElement("div", null, "RESISTANCE (k\u03A9)")), table.rows.map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "8px",
+      padding: "8px 16px",
+      background: i % 2 === 0 ? brand.cardBg : brand.bg,
+      border: `1px solid ${brand.borderColor}`,
+      borderTop: "none",
+      borderRadius: i === table.rows.length - 1 ? "0 0 8px 8px" : "0",
+      fontSize: "13px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#fff"
+    }
+  }, r.temp, "\xB0C"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#fbbf24",
+      fontWeight: "600"
+    }
+  }, r.resistance, " k\u03A9")))))), activeBrand === "samsung" && activeTab === "commission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      background: brand.bg,
+      marginBottom: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "DVM S COMMISSIONING GUIDE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#8b95a8",
+      lineHeight: "1.6"
+    }
+  }, "Based on Samsung DVM S / S2 commissioning procedures. Tap each step to expand.")), samsungCommissioningSteps.map((s, idx) => /*#__PURE__*/React.createElement("div", {
+    key: idx,
+    style: {
+      marginBottom: "8px"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setExpandedStep(expandedStep === idx ? null : idx),
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      width: "100%",
+      background: expandedStep === idx ? brand.gradientFrom : brand.cardBg,
+      border: `1px solid ${expandedStep === idx ? brand.accent : brand.borderColor}`,
+      borderRadius: expandedStep === idx ? "8px 8px 0 0" : "8px",
+      padding: "12px 14px",
+      cursor: "pointer",
+      color: "#e2e8f0",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "20px"
+    }
+  }, s.icon), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      color: brand.accentLight,
+      letterSpacing: "1px"
+    }
+  }, s.step), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600"
+    }
+  }, s.title)), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: brand.accent,
+      fontSize: "18px"
+    }
+  }, expandedStep === idx ? "▾" : "›")), expandedStep === idx && /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: brand.bg,
+      border: `1px solid ${brand.accent}`,
+      borderTop: "none",
+      borderRadius: "0 0 8px 8px",
+      padding: "12px 14px"
+    }
+  }, s.items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      display: "flex",
+      gap: "10px",
+      marginBottom: "9px",
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "20px",
+      height: "20px",
+      borderRadius: "3px",
+      background: brand.borderColor,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "11px",
+      color: brand.accentLight,
+      fontWeight: "700",
+      flexShrink: 0,
+      marginTop: "1px"
+    }
+  }, i + 1), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#cbd5e1",
+      lineHeight: "1.5"
+    }
+  }, item))))))), activeBrand === "samsung" && activeTab === "field" && /*#__PURE__*/React.createElement(React.Fragment, null, view === "categories" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "HOW TO ACCESS CONFIGURATION"), samsungEntrySteps.map(s => /*#__PURE__*/React.createElement("div", {
+    key: s.num,
+    style: {
+      display: "flex",
+      gap: "10px",
+      marginBottom: "9px",
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "22px",
+      height: "22px",
+      borderRadius: "50%",
+      background: brand.accent,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "12px",
+      fontWeight: "700",
+      color: "#fff",
+      flexShrink: 0
+    }
+  }, s.num), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px"
+    }
+  }, s.text), s.sub && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "12px",
+      color: "#8b95a8",
+      marginTop: "2px"
+    }
+  }, s.sub))))), /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "SELECT CATEGORY"), samsungFieldSettings.map(cat => /*#__PURE__*/React.createElement("button", {
+    key: cat.category,
+    onClick: () => {
+      setSelectedCategory(cat);
+      setView("settings");
+    },
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      width: "100%",
+      ...S.card,
+      cursor: "pointer",
+      color: "#e2e8f0",
+      textAlign: "left"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: "20px"
+    }
+  }, cat.icon), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600"
+    }
+  }, cat.category), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#8b95a8",
+      marginTop: "2px"
+    }
+  }, cat.settings.length, " ", cat.settings.length === 1 ? "setting" : "settings")), /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: "auto",
+      color: brand.accent,
+      fontSize: "16px"
+    }
+  }, "\u203A")))), view === "settings" && selectedCategory && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, selectedCategory.icon, " ", selectedCategory.category.toUpperCase()), selectedCategory.settings.map(setting => /*#__PURE__*/React.createElement("div", {
+    key: setting.label,
+    style: {
+      ...S.card,
+      borderLeft: `3px solid ${brand.accent}`
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "15px",
+      fontWeight: "600",
+      color: "#fff",
+      marginBottom: "4px"
+    }
+  }, setting.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "inline-block",
+      background: brand.gradientTo,
+      border: `1px solid ${brand.accent}`,
+      borderRadius: "4px",
+      padding: "2px 8px",
+      fontSize: "13px",
+      fontWeight: "700",
+      color: brand.accentLight,
+      marginBottom: "6px"
+    }
+  }, setting.fnCode), setting.description && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#8b95a8",
+      marginBottom: "6px"
+    }
+  }, setting.description), setting.proTip && /*#__PURE__*/React.createElement("div", {
+    style: S.tip
+  }, "\u26A1 ", setting.proTip), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: "10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "11px",
+      color: brand.accentLight,
+      letterSpacing: "1px",
+      marginBottom: "6px"
+    }
+  }, "OPTIONS"), setting.options.map(opt => /*#__PURE__*/React.createElement("div", {
+    key: opt.value,
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+      marginBottom: "4px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      minWidth: "50px",
+      background: brand.gradientTo,
+      border: `1px solid ${brand.borderColor}`,
+      borderRadius: "4px",
+      padding: "3px 8px",
+      fontSize: "13px",
+      fontWeight: "700",
+      color: "#fff",
+      textAlign: "center"
+    }
+  }, opt.value), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "13px",
+      color: "#cbd5e1"
+    }
+  }, opt.label)))))))), activeBrand === "samsung" && activeTab === "thermistor" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      ...S.cardAccent,
+      marginBottom: "16px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: S.label
+  }, "THERMISTOR RESISTANCE REFERENCE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: "14px",
+      color: "#b0bec5",
+      lineHeight: "1.5"
+    }
+  }, "Samsung DVM uses 10k\u03A9 NTC for most sensors. Disconnect from PCB before measuring. Error codes reference which sensor failed (E121=room air, E122=EVA IN, etc.).")), samsungThermistorTables.map((table, idx) => /*#__PURE__*/React.createElement("div", {
     key: idx,
     style: {
       marginBottom: "20px"
