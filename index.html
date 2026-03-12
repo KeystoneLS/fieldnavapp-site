@@ -340,7 +340,7 @@ const brands = [{
   cardBg: "#141b2d",
   borderColor: "#1e3a5f",
   controllerTag: "BRC1E62/72/73",
-  tabs: ["field", "commission", "errors", "thermistor"]
+  tabs: ["errors", "commission", "field", "thermistor"]
 }, {
   id: "mitsubishi",
   name: "Mitsubishi Electric",
@@ -5321,14 +5321,14 @@ const AppComponent = function VRFNavigator() {
   // ── Tab config per brand ──
   const tabConfig = {
     daikin: [{
-      id: "field",
-      label: "⚙️ Field Settings"
+      id: "errors",
+      label: "🚨 Fault Codes"
     }, {
       id: "commission",
       label: "🔧 Commissioning"
     }, {
-      id: "errors",
-      label: "🚨 Fault Codes"
+      id: "field",
+      label: "⚙️ Settings"
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
@@ -5354,7 +5354,7 @@ const AppComponent = function VRFNavigator() {
       label: "🔧 Commissioning"
     }, {
       id: "field",
-      label: "⚙️ Function Codes"
+      label: "⚙️ Settings"
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
@@ -5367,7 +5367,7 @@ const AppComponent = function VRFNavigator() {
       label: "🔧 Commissioning"
     }, {
       id: "field",
-      label: "⚙️ Configuration"
+      label: "⚙️ Settings"
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
@@ -5380,7 +5380,7 @@ const AppComponent = function VRFNavigator() {
       label: "🔧 Commissioning"
     }, {
       id: "field",
-      label: "⚙️ Configuration"
+      label: "⚙️ Settings"
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
