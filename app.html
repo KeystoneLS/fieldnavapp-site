@@ -6265,16 +6265,25 @@ const AppComponent = function VRFNavigator() {
       }
     }, b.subtitle))), /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: "11px",
-        color: t.textSecondary,
-        letterSpacing: "3px",
         marginTop: "20px",
         marginBottom: "12px",
         textAlign: "left",
         borderBottom: `1px solid ${darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
         paddingBottom: "6px"
       }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: t.textSecondary,
+        letterSpacing: "3px"
+      }
     }, "CONTROLLERS & THERMOSTATS"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "10px",
+        color: darkMode ? "#6b7280" : "#9ca3af",
+        marginTop: "3px"
+      }
+    }, "\u{1F6A7}", " Open during construction \u2014 data may shift")), /*#__PURE__*/React.createElement("div", {
       style: {
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
@@ -6315,7 +6324,8 @@ const AppComponent = function VRFNavigator() {
         padding: "14px",
         background: t.comingSoonBg,
         border: `1px solid ${t.comingSoonBorder}`,
-        borderRadius: "8px"
+        borderRadius: "8px",
+        opacity: 0.7
       }
     }, /*#__PURE__*/React.createElement("div", {
       style: {
@@ -6324,7 +6334,7 @@ const AppComponent = function VRFNavigator() {
         letterSpacing: "2px",
         marginBottom: "6px"
       }
-    }, "COMING SOON"), /*#__PURE__*/React.createElement("div", {
+    }, "\u{1F512}", " CLOSED \u2014 COMING SOON"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "14px",
         color: t.comingSoonText
