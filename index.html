@@ -5846,6 +5846,54 @@ const AppComponent = function VRFNavigator() {
   // ── Analytics helper ──
   const track = (event, params) => window.gtag?.('event', event, params);
 
+  // ── Feedback system ──
+  const [feedbackGiven, setFeedbackGiven] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("fn_feedback") || "{}");
+    } catch {
+      return {};
+    }
+  });
+  const [feedbackFlash, setFeedbackFlash] = useState({});
+  const sessionVoteCount = Object.keys(feedbackGiven).length;
+  const giveFeedback = (brandId, code, desc, rating) => {
+    const key = `${brandId}:${code}`;
+    if (feedbackGiven[key] || sessionVoteCount >= 20) return;
+    const updated = {
+      ...feedbackGiven,
+      [key]: rating
+    };
+    setFeedbackGiven(updated);
+    try {
+      localStorage.setItem("fn_feedback", JSON.stringify(updated));
+    } catch {}
+    setFeedbackFlash(f => ({
+      ...f,
+      [key]: true
+    }));
+    setTimeout(() => setFeedbackFlash(f => {
+      const n = {
+        ...f
+      };
+      delete n[key];
+      return n;
+    }), 2500);
+    track(rating === "helpful" ? "feedback_helpful" : "feedback_not_helpful", {
+      brand: brandId,
+      code,
+      desc
+    });
+  };
+  const openFeedbackEmail = (brandId, brandName, code, desc, action) => {
+    track("feedback_email_opened", {
+      brand: brandId,
+      code
+    });
+    const subject = encodeURIComponent(`FN Feedback: ${brandName} ${code}`);
+    const body = encodeURIComponent(`Brand: ${brandName}\nFault Code: ${code}\nDescription: ${desc}\nAction shown: ${action}\n\nMy feedback:\n`);
+    window.open(`mailto:feedback@fieldnavapp.com?subject=${subject}&body=${body}`, "_self");
+  };
+
   // ── Theme-resolved brands ──
   const brands = brandsRaw.map(r => resolveBrand(r, darkMode));
   const brand = brands.find(b => b.id === activeBrand) || brands[0];
@@ -7191,7 +7239,71 @@ const AppComponent = function VRFNavigator() {
       color: t.actionText,
       lineHeight: "1.5"
     }
-  }, "\u2192 ", e.action), e.subcodes && /*#__PURE__*/React.createElement("div", {
+  }, "\u2192 ", e.action), sessionVoteCount < 20 && (() => {
+    const fbKey = `${activeBrand}:${e.code}`;
+    const vote = feedbackGiven[fbKey];
+    const flash = feedbackFlash[fbKey];
+    if (vote && !flash) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: "10px",
+        paddingTop: "8px",
+        borderTop: `1px solid ${t.subtleBorder}`,
+        display: "flex",
+        alignItems: "center",
+        gap: "10px"
+      }
+    }, vote === "helpful" && flash ? /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "12px",
+        color: t.successText
+      }
+    }, "\u2713", " Thanks!") : vote === "not_helpful" && flash ? /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "12px",
+        color: t.warnText
+      }
+    }, "\u2717", " Noted \u2014 thanks for the feedback") : !vote ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "11px",
+        color: t.textSecondary
+      }
+    }, "Helpful?"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => giveFeedback(activeBrand, e.code, e.desc, "helpful"),
+      style: {
+        background: "none",
+        border: `1px solid ${t.subtleBorder}`,
+        borderRadius: "6px",
+        padding: "4px 10px",
+        cursor: "pointer",
+        fontSize: "13px",
+        color: t.textSecondary
+      }
+    }, "\uD83D\uDC4D"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => giveFeedback(activeBrand, e.code, e.desc, "not_helpful"),
+      style: {
+        background: "none",
+        border: `1px solid ${t.subtleBorder}`,
+        borderRadius: "6px",
+        padding: "4px 10px",
+        cursor: "pointer",
+        fontSize: "13px",
+        color: t.textSecondary
+      }
+    }, "\uD83D\uDC4E"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => openFeedbackEmail(activeBrand, brand.name, e.code, e.desc, e.action),
+      style: {
+        background: "none",
+        border: `1px solid ${t.subtleBorder}`,
+        borderRadius: "6px",
+        padding: "4px 10px",
+        cursor: "pointer",
+        fontSize: "13px",
+        color: t.textSecondary,
+        marginLeft: "auto"
+      }
+    }, "\u2709\uFE0F", " Email")) : null);
+  })(), e.subcodes && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: "8px",
       paddingTop: "8px",
