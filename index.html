@@ -6285,7 +6285,52 @@ const AppComponent = function VRFNavigator() {
         transition: "left 0.3s",
         boxShadow: "0 1px 3px rgba(0,0,0,0.3)"
       }
-    }, darkMode ? "\u{1F319}" : "\u{2600}\u{FE0F}")), /*#__PURE__*/React.createElement("div", {
+    }, darkMode ? "\u{1F319}" : "\u{2600}\u{FE0F}")), /*#__PURE__*/React.createElement("a", {
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSep3jgOkyK1rCZn_igtpZiCfcKQ4Qp5BLpJ2t6O00xVEk1IUQ/viewform",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      onClick: () => track('giveaway_banner_click', {}),
+      style: {
+        display: "block",
+        textDecoration: "none",
+        marginBottom: "24px",
+        background: darkMode ? "linear-gradient(135deg, #1a1a2e, #16213e)" : "linear-gradient(135deg, #fef9c3, #fde68a)",
+        border: darkMode ? "1px solid #f59e0b" : "1px solid #d97706",
+        borderRadius: "12px",
+        padding: "16px 18px",
+        textAlign: "left",
+        position: "relative",
+        overflow: "hidden"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        letterSpacing: "2px",
+        color: darkMode ? "#f59e0b" : "#92400e",
+        marginBottom: "6px",
+        fontWeight: "700"
+      }
+    }, "\uD83C\uDF89", " GIVEAWAY"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "15px",
+        fontWeight: "700",
+        color: darkMode ? "#fde68a" : "#78350f",
+        marginBottom: "4px",
+        lineHeight: "1.3"
+      }
+    }, "Win up to $200 at Home Depot or Lowe's"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "12px",
+        color: darkMode ? "#d4a" : "#92400e",
+        lineHeight: "1.4"
+      }
+    }, "Sign up as an early tester \u2014 drawing May 1st"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: darkMode ? "#6b7280" : "#a8896c",
+        marginTop: "8px"
+      }
+    }, "Tap to enter ", "\u2192")), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "11px",
         color: t.textSecondary,
