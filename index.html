@@ -331,6 +331,7 @@ const { useState } = React;
 const brandsRaw = [{
   id: "daikin",
   name: "Daikin VRV",
+  category: "vrf",
   subtitle: "VRV III / IV Field Settings, Commissioning & Fault Codes",
   accent: "#2a5298",
   controllerTag: "BRC1E62/72/73",
@@ -362,6 +363,7 @@ const brandsRaw = [{
 }, {
   id: "mitsubishi",
   name: "Mitsubishi Electric",
+  category: "vrf",
   subtitle: "City Multi / Mr Slim / P-Series / K-Series / PWFY",
   accent: "#b91c1c",
   controllerTag: "M-NET / MA Controller",
@@ -393,6 +395,7 @@ const brandsRaw = [{
 }, {
   id: "lg",
   name: "LG Multi V",
+  category: "vrf",
   subtitle: "Multi V 5 / IV / S — Error Codes, Commissioning & Function Codes",
   accent: "#16a34a",
   controllerTag: "PREMTB100 / PQRCVSL0",
@@ -424,6 +427,7 @@ const brandsRaw = [{
 }, {
   id: "samsung",
   name: "Samsung DVM",
+  category: "vrf",
   subtitle: "DVM S / S2 / Plus III — Error Codes, Commissioning & Configuration",
   accent: "#6366f1",
   controllerTag: "MWR-WE13N / SNET Pro",
@@ -455,6 +459,7 @@ const brandsRaw = [{
 }, {
   id: "carrier",
   name: "Carrier VRF",
+  category: "vrf",
   subtitle: "38VMA / 38VMR — Error Codes, Commissioning & Configuration",
   accent: "#eab308",
   controllerTag: "CCM01 / Touch Pilot",
@@ -482,6 +487,264 @@ const brandsRaw = [{
     badgeBorder: "#ca8a04",
     badgeText: "#854d0e",
     descText: "#854d0e"
+  }
+},
+// ── CONTROLLERS & THERMOSTATS ───────────────────────────────────────────────
+{
+  id: "lochinvar",
+  name: "Lochinvar",
+  category: "controls",
+  subtitle: "Knight / Noble / Power-fin — SMART SYSTEM Control",
+  accent: "#ea580c",
+  controllerTag: "SMART SYSTEM",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#fdba74",
+    gradientFrom: "#2a1a08",
+    gradientTo: "#1a0f04",
+    bg: "#110c08",
+    cardBg: "#1f1610",
+    borderColor: "#5f3520",
+    badgeBg: "#2a1a08",
+    badgeBorder: "#ea580c",
+    badgeText: "#fdba74",
+    descText: "#fdba74"
+  },
+  light: {
+    accentLight: "#9a3412",
+    gradientFrom: "#ea580c",
+    gradientTo: "#c2410c",
+    bg: "#fff7ed",
+    cardBg: "#ffffff",
+    borderColor: "#e8d5c0",
+    badgeBg: "#fff7ed",
+    badgeBorder: "#ea580c",
+    badgeText: "#9a3412",
+    descText: "#9a3412"
+  }
+}, {
+  id: "carel",
+  name: "Carel",
+  category: "controls",
+  subtitle: "ir33 / pCO Series — Tiered Password System",
+  accent: "#0d9488",
+  controllerTag: "ir33 / pCO",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#5eead4",
+    gradientFrom: "#0a2a24",
+    gradientTo: "#061a16",
+    bg: "#080f0d",
+    cardBg: "#0f1f1b",
+    borderColor: "#1e5f50",
+    badgeBg: "#0a2a24",
+    badgeBorder: "#0d9488",
+    badgeText: "#5eead4",
+    descText: "#5eead4"
+  },
+  light: {
+    accentLight: "#115e59",
+    gradientFrom: "#0d9488",
+    gradientTo: "#0f766e",
+    bg: "#f0fdfa",
+    cardBg: "#ffffff",
+    borderColor: "#c5e8e2",
+    badgeBg: "#f0fdfa",
+    badgeBorder: "#0d9488",
+    badgeText: "#115e59",
+    descText: "#115e59"
+  }
+}, {
+  id: "danfoss",
+  name: "Danfoss",
+  category: "controls",
+  subtitle: "ERC / MCX Series — Service & OEM Levels",
+  accent: "#dc2626",
+  controllerTag: "ERC / MCX",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#fca5a5",
+    gradientFrom: "#2a0808",
+    gradientTo: "#1a0404",
+    bg: "#110808",
+    cardBg: "#1f0f0f",
+    borderColor: "#5f1e1e",
+    badgeBg: "#2a0808",
+    badgeBorder: "#dc2626",
+    badgeText: "#fca5a5",
+    descText: "#fca5a5"
+  },
+  light: {
+    accentLight: "#991b1b",
+    gradientFrom: "#dc2626",
+    gradientTo: "#b91c1c",
+    bg: "#fef2f2",
+    cardBg: "#ffffff",
+    borderColor: "#e8c5c5",
+    badgeBg: "#fef2f2",
+    badgeBorder: "#dc2626",
+    badgeText: "#991b1b",
+    descText: "#991b1b"
+  }
+}, {
+  id: "dixell",
+  name: "Dixell",
+  category: "controls",
+  subtitle: "Commercial Refrigeration — Hidden Menu L2",
+  accent: "#0891b2",
+  controllerTag: "XR Series",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#67e8f9",
+    gradientFrom: "#082a30",
+    gradientTo: "#041a20",
+    bg: "#080f11",
+    cardBg: "#0f1f24",
+    borderColor: "#1e5f6f",
+    badgeBg: "#082a30",
+    badgeBorder: "#0891b2",
+    badgeText: "#67e8f9",
+    descText: "#67e8f9"
+  },
+  light: {
+    accentLight: "#155e75",
+    gradientFrom: "#0891b2",
+    gradientTo: "#0e7490",
+    bg: "#ecfeff",
+    cardBg: "#ffffff",
+    borderColor: "#c5e8ef",
+    badgeBg: "#ecfeff",
+    badgeBorder: "#0891b2",
+    badgeText: "#155e75",
+    descText: "#155e75"
+  }
+}, {
+  id: "honeywell",
+  name: "Honeywell Pro",
+  category: "controls",
+  subtitle: "T6 / T4 / T10 — Date Code Access",
+  accent: "#b91c1c",
+  controllerTag: "Pro T-Series",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#fca5a5",
+    gradientFrom: "#2a0f0f",
+    gradientTo: "#1a0808",
+    bg: "#110808",
+    cardBg: "#1f1010",
+    borderColor: "#5f1e1e",
+    badgeBg: "#2a0f0f",
+    badgeBorder: "#b91c1c",
+    badgeText: "#fca5a5",
+    descText: "#fca5a5"
+  },
+  light: {
+    accentLight: "#7f1d1d",
+    gradientFrom: "#b91c1c",
+    gradientTo: "#991b1b",
+    bg: "#fef2f2",
+    cardBg: "#ffffff",
+    borderColor: "#e8c5c5",
+    badgeBg: "#fef2f2",
+    badgeBorder: "#b91c1c",
+    badgeText: "#7f1d1d",
+    descText: "#7f1d1d"
+  }
+}, {
+  id: "zonex",
+  name: "ZoneX",
+  category: "controls",
+  subtitle: "ModStat / EzTouch — Zone Control Systems",
+  accent: "#7c3aed",
+  controllerTag: "ModStat / EzTouch",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#c4b5fd",
+    gradientFrom: "#1a0f3e",
+    gradientTo: "#0d0824",
+    bg: "#0a0814",
+    cardBg: "#12102a",
+    borderColor: "#3e2e7f",
+    badgeBg: "#1a0f3e",
+    badgeBorder: "#7c3aed",
+    badgeText: "#c4b5fd",
+    descText: "#c4b5fd"
+  },
+  light: {
+    accentLight: "#5b21b6",
+    gradientFrom: "#7c3aed",
+    gradientTo: "#6d28d9",
+    bg: "#f5f3ff",
+    cardBg: "#ffffff",
+    borderColor: "#d8d0f0",
+    badgeBg: "#f5f3ff",
+    badgeBorder: "#7c3aed",
+    badgeText: "#5b21b6",
+    descText: "#5b21b6"
+  }
+}, {
+  id: "venstar",
+  name: "Venstar",
+  category: "controls",
+  subtitle: "ColorTouch / Explorer — Installation Settings",
+  accent: "#059669",
+  controllerTag: "ColorTouch / Explorer",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#6ee7b7",
+    gradientFrom: "#0a2a18",
+    gradientTo: "#061a0e",
+    bg: "#080f0b",
+    cardBg: "#0f1f16",
+    borderColor: "#1e5f38",
+    badgeBg: "#0a2a18",
+    badgeBorder: "#059669",
+    badgeText: "#6ee7b7",
+    descText: "#6ee7b7"
+  },
+  light: {
+    accentLight: "#065f46",
+    gradientFrom: "#059669",
+    gradientTo: "#047857",
+    bg: "#ecfdf5",
+    cardBg: "#ffffff",
+    borderColor: "#c5e8d8",
+    badgeBg: "#ecfdf5",
+    badgeBorder: "#059669",
+    badgeText: "#065f46",
+    descText: "#065f46"
+  }
+}, {
+  id: "sensi",
+  name: "Sensi",
+  category: "controls",
+  subtitle: "White Rodgers — Touch 2 / Lite",
+  accent: "#2563eb",
+  controllerTag: "Touch 2 / Lite",
+  tabs: ["access", "tips", "reference"],
+  dark: {
+    accentLight: "#93c5fd",
+    gradientFrom: "#0a1a3e",
+    gradientTo: "#040d24",
+    bg: "#080a14",
+    cardBg: "#10152a",
+    borderColor: "#1e3a6f",
+    badgeBg: "#0a1a3e",
+    badgeBorder: "#2563eb",
+    badgeText: "#93c5fd",
+    descText: "#93c5fd"
+  },
+  light: {
+    accentLight: "#1e40af",
+    gradientFrom: "#2563eb",
+    gradientTo: "#1d4ed8",
+    bg: "#eff6ff",
+    cardBg: "#ffffff",
+    borderColor: "#c5d5f0",
+    badgeBg: "#eff6ff",
+    badgeBorder: "#2563eb",
+    badgeText: "#1e40af",
+    descText: "#1e40af"
   }
 }];
 
@@ -5316,6 +5579,242 @@ const carrierThermistorTables = [{
   }]
 }];
 
+// ── CONTROLLER DATA ──────────────────────────────────────────────────────────
+
+const lochinvarAccess = [{
+  title: "Installer Menu Access",
+  code: "5309",
+  steps: ["Press MENU on the SMART SYSTEM control", "Select INSTALLER", "Enter code 5309"],
+  note: "Universal key for all Knight, Noble, and Power-fin models."
+}, {
+  title: "Service / Test Mode",
+  code: null,
+  steps: ["From the Installer menu, navigate to Service Mode", "Select Max Fire or Min Fire for combustion analysis", "System will hold fire rate without waiting for load call"],
+  note: "Bypasses normal load logic — use for combustion testing only."
+}, {
+  title: "Quick High-Fire Test",
+  code: null,
+  steps: ["Hold the RESET button for 5 seconds", "Unit enters 15-minute high-fire test mode"],
+  note: "Works on some models. Useful when you don't need full Service Mode access."
+}];
+const lochinvarTips = [{
+  title: "BMS 0-10V Not Responding",
+  description: "If the Building Management System isn't talking to the boiler, check BMS Configuration in the installer menu. Often the boiler is set to 'Local' instead of 'Remote,' which ignores the external signal entirely."
+}, {
+  title: "Forced Fire Rate for Combustion",
+  description: "Use Service Mode to lock the boiler at Max or Min fire. This lets you take accurate combustion readings without the modulation logic hunting."
+}, {
+  title: "Reset Button Shortcut",
+  description: "On some models, holding RESET for 5 seconds forces a 15-minute high-fire test — quicker than navigating the full Service Mode menu."
+}];
+const lochinvarReference = [{
+  controller: "Knight / Noble / Power-fin",
+  method: "Menu → Installer",
+  code: "5309"
+}];
+const carelAccess = [{
+  title: "Standard Service Password",
+  code: "22",
+  steps: ["Hold PRG + SET for 5 seconds", "When 0 flashes on screen, arrow UP to 22", "Press SET to confirm"],
+  note: "Standard service-level password for ir33 series."
+}, {
+  title: "Manual Defrost",
+  code: null,
+  steps: ["Hold the DEF (Down) button for 5 seconds", "Unit enters manual defrost cycle"],
+  note: "Forces immediate defrost regardless of timer schedule."
+}, {
+  title: "Continuous Cycle (Force Run)",
+  code: null,
+  steps: ["Hold UP + DOWN simultaneously for 5 seconds", "Compressor runs non-stop"],
+  note: "Useful for rapid pull-downs. Watch the coil for icing — no automatic defrost in this mode."
+}];
+const carelTips = [{
+  title: "The /5 Toggle — Celsius vs Fahrenheit",
+  description: "In the parameter menu, code /5 is the temperature unit toggle. Set to 0 for Celsius, 1 for Fahrenheit. This is the single most common 'fix' for units reading wrong temps after commissioning."
+}, {
+  title: "Continuous Cycle Warning",
+  description: "Force-run mode (UP + DOWN for 5 seconds) bypasses all safety timers. Watch coil temp closely — icing can damage the evaporator if left unattended."
+}, {
+  title: "NFC Parameter Access (2026+)",
+  description: "Newer Carel controllers support NFC. Use the manufacturer app on your phone — tap the display face to pull the entire parameter list without touching buttons."
+}];
+const carelReference = [{
+  controller: "Carel ir33",
+  method: "Hold PRG + SET (5s)",
+  code: "22"
+}];
+const danfossAccess = [{
+  title: "ERC Service Password",
+  code: "989",
+  steps: ["Hold UP + DOWN until PAS appears on display", "Scroll to 989", "Press SET to enter Service level"],
+  note: "Most common service password for ERC 112/211 series."
+}, {
+  title: "Factory Reset",
+  code: null,
+  steps: ["Power off the controller", "Hold all four buttons during power-up", "Continue holding until display resets"],
+  note: "Nuclear option — resets all parameters to factory defaults. Use when controller is 'possessed.'"
+}];
+const danfossTips = [{
+  title: "Back Button Behavior (ERC 211)",
+  description: "Short press of the Back button acts as 'Escape' to exit menus. Long press toggles ECO mode — which often messes up temperatures and generates 'broken' service calls. Know the difference."
+}, {
+  title: "ECO Mode False Alarms",
+  description: "If a customer reports erratic temperatures, check if ECO mode was accidentally enabled (long-press Back). This raises the setpoint during unoccupied periods and confuses end users."
+}, {
+  title: "NFC Support on Newer Models",
+  description: "Danfoss MCX series supports NFC parameter access. Tap your phone to the display face with the Danfoss app to read/write all parameters wirelessly."
+}];
+const danfossReference = [{
+  controller: "Danfoss ERC 112/211",
+  method: "Hold UP + DOWN → PAS",
+  code: "989"
+}];
+const dixellAccess = [{
+  title: "Level 1 — User Parameters",
+  code: null,
+  steps: ["Hold SET + DOWN for 3 seconds", "Screen shows parameter labels (Hy, LS, US, etc.)"],
+  note: "Basic user-accessible parameters like differential (Hy) and setpoint limits."
+}, {
+  title: "Level 2 — Hidden Menu",
+  code: null,
+  steps: ["First enter Level 1 (SET + DOWN for 3 seconds)", "Then hold SET + DOWN again for 7+ seconds", "Screen will flash 'L2'"],
+  note: "The real configuration menu. Contains evaporator fan management and digital input configs."
+}, {
+  title: "Unlock Keyboard",
+  code: null,
+  steps: ["Hold UP + DOWN for 3 seconds", "Screen flashes 'unL'"],
+  note: "Unlocks the keypad if it's been locked by a previous tech."
+}];
+const dixellTips = [{
+  title: "Why You Need Level 2",
+  description: "Level 2 is where you find evaporator fan management and digital input configurations. For example, setting a door switch to kill the compressor when the walk-in door opens — that's an L2 parameter."
+}, {
+  title: "Time-Based Access (No Code)",
+  description: "Dixell doesn't use numeric passwords — access is based on button-hold duration. 3 seconds = Level 1, 7+ seconds = Level 2. Timing matters."
+}, {
+  title: "Door Switch Configuration",
+  description: "In L2, look for the digital input parameters. You can configure a door switch to stop the compressor, trigger an alarm, or activate defrost — depending on the model."
+}];
+const dixellReference = [{
+  controller: "Dixell XR Series",
+  method: "SET + DOWN (hold time)",
+  code: "3s = L1, 7s = L2"
+}];
+const honeywellAccess = [{
+  title: "Date Code PIN (T6/T4)",
+  code: null,
+  steps: ["Pull the thermostat off the wall", "Find the 4-digit date code on the back (e.g., 2218)", "Add 1234 to that number (2218 + 1234 = 3452)", "Enter 3452 as the PIN"],
+  note: "If that fails, try adding 1235 instead — required for models built after 2024."
+}, {
+  title: "Installer Setup (ISU) Access",
+  code: null,
+  steps: ["Press and hold MENU for 5 seconds", "Screen changes to 'ISU'", "Navigate parameters with arrow keys"],
+  note: "Standard method for all Pro series when the PIN isn't needed."
+}, {
+  title: "T10/T10+ Pro Access",
+  code: null,
+  steps: ["Go to Menu → Thermostat Information", "Note the date code displayed on screen", "That date code IS the PIN — no math required"],
+  note: "Simpler than T6/T4 — the date code on-screen is used directly."
+}];
+const honeywellTips = [{
+  title: "Date Code Math Shortcut",
+  description: "For T6/T4: find the date code on the back, add 1234. That's your PIN. For models after 2024, try 1235 instead. For T10/T10+, skip the math — the date code on-screen IS the PIN."
+}, {
+  title: "The Deadband Fix",
+  description: "If the customer says the system 'runs too much' or 'never hits temp,' check the Deadband (differential) in ISU. Factory default is usually 0.5°F which makes the system twitchy. Bump to 1.5-2.0°F for longer cycles and happier customers."
+}];
+const honeywellReference = [{
+  controller: "Honeywell T6/T4",
+  method: "Date code + 1234",
+  code: "Varies"
+}, {
+  controller: "Honeywell T10/T10+",
+  method: "Menu → Info → Date code",
+  code: "On-screen"
+}];
+const zonexAccess = [{
+  title: "Config Mode (ModStat/EzTouch)",
+  code: null,
+  steps: ["Press and hold MENU and AUTO/OFF simultaneously", "Thermostat Configuration Menu opens", "Set Zone ID here (critical for daisy-chained systems)"],
+  note: "This is where you configure zone addressing for multi-zone setups."
+}, {
+  title: "Controller Reset / Force Scan",
+  code: null,
+  steps: ["Hold the UP button on the main controller", "While holding UP, flip the power switch ON", "Keep holding for 20 seconds", "Controller scans and displays number of active stats"],
+  note: "Forces a full rescan when thermostats aren't reporting to the board."
+}];
+const zonexTips = [{
+  title: "Air Balance Mode",
+  description: "Inside the Menu + Auto/Off config screen, find 'Air Balance Mode.' It forces the damper 100% open for that specific zone so you can read CFM accurately without the logic fighting you."
+}, {
+  title: "Stats Not Reporting",
+  description: "If thermostats aren't talking to the board, use the Force Scan (hold UP during power-on for 20 seconds). This resets the communication bus and re-discovers all connected stats."
+}, {
+  title: "Zone ID is Critical",
+  description: "In daisy-chained systems, each stat needs a unique Zone ID. If two stats share an ID, you'll get phantom calls and temperature chaos. Always verify IDs during commissioning."
+}];
+const zonexReference = [{
+  controller: "ZoneX ModStat/EzTouch",
+  method: "Hold MENU + AUTO/OFF",
+  code: "No code"
+}];
+const venstarAccess = [{
+  title: "Default PIN",
+  code: "0000",
+  steps: ["If the screen is locked, enter 0000", "If 0000 doesn't work, try 1234"],
+  note: "Standard default PINs for Venstar thermostats."
+}, {
+  title: "Installation Settings",
+  code: null,
+  steps: ["Go to Menu → Settings", "Scroll down to Installation Settings", "Access service filter resets, deadband, and delay settings"],
+  note: "This is the 'pro' menu with all the configuration options."
+}];
+const venstarTips = [{
+  title: "SD Card Override (ColorTouch)",
+  description: "If you can't get into the menu, create a file named 'settings.txt' on a FAT32-formatted SD card. Insert it into the side slot — it can force a settings override or firmware flash."
+}, {
+  title: "Service Filter Reset",
+  description: "Inside Installation Settings, you'll find the service filter timer reset. This is what the customer calls about when the 'Change Filter' reminder won't go away."
+}, {
+  title: "Deadband Adjustment",
+  description: "Like Honeywell, factory deadband is usually too tight. Bump it up to 1.5-2.0°F in Installation Settings to reduce short cycling and contactor wear."
+}];
+const venstarReference = [{
+  controller: "Venstar ColorTouch/Explorer",
+  method: "Menu → Settings → Install",
+  code: "0000 or 1234"
+}];
+const sensiAccess = [{
+  title: "Sensi Lite — Hidden Setup",
+  code: null,
+  steps: ["Press and hold the Menu Icon for exactly 8 seconds", "Screen flashes 'Setup Outdoor'", "Toggle between AC / HP / Electric / Gas without the app"],
+  note: "No obvious buttons on this model — the 8-second hold is the only way in without the app."
+}, {
+  title: "Sensi Touch 2 — Advanced Setup",
+  code: null,
+  steps: ["Tap Menu → Advanced Setup", "If prompted for PIN, check the MAC ID on the About screen", "Last 4 digits of MAC ID are often the default bypass"],
+  note: "Works when the homeowner doesn't know their PIN."
+}];
+const sensiTips = [{
+  title: "The Ghost Reset (Wi-Fi Fix)",
+  description: "If Wi-Fi is acting up: go to Wireless menu, turn Wi-Fi OFF, then pull the thermostat off the wall for 60 seconds. This clears the radio cache better than the software 'Reset Wi-Fi' option."
+}, {
+  title: "MAC ID as PIN Bypass",
+  description: "On Sensi Touch 2, the last 4 digits of the MAC address (visible in About screen) often work as the default PIN when the homeowner's custom PIN is unknown."
+}, {
+  title: "App-Free Configuration (Lite)",
+  description: "The Sensi Lite looks like it needs the app for everything, but the 8-second Menu hold reveals a hardware setup menu. Essential when there's no Wi-Fi on site."
+}];
+const sensiReference = [{
+  controller: "Sensi Lite",
+  method: "Hold Menu Icon (8s)",
+  code: "No code"
+}, {
+  controller: "Sensi Touch 2",
+  method: "Menu → Advanced Setup",
+  code: "Last 4 of MAC"
+}];
+
 // ═══════════════════════════════════════════════════════════════════════════════
 //  SHARED STYLES & COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -5572,6 +6071,86 @@ const AppComponent = function VRFNavigator() {
     }, {
       id: "thermistor",
       label: "🌡️ Thermistors"
+    }],
+    lochinvar: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    carel: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    danfoss: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    dixell: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    honeywell: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    zonex: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    venstar: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
+    }],
+    sensi: [{
+      id: "access",
+      label: "🔑 Access & Setup"
+    }, {
+      id: "tips",
+      label: "💡 Field Tips"
+    }, {
+      id: "reference",
+      label: "📋 Quick Reference"
     }]
   };
 
@@ -5607,13 +6186,13 @@ const AppComponent = function VRFNavigator() {
         color: t.textStrong,
         marginBottom: "4px"
       }
-    }, "VRF Field Navigator"), /*#__PURE__*/React.createElement("div", {
+    }, "Field Navigator"), /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "14px",
         color: t.textSecondary,
         marginBottom: "20px"
       }
-    }, "Select equipment manufacturer"), /*#__PURE__*/React.createElement("button", {
+    }, "Select equipment category"), /*#__PURE__*/React.createElement("button", {
       onClick: () => setDarkMode(!darkMode),
       style: {
         background: darkMode ? "#1e293b" : "#e2e8f0",
@@ -5643,7 +6222,17 @@ const AppComponent = function VRFNavigator() {
         transition: "left 0.3s",
         boxShadow: "0 1px 3px rgba(0,0,0,0.3)"
       }
-    }, darkMode ? "\u{1F319}" : "\u{2600}\u{FE0F}")), brands.map(b => /*#__PURE__*/React.createElement("button", {
+    }, darkMode ? "\u{1F319}" : "\u{2600}\u{FE0F}")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: t.textSecondary,
+        letterSpacing: "3px",
+        marginBottom: "12px",
+        textAlign: "left",
+        borderBottom: `1px solid ${darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
+        paddingBottom: "6px"
+      }
+    }, "VRF SYSTEMS"), brands.filter(b => b.category === "vrf").map(b => /*#__PURE__*/React.createElement("button", {
       key: b.id,
       onClick: () => {
         setActiveBrand(b.id);
@@ -5676,7 +6265,53 @@ const AppComponent = function VRFNavigator() {
       }
     }, b.subtitle))), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: "30px",
+        fontSize: "11px",
+        color: t.textSecondary,
+        letterSpacing: "3px",
+        marginTop: "20px",
+        marginBottom: "12px",
+        textAlign: "left",
+        borderBottom: `1px solid ${darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
+        paddingBottom: "6px"
+      }
+    }, "CONTROLLERS & THERMOSTATS"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "12px",
+        marginBottom: "16px"
+      }
+    }, brands.filter(b => b.category === "controls").map(b => /*#__PURE__*/React.createElement("button", {
+      key: b.id,
+      onClick: () => {
+        setActiveBrand(b.id);
+        setTab(b.tabs[0]);
+      },
+      style: {
+        padding: "14px",
+        background: `linear-gradient(135deg, ${b.gradientFrom}, ${b.gradientTo})`,
+        border: `2px solid ${b.accent}`,
+        borderRadius: "10px",
+        cursor: "pointer",
+        color: "#fff",
+        textAlign: "left",
+        fontFamily: mono
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "15px",
+        fontWeight: "700",
+        marginBottom: "2px"
+      }
+    }, b.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: darkMode ? b.accentLight : "rgba(255,255,255,0.8)",
+        lineHeight: "1.4"
+      }
+    }, b.subtitle)))), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: "20px",
         padding: "14px",
         background: t.comingSoonBg,
         border: `1px solid ${t.comingSoonBorder}`,
@@ -5694,7 +6329,7 @@ const AppComponent = function VRFNavigator() {
         fontSize: "14px",
         color: t.comingSoonText
       }
-    }, "Toshiba \u2022 Bosch \u2022 Fujitsu"))));
+    }, "Toshiba \u2022 Bosch \u2022 Fujitsu \u2022 Lennox"))));
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -7715,7 +8350,191 @@ const AppComponent = function VRFNavigator() {
       color: t.golden,
       fontWeight: "600"
     }
-  }, r.resistance, " k\u03A9"))))))));
+  }, r.resistance, " k\u03A9")))))), brand.category === "controls" && activeTab === "access" && (() => {
+    const dataMap = {
+      lochinvar: lochinvarAccess,
+      carel: carelAccess,
+      danfoss: danfossAccess,
+      dixell: dixellAccess,
+      honeywell: honeywellAccess,
+      zonex: zonexAccess,
+      venstar: venstarAccess,
+      sensi: sensiAccess
+    };
+    const items = dataMap[activeBrand] || [];
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      style: S.label
+    }, "\uD83D\uDD11 ACCESS METHODS"), items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: S.cardAccent
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        marginBottom: "10px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "15px",
+        fontWeight: "700",
+        color: t.textStrong
+      }
+    }, item.title), item.code && /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "inline-block",
+        background: brand.gradientTo,
+        border: `1px solid ${brand.accent}`,
+        borderRadius: "4px",
+        padding: "2px 8px",
+        fontSize: "13px",
+        fontWeight: "700",
+        color: "#fff"
+      }
+    }, item.code)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginBottom: "8px"
+      }
+    }, item.steps.map((step, j) => /*#__PURE__*/React.createElement("div", {
+      key: j,
+      style: {
+        display: "flex",
+        gap: "8px",
+        marginBottom: "4px",
+        fontSize: "13px",
+        color: t.text
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        minWidth: "20px",
+        height: "20px",
+        borderRadius: "3px",
+        background: brand.borderColor,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "11px",
+        color: brand.accentLight,
+        fontWeight: "700",
+        flexShrink: 0,
+        marginTop: "1px"
+      }
+    }, j + 1), /*#__PURE__*/React.createElement("div", null, step)))), item.note && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "12px",
+        color: t.textSecondary,
+        borderTop: `1px solid ${brand.borderColor}`,
+        paddingTop: "8px",
+        marginTop: "4px"
+      }
+    }, "\uD83D\uDCA1 ", item.note))));
+  })(), brand.category === "controls" && activeTab === "tips" && (() => {
+    const dataMap = {
+      lochinvar: lochinvarTips,
+      carel: carelTips,
+      danfoss: danfossTips,
+      dixell: dixellTips,
+      honeywell: honeywellTips,
+      zonex: zonexTips,
+      venstar: venstarTips,
+      sensi: sensiTips
+    };
+    const items = dataMap[activeBrand] || [];
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      style: S.label
+    }, "\uD83D\uDCA1 FIELD TIPS & SECRETS"), items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: S.card
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "15px",
+        fontWeight: "700",
+        color: t.textStrong,
+        marginBottom: "8px"
+      }
+    }, item.title), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: t.text,
+        lineHeight: "1.6"
+      }
+    }, item.description))));
+  })(), brand.category === "controls" && activeTab === "reference" && (() => {
+    const dataMap = {
+      lochinvar: lochinvarReference,
+      carel: carelReference,
+      danfoss: danfossReference,
+      dixell: dixellReference,
+      honeywell: honeywellReference,
+      zonex: zonexReference,
+      venstar: venstarReference,
+      sensi: sensiReference
+    };
+    const items = dataMap[activeBrand] || [];
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      style: S.label
+    }, "\uD83D\uDCCB QUICK REFERENCE"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        ...S.cardAccent,
+        padding: 0,
+        overflow: "hidden"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        background: brand.gradientTo,
+        padding: "10px 14px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: "#fff",
+        fontWeight: "700",
+        letterSpacing: "1px"
+      }
+    }, "CONTROLLER"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: "#fff",
+        fontWeight: "700",
+        letterSpacing: "1px"
+      }
+    }, "ACCESS METHOD"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "11px",
+        color: "#fff",
+        fontWeight: "700",
+        letterSpacing: "1px"
+      }
+    }, "CODE")), items.map((item, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        padding: "10px 14px",
+        background: i % 2 === 0 ? brand.cardBg : brand.bg,
+        borderTop: `1px solid ${brand.borderColor}`
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: t.textStrong,
+        fontWeight: "600"
+      }
+    }, item.controller), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: t.text
+      }
+    }, item.method), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: t.golden,
+        fontWeight: "700"
+      }
+    }, item.code)))));
+  })()));
 };
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(AppComponent));
