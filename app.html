@@ -6,6 +6,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>VRF Field Navigator</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5X6B1EWWNT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5X6B1EWWNT');
+</script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body { background: #0a0a0f; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
@@ -5836,6 +5843,9 @@ const AppComponent = function VRFNavigator() {
   // Mitsubishi LED search
   const [ledSearch, setLedSearch] = useState("");
 
+  // ── Analytics helper ──
+  const track = (event, params) => window.gtag?.('event', event, params);
+
   // ── Theme-resolved brands ──
   const brands = brandsRaw.map(r => resolveBrand(r, darkMode));
   const brand = brands.find(b => b.id === activeBrand) || brands[0];
@@ -6193,7 +6203,12 @@ const AppComponent = function VRFNavigator() {
         marginBottom: "20px"
       }
     }, "Select equipment category"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => setDarkMode(!darkMode),
+      onClick: () => {
+        setDarkMode(!darkMode);
+        track('theme_toggle', {
+          mode: darkMode ? 'light' : 'dark'
+        });
+      },
       style: {
         background: darkMode ? "#1e293b" : "#e2e8f0",
         border: "none",
@@ -6237,6 +6252,9 @@ const AppComponent = function VRFNavigator() {
       onClick: () => {
         setActiveBrand(b.id);
         setTab(b.tabs[0]);
+        track('brand_select', {
+          brand: b.id
+        });
       },
       style: {
         display: "block",
@@ -6295,6 +6313,9 @@ const AppComponent = function VRFNavigator() {
       onClick: () => {
         setActiveBrand(b.id);
         setTab(b.tabs[0]);
+        track('controller_select', {
+          brand: b.id
+        });
       },
       style: {
         padding: "14px",
@@ -6406,7 +6427,12 @@ const AppComponent = function VRFNavigator() {
       color: "#fff"
     }
   }, "Field Navigator")), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setDarkMode(!darkMode),
+    onClick: () => {
+      setDarkMode(!darkMode);
+      track('theme_toggle', {
+        mode: darkMode ? 'light' : 'dark'
+      });
+    },
     style: {
       marginLeft: "auto",
       background: darkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.2)",
@@ -6452,7 +6478,13 @@ const AppComponent = function VRFNavigator() {
     }
   }, currentTabs.map(tb => /*#__PURE__*/React.createElement("button", {
     key: tb.id,
-    onClick: () => setTab(tb.id),
+    onClick: () => {
+      setTab(tb.id);
+      track('tab_change', {
+        tab: tb.id,
+        brand: activeBrand
+      });
+    },
     style: {
       flex: 1,
       padding: "10px 4px",
@@ -7085,7 +7117,13 @@ const AppComponent = function VRFNavigator() {
   }, "Level 4"), ": Notify and continue")), /*#__PURE__*/React.createElement("input", {
     placeholder: "Search code or description...",
     value: errorSearch,
-    onChange: e => setErrorSearch(e.target.value),
+    onChange: e => {
+      setErrorSearch(e.target.value);
+      if (e.target.value.length === 3) track('fault_code_search', {
+        query: e.target.value,
+        brand: activeBrand
+      });
+    },
     style: {
       width: "100%",
       background: brand.cardBg,
