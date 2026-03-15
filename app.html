@@ -2203,17 +2203,119 @@ const mitsubishiErrorCodes = [
   code: "1102",
   category: "City Multi",
   desc: "High discharge temp exceeded 115°C",
-  action: "Low refrigerant or discharge thermistor fault. Check TH4 reading and refrigerant charge."
+  action: "Low refrigerant or discharge thermistor fault. Check TH4 reading and refrigerant charge.",
+  details: {
+    meaning: "The discharge temperature sensor (TH4) on the compressor measured above 115°C. The board shuts down the compressor to prevent overheating damage. High discharge temp is a symptom — it means the compressor is working too hard, not getting enough cooling from returning suction gas, or the sensor is lying.",
+    causes: [{
+      rank: 1,
+      text: "Low refrigerant charge — not enough suction gas to cool the compressor, discharge temp climbs"
+    }, {
+      rank: 2,
+      text: "Dirty condenser coil — high head pressure forces compressor to work harder"
+    }, {
+      rank: 3,
+      text: "Condenser fan failure — same effect as dirty coil"
+    }, {
+      rank: 4,
+      text: "TH4 thermistor fault — reading higher than actual temperature"
+    }, {
+      rank: 5,
+      text: "Liquid line restriction (filter drier, TXV, kink) — starves evaporator, low suction superheat"
+    }, {
+      rank: 6,
+      text: "Compressor valve damage — internal bypass raises discharge temp"
+    }],
+    checks: ["Check TH4 reading on MST — compare to actual discharge temp with a clamp thermometer on the discharge line", "If TH4 reads 115°C+ but clamp reads 80°C — TH4 is faulty, check resistance against thermistor table", "Check suction pressure and superheat — low suction = low charge or restriction", "Inspect condenser coil and verify all fans running", "Check subcooling — low subcooling with low suction pressure = low charge", "Listen for compressor cycling on and off rapidly — sign of repeated protection trips"],
+    branches: [{
+      condition: "TH4 reading matches actual temp and discharge is genuinely high",
+      target: "Charge or airflow problem — check suction superheat, subcooling, condenser airflow"
+    }, {
+      condition: "TH4 reads high but actual temp is normal",
+      target: "TH4 sensor fault — check resistance at thermistor table, replace if out of spec"
+    }, {
+      condition: "Suction pressure is very low with high superheat",
+      target: "Low charge — leak check, repair, vacuum, recharge"
+    }, {
+      condition: "Head pressure is high with normal suction",
+      target: "Condenser problem — clean coil, check fans, check for recirculation"
+    }]
+  }
 }, {
   code: "1301",
   category: "City Multi",
   desc: "Low pressure fault — LP sensor below 1 bar before startup",
-  action: "Check refrigerant charge. Check for leaks. Verify LP sensor reading."
+  action: "Check refrigerant charge. Check for leaks. Verify LP sensor reading.",
+  details: {
+    meaning: "The low-pressure sensor detected system pressure below 1 bar (14.5 psi) before the compressor even starts. The board will not attempt to start the compressor at this pressure. This almost always indicates a significant refrigerant loss or a sensor issue — the system should have standing pressure well above 1 bar at any ambient temperature.",
+    causes: [{
+      rank: 1,
+      text: "Refrigerant leak — major loss, system is nearly empty"
+    }, {
+      rank: 2,
+      text: "Stop valve closed on suction or liquid line — isolating outdoor unit"
+    }, {
+      rank: 3,
+      text: "LP pressure sensor fault — reading low falsely"
+    }, {
+      rank: 4,
+      text: "Previous service left system in vacuum — charge was never restored"
+    }, {
+      rank: 5,
+      text: "Massive restriction in liquid line (TXV, filter drier, kink) — only during operation"
+    }],
+    checks: ["Connect gauges — what is the actual standing pressure? It should equalize to saturation temperature matching ambient", "If gauges read 0 psi — system is empty. Find the leak before recharging", "If gauges show normal standing pressure but MST reads low — LP sensor is faulty", "Check all stop valves are fully open (back-seated)", "Look for obvious oil stains at joints, flares, and brazed connections", "Check error history — did this happen suddenly (leak) or gradually (slow leak)?"],
+    branches: [{
+      condition: "Gauges confirm 0 or near-0 pressure",
+      target: "Major leak — nitrogen pressure test, find leak, repair, vacuum, recharge by weight"
+    }, {
+      condition: "Gauges show normal pressure but MST reads below 1 bar",
+      target: "LP sensor fault — check wiring, replace transducer"
+    }, {
+      condition: "Stop valves were found closed",
+      target: "Open valves, verify pressure equalizes, check for other service errors"
+    }]
+  }
 }, {
   code: "1302",
   category: "City Multi",
   desc: "High pressure fault — system exceeding 32.3 bar",
-  action: "Check 63HS sensor against gauges. Check condenser airflow and fan operation."
+  action: "Check 63HS sensor against gauges. Check condenser airflow and fan operation.",
+  details: {
+    meaning: "The high-pressure sensor (63HS) has detected system pressure above 32.3 bar (468 psi). The outdoor unit board locks out the compressor to protect the system from damage. This is a protection fault — the system is telling you pressure is genuinely too high, or the sensor reading it thinks so.",
+    causes: [{
+      rank: 1,
+      text: "Dirty or blocked condenser coil — reduced airflow causes head pressure to climb"
+    }, {
+      rank: 2,
+      text: "Condenser fan motor failure or running at reduced speed"
+    }, {
+      rank: 3,
+      text: "Refrigerant overcharge — excess charge raises head pressure, especially in cooling"
+    }, {
+      rank: 4,
+      text: "Non-condensables (air/nitrogen) trapped in the system after service"
+    }, {
+      rank: 5,
+      text: "Liquid line stop valve not fully open — restriction raises discharge pressure"
+    }, {
+      rank: 6,
+      text: "63HS pressure transducer fault — reading high falsely"
+    }],
+    checks: ["Visually inspect condenser coil — look for dirt, debris, recirculation, or nearby heat sources", "Verify all condenser fans are running and at full speed", "Compare 63HS reading on MST to actual gauge pressure — should match within 0.5 bar", "Check that all stop valves (liquid and gas) are fully open (back-seated)", "Check ambient temperature — fault may be legitimate if ambient exceeds unit's rated max", "Review error history — repeating HP trips suggest charge or airflow issue, not sensor"],
+    branches: [{
+      condition: "63HS reads high and gauges confirm high pressure",
+      target: "Airflow or charge problem — clean condenser, check fans, verify charge by weight"
+    }, {
+      condition: "63HS reads high but gauges show normal pressure",
+      target: "Pressure transducer fault — check 63HS wiring and replace sensor if reading drifts"
+    }, {
+      condition: "All condenser fans are not running",
+      target: "Check fan motor windings, fan board output, and THHS heat sink temp"
+    }, {
+      condition: "System was recently serviced or charged",
+      target: "Likely non-condensables or overcharge — recover, vacuum, weigh in correct charge"
+    }]
+  }
 }, {
   code: "1520",
   category: "City Multi",
@@ -2248,7 +2350,37 @@ const mitsubishiErrorCodes = [
   code: "4102",
   category: "City Multi",
   desc: "Open phase fault",
-  action: "Check all 3 phases at disconnect. Verify phase rotation."
+  action: "Check all 3 phases at disconnect. Verify phase rotation.",
+  details: {
+    meaning: "The outdoor unit has detected that one of the three power supply phases is missing. The board will not start the compressor without all three phases present. This is a power supply fault — either the supply is incomplete or the board's detection circuit has a problem.",
+    causes: [{
+      rank: 1,
+      text: "Blown fuse on one phase — check all 3 fuses at the disconnect"
+    }, {
+      rank: 2,
+      text: "Loose wire at the disconnect, breaker, or outdoor unit terminal block"
+    }, {
+      rank: 3,
+      text: "Tripped breaker on one pole — single pole of a 3-pole breaker not engaging"
+    }, {
+      rank: 4,
+      text: "Contactor failure — one pole not pulling in or burnt contact"
+    }, {
+      rank: 5,
+      text: "Phase detection circuit on outdoor PCB is faulty"
+    }],
+    checks: ["Measure voltage on all 3 phases at the outdoor unit terminal block — L1-L2, L2-L3, L1-L3", "All three readings should be within ±10% of rated voltage and balanced within 2%", "If one phase reads 0V — trace back to the disconnect, breaker, and utility", "Check all fuses at the disconnect with a meter (not just visually)", "Inspect contactor contacts — look for pitting, burning, or a stuck pole", "Toggle the disconnect off and on — sometimes a loose connection reseats"],
+    branches: [{
+      condition: "One phase reads 0V at outdoor terminal block",
+      target: "Trace the dead phase back — check fuse, breaker, contactor, wiring"
+    }, {
+      condition: "All 3 phases read correct voltage",
+      target: "Phase detection circuit on PCB may be faulty — check board"
+    }, {
+      condition: "Voltage present but unbalanced >5%",
+      target: "Utility issue — contact electrician or power company"
+    }]
+  }
 }, {
   code: "4103",
   category: "City Multi",
@@ -2288,7 +2420,40 @@ const mitsubishiErrorCodes = [
   code: "4220",
   category: "City Multi",
   desc: "Bus voltage error",
-  action: "Detail 108=low bus <200VDC, 109=high bus >380VDC, 1=PAM damage, 121=replace inverter board. Check mains power."
+  action: "Detail 108=low bus <200VDC, 109=high bus >380VDC, 1=PAM damage, 121=replace inverter board. Check mains power.",
+  details: {
+    meaning: "The inverter board's DC bus voltage is outside acceptable range. The DC bus is the rectified mains power that feeds the inverter — it should be roughly 1.4x the AC input voltage (e.g., ~560VDC on 400V 3-phase). The detail code tells you exactly what went wrong.",
+    causes: [{
+      rank: 1,
+      text: "Low incoming voltage — brownout, undersized wiring, or loose connection (detail 108)"
+    }, {
+      rank: 2,
+      text: "High incoming voltage — utility overvoltage or incorrect supply tap (detail 109)"
+    }, {
+      rank: 3,
+      text: "PAM (Power Active Module) board failure — DC bus regulation circuit damaged (detail 1)"
+    }, {
+      rank: 4,
+      text: "Inverter board failure — internal bus voltage sensing or regulation fault (detail 121)"
+    }, {
+      rank: 5,
+      text: "Loose power terminal — intermittent connection causes voltage fluctuation"
+    }],
+    checks: ["Read the detail code first — it tells you exactly where to look", "Measure incoming 3-phase voltage at the disconnect — all phases should be within ±10% of rated", "Check for voltage imbalance between phases — >2% imbalance can cause bus issues", "Inspect all power wiring terminals for tightness — especially at the disconnect and main PCB", "Check if fault is intermittent (power quality) or constant (board failure)", "If detail 1 or 121 — visual inspect PAM and inverter boards for burnt components"],
+    branches: [{
+      condition: "Detail 108 — low bus voltage",
+      target: "Check incoming voltage, wire sizing, breaker connections. May need electrician for utility issue"
+    }, {
+      condition: "Detail 109 — high bus voltage",
+      target: "Verify supply voltage. Check transformer tap setting. May need utility correction"
+    }, {
+      condition: "Detail 1 — PAM damage",
+      target: "Replace PAM board. Check incoming power quality before powering new board"
+    }, {
+      condition: "Detail 121 — inverter board",
+      target: "Replace inverter PCB. Verify power supply is clean before commissioning replacement"
+    }]
+  }
 }, {
   code: "4230",
   category: "City Multi",
@@ -2298,7 +2463,40 @@ const mitsubishiErrorCodes = [
   code: "4250",
   category: "City Multi",
   desc: "Overcurrent — inverter IPM problem or compressor lock",
-  action: "Detail 101=IPM fault, 102=ACCT 34.5A peak/16A rms detected. Check compressor or inverter board."
+  action: "Detail 101=IPM fault, 102=ACCT 34.5A peak/16A rms detected. Check compressor or inverter board.",
+  details: {
+    meaning: "The inverter board detected an overcurrent condition. Detail code 101 means the IPM (Intelligent Power Module) on the inverter board triggered its internal protection. Detail code 102 means the ACCT (AC Current Transformer) detected current exceeding 34.5A peak or 16A RMS. This fault can be an expensive misdiagnosis — it could be the inverter board OR the compressor.",
+    causes: [{
+      rank: 1,
+      text: "Compressor mechanical failure — seized, locked rotor, or internal short drawing excessive current"
+    }, {
+      rank: 2,
+      text: "Inverter board IPM failure — the power module itself is damaged (detail 101)"
+    }, {
+      rank: 3,
+      text: "Wiring issue between inverter board and compressor — loose connection causing arc/spike"
+    }, {
+      rank: 4,
+      text: "Liquid slugging — liquid refrigerant reaching compressor causes current spike on startup"
+    }, {
+      rank: 5,
+      text: "Incorrect refrigerant charge — severe overcharge can hydraulic lock the compressor"
+    }],
+    checks: ["Check detail code: 101 = IPM internal fault, 102 = measured overcurrent via ACCT sensor", "Measure compressor winding resistance (U-V, V-W, U-W) — should be balanced within 0.5Ω", "Measure compressor insulation to ground (megger test) — should be >1MΩ", "Check for compressor lock — try to start manually and listen for hum without rotation", "Inspect inverter board for burnt components, discolored IPM module, or swollen capacitors", "Check wiring between inverter board and compressor terminals — tighten all connections"],
+    branches: [{
+      condition: "Detail 101 and compressor windings test good",
+      target: "Inverter board IPM failure — replace inverter PCB"
+    }, {
+      condition: "Detail 102 and compressor windings are unbalanced or shorted to ground",
+      target: "Compressor failure — replace compressor"
+    }, {
+      condition: "Detail 102 but compressor tests fine",
+      target: "Check for liquid slugging, overcharge, or wiring — ACCT sensor may also be faulty"
+    }, {
+      condition: "Fault occurs only on startup in cold weather",
+      target: "Likely liquid migration — check crankcase heater operation"
+    }]
+  }
 }, {
   code: "5102",
   category: "City Multi",
@@ -2358,7 +2556,43 @@ const mitsubishiErrorCodes = [
   code: "6600",
   category: "City Multi",
   desc: "Indoor comms error (A0 on P-Series A)",
-  action: "Check indoor unit communication wiring. Check CN40 connector."
+  action: "Check indoor unit communication wiring. Check CN40 connector.",
+  details: {
+    meaning: "Communication between the outdoor unit and one or more indoor units has failed on the M-NET transmission line. The outdoor unit cannot see or talk to an indoor unit that should be on the network. This is the most common communication fault on City Multi systems and corresponds to P-code A0 (2 green, 5 red LED flashes on the indoor board).",
+    causes: [{
+      rank: 1,
+      text: "Loose or disconnected M-NET wiring at TB7 (outdoor) or CN40/TB3 (indoor)"
+    }, {
+      rank: 2,
+      text: "M-NET wire shorted, pinched, or damaged during installation"
+    }, {
+      rank: 3,
+      text: "Incorrect polarity — M1/M2 wires swapped at one or more units"
+    }, {
+      rank: 4,
+      text: "Indoor PCB failure — transmission circuit damaged"
+    }, {
+      rank: 5,
+      text: "BC Controller not powered or M-NET connection through BC is broken"
+    }, {
+      rank: 6,
+      text: "Address conflict — two units with same M-NET address"
+    }],
+    checks: ["Check which indoor unit is faulting — the outdoor unit error log should show the address", "Inspect CN40 connector at the faulting indoor unit — reseat the connector", "Check M-NET wiring continuity from outdoor TB7 to the faulting indoor CN40", "Verify M-NET polarity is consistent — M1 to M1, M2 to M2 throughout the chain", "Measure M-NET voltage at outdoor TB7 — should be ~12VDC between M1 and M2", "Check that all BC Controllers in the circuit are powered and online"],
+    branches: [{
+      condition: "One indoor unit is faulting",
+      target: "Check that specific unit's CN40 connection, wiring run, and address setting"
+    }, {
+      condition: "Multiple indoor units faulting",
+      target: "Problem is upstream — check TB7 at outdoor, BC Controller, or main trunk wiring"
+    }, {
+      condition: "M-NET voltage is 0V at outdoor TB7",
+      target: "Outdoor PCB M-NET circuit fault or blown fuse — check board"
+    }, {
+      condition: "Wiring checks good but fault persists",
+      target: "Swap indoor PCB — transmission IC may be damaged"
+    }]
+  }
 }, {
   code: "6602",
   category: "City Multi",
@@ -2428,7 +2662,43 @@ const mitsubishiErrorCodes = [
   code: "7102",
   category: "City Multi",
   desc: "Error in number of connected units",
-  action: "M-NET voltage loss (short/break), no power to BC Controller, wrong SW5 setting, wrong box type."
+  action: "M-NET voltage loss (short/break), no power to BC Controller, wrong SW5 setting, wrong box type.",
+  details: {
+    meaning: "The outdoor unit has completed auto-addressing but the number of indoor units it found on the M-NET network doesn't match what it expects based on the system configuration. This typically happens during commissioning or after a BC Controller loses power. The outdoor unit knows how many units should be connected and is telling you something is missing or extra.",
+    causes: [{
+      rank: 1,
+      text: "BC Controller not powered — indoor units behind it can't communicate"
+    }, {
+      rank: 2,
+      text: "M-NET wiring broken or shorted — units downstream of the break are invisible"
+    }, {
+      rank: 3,
+      text: "SW5 DIP switch on outdoor unit set incorrectly — wrong system configuration"
+    }, {
+      rank: 4,
+      text: "Wrong BC box type installed — CMB vs CMDB vs BS box mismatch"
+    }, {
+      rank: 5,
+      text: "Indoor unit PCB replaced but address not restored — unit shows as new/unknown"
+    }, {
+      rank: 6,
+      text: "System was expanded but auto-address was not re-run"
+    }],
+    checks: ["Count indoor units physically vs what the outdoor unit sees in the MST service monitor", "Verify every BC Controller has power (LED should be on) and M-NET connection", "Check SW5 settings on outdoor unit against the engineering drawing/schedule", "Verify BC box type matches the installation drawing — CMB for branch, CMDB for double branch", "Re-run auto-addressing from the outdoor unit and compare results", "Check M-NET wiring from outdoor TB7 through each BC to each indoor unit"],
+    branches: [{
+      condition: "BC Controller has no power or LED is off",
+      target: "Restore power to BC — check breaker, transformer, wiring to BC box"
+    }, {
+      condition: "All BCs powered but some indoor units missing",
+      target: "Check M-NET wiring between BC and missing indoor units"
+    }, {
+      condition: "SW5 settings don't match drawing",
+      target: "Correct SW5 DIP switches and re-run auto-address"
+    }, {
+      condition: "System was recently modified or expanded",
+      target: "Re-run full auto-address sequence from outdoor unit"
+    }]
+  }
 }, {
   code: "7105",
   category: "City Multi",
@@ -2592,7 +2862,43 @@ const mitsubishiErrorCodes = [
   code: "E0",
   category: "P-Series K",
   desc: "System transmission error",
-  action: "Comms fault between indoor and remote controller, or incorrect group/master-slave settings. Check CN40, SW2, SW6."
+  action: "Comms fault between indoor and remote controller, or incorrect group/master-slave settings. Check CN40, SW2, SW6.",
+  details: {
+    meaning: "Communication has failed between the indoor unit and its wired remote controller, OR between grouped indoor units in a multi-indoor configuration. The indoor board cannot talk to the remote or to other units in its group. This is the P-Series equivalent of City Multi code 6600.",
+    causes: [{
+      rank: 1,
+      text: "Loose or disconnected remote controller wiring at CN40 on the indoor board"
+    }, {
+      rank: 2,
+      text: "Remote controller cable damaged — pinched, cut, or too long (max 200m)"
+    }, {
+      rank: 3,
+      text: "Incorrect group or master/slave settings — SW2, SW6 DIP switches wrong"
+    }, {
+      rank: 4,
+      text: "Remote controller fault — display blank or showing garbled data"
+    }, {
+      rank: 5,
+      text: "Indoor PCB transmission circuit failure"
+    }, {
+      rank: 6,
+      text: "Multiple remotes wired incorrectly — main vs sub controller conflict"
+    }],
+    checks: ["Check CN40 connector on the indoor unit board — reseat it firmly", "Check remote controller wiring at both ends — indoor board and behind the remote", "Verify SW2 and SW6 DIP switches match the installation configuration", "If multiple indoor units are grouped, verify master/slave addressing is correct", "Try a different remote controller to rule out remote fault", "Measure voltage between signal terminals — should see ~12VDC communication signal"],
+    branches: [{
+      condition: "Single split system, one remote",
+      target: "Check CN40, check cable continuity, try a new remote"
+    }, {
+      condition: "Grouped system, multiple indoor units",
+      target: "Check SW2/SW6 master-slave settings on each indoor unit in the group"
+    }, {
+      condition: "Remote display is blank",
+      target: "Check power to remote — should get 12VDC from indoor board. If no voltage, indoor PCB fault"
+    }, {
+      condition: "Wiring and settings all check out",
+      target: "Swap indoor PCB — transmission IC likely failed"
+    }]
+  }
 }, {
   code: "P1",
   category: "P-Series K",
@@ -2622,7 +2928,43 @@ const mitsubishiErrorCodes = [
   code: "P6",
   category: "P-Series K",
   desc: "Frost protection (cooling) / overheat protection (heating)",
-  action: "Indoor coil sensor. Causes: airflow restriction or refrigerant charge problem."
+  action: "Indoor coil sensor. Causes: airflow restriction or refrigerant charge problem.",
+  details: {
+    meaning: "In cooling mode: the indoor coil temperature dropped below the frost protection threshold — the coil is freezing up. In heating mode: the indoor coil temperature exceeded the overheat protection threshold. Either way, the system shuts down to protect itself. This is one of the most common P-Series faults and almost always points to an airflow or charge issue.",
+    causes: [{
+      rank: 1,
+      text: "Dirty air filter — restricted airflow causes coil to freeze in cooling or overheat in heating"
+    }, {
+      rank: 2,
+      text: "Low refrigerant charge — low suction pressure drops evaporator temp below freezing"
+    }, {
+      rank: 3,
+      text: "Fan motor failure or running at low speed — not enough air across the coil"
+    }, {
+      rank: 4,
+      text: "TH2 coil thermistor fault — reading incorrectly, triggering false protection"
+    }, {
+      rank: 5,
+      text: "Indoor coil blocked with ice — system ran too long with restricted airflow before tripping"
+    }, {
+      rank: 6,
+      text: "Dirty indoor coil — lint, dust, or debris reducing heat transfer"
+    }],
+    checks: ["Check the air filter — pull it out and inspect. This is the #1 cause", "Check TH2 reading on the indoor board vs actual coil temperature", "Verify the indoor fan motor is running and at correct speed", "Look at the indoor coil — is there ice buildup? Let it defrost before restarting", "Check refrigerant pressures — low suction in cooling = low charge or restriction", "In heating: check if the outdoor unit is running and producing hot gas"],
+    branches: [{
+      condition: "Filter is dirty or coil is blocked",
+      target: "Clean filter/coil, let ice melt if present, restart system"
+    }, {
+      condition: "Filter clean but suction pressure is low",
+      target: "Refrigerant charge issue — check for leaks, verify charge"
+    }, {
+      condition: "TH2 reads abnormally vs actual coil temp",
+      target: "TH2 sensor fault — check resistance (spec: 6.4kΩ @ 20°C), replace if out of range"
+    }, {
+      condition: "Fan not running or very slow",
+      target: "Check fan motor, capacitor (if applicable), and indoor PCB fan output"
+    }]
+  }
 }, {
   code: "P7",
   category: "P-Series K",
@@ -5842,6 +6184,8 @@ const AppComponent = function VRFNavigator() {
   const [errorFilter, setErrorFilter] = useState("all");
   // Mitsubishi LED search
   const [ledSearch, setLedSearch] = useState("");
+  // Expandable fault code detail view
+  const [expandedFault, setExpandedFault] = useState(null);
 
   // ── Analytics helper ──
   const track = (event, params) => window.gtag?.('event', event, params);
@@ -6039,6 +6383,7 @@ const AppComponent = function VRFNavigator() {
     setErrorSearch("");
     setErrorFilter("all");
     setLedSearch("");
+    setExpandedFault(null);
   };
   const handleBack = () => {
     if (view === "detail") {
@@ -7244,6 +7589,7 @@ const AppComponent = function VRFNavigator() {
     value: errorSearch,
     onChange: e => {
       setErrorSearch(e.target.value);
+      setExpandedFault(null);
       if (e.target.value.length === 3) track('fault_code_search', {
         query: e.target.value,
         brand: activeBrand
@@ -7270,7 +7616,10 @@ const AppComponent = function VRFNavigator() {
     }
   }, errorCategories.map(cat => /*#__PURE__*/React.createElement("button", {
     key: cat,
-    onClick: () => setErrorFilter(cat),
+    onClick: () => {
+      setErrorFilter(cat);
+      setExpandedFault(null);
+    },
     style: {
       background: errorFilter === cat ? brand.accent : brand.cardBg,
       border: `1px solid ${errorFilter === cat ? brand.accentLight : brand.borderColor}`,
@@ -7282,139 +7631,349 @@ const AppComponent = function VRFNavigator() {
       fontFamily: mono,
       textTransform: "capitalize"
     }
-  }, cat))), filteredErrors.map(e => /*#__PURE__*/React.createElement("div", {
-    key: e.code,
-    style: {
-      ...S.card,
-      borderLeft: `3px solid ${e.category === "Indoor" ? t.catIndoor : e.category === "Outdoor" ? t.catOutdoor : e.category === "System" ? t.catSystem : e.category === "Charge" ? t.catCharge : e.category === "BS Box" ? t.catBSBox : e.category === "City Multi" ? t.catIndoor : e.category === "K-Control" ? t.catOutdoor : e.category === "P-Series K" ? t.catPSeries : e.category === "PWFY" ? t.catBSBox : e.category === "Hydro Kit" ? t.catBSBox : e.category === "Heat Recovery" ? t.catPSeries : brand.accent}`
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: "10px",
-      marginBottom: "6px"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: brand.badgeBg,
-      border: `1px solid ${brand.badgeBorder}`,
-      borderRadius: "4px",
-      padding: "3px 8px",
-      fontSize: "15px",
-      fontWeight: "700",
-      color: brand.badgeText
-    }
-  }, e.code), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: "14px",
-      color: brand.descText
-    }
-  }, e.desc)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: "13px",
-      color: t.actionText,
-      lineHeight: "1.5"
-    }
-  }, "\u2192 ", e.action), sessionVoteCount < 20 && (() => {
-    const fbKey = `${activeBrand}:${e.code}`;
-    const vote = feedbackGiven[fbKey];
-    const flash = feedbackFlash[fbKey];
-    if (vote && !flash) return null;
-    return /*#__PURE__*/React.createElement("div", {
+  }, cat))), filteredErrors.map(e => {
+    const catColor = e.category === "Indoor" ? t.catIndoor : e.category === "Outdoor" ? t.catOutdoor : e.category === "System" ? t.catSystem : e.category === "Charge" ? t.catCharge : e.category === "BS Box" ? t.catBSBox : e.category === "City Multi" ? t.catIndoor : e.category === "K-Control" ? t.catOutdoor : e.category === "P-Series K" ? t.catPSeries : e.category === "PWFY" ? t.catBSBox : e.category === "Hydro Kit" ? t.catBSBox : e.category === "Heat Recovery" ? t.catPSeries : brand.accent;
+    const isExpanded = expandedFault === e.code;
+    const hasDetails = !!e.details;
+
+    // ── Feedback block (reused in both expanded and collapsed) ──
+    const feedbackBlock = sessionVoteCount < 20 && (() => {
+      const fbKey = `${activeBrand}:${e.code}`;
+      const vote = feedbackGiven[fbKey];
+      const flash = feedbackFlash[fbKey];
+      if (vote && !flash) return null;
+      return /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginTop: "10px",
+          paddingTop: "8px",
+          borderTop: `1px solid ${t.subtleBorder}`,
+          display: "flex",
+          alignItems: "center",
+          gap: "10px"
+        }
+      }, vote === "helpful" && flash ? /*#__PURE__*/React.createElement("span", {
+        style: {
+          fontSize: "12px",
+          color: t.successText
+        }
+      }, "\u2713", " Thanks!") : vote === "not_helpful" && flash ? /*#__PURE__*/React.createElement("span", {
+        style: {
+          fontSize: "12px",
+          color: t.warnText
+        }
+      }, "\u2717", " Noted \u2014 thanks for the feedback") : !vote ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+        style: {
+          fontSize: "11px",
+          color: t.textSecondary
+        }
+      }, "Helpful?"), /*#__PURE__*/React.createElement("button", {
+        onClick: () => giveFeedback(activeBrand, e.code, e.desc, "helpful"),
+        style: {
+          background: "none",
+          border: `1px solid ${t.subtleBorder}`,
+          borderRadius: "6px",
+          padding: "4px 10px",
+          cursor: "pointer",
+          fontSize: "13px",
+          color: t.textSecondary
+        }
+      }, "\uD83D\uDC4D"), /*#__PURE__*/React.createElement("button", {
+        onClick: () => giveFeedback(activeBrand, e.code, e.desc, "not_helpful"),
+        style: {
+          background: "none",
+          border: `1px solid ${t.subtleBorder}`,
+          borderRadius: "6px",
+          padding: "4px 10px",
+          cursor: "pointer",
+          fontSize: "13px",
+          color: t.textSecondary
+        }
+      }, "\uD83D\uDC4E"), /*#__PURE__*/React.createElement("button", {
+        onClick: () => openFeedbackEmail(activeBrand, brand.name, e.code, e.desc, e.action),
+        style: {
+          background: "none",
+          border: `1px solid ${t.subtleBorder}`,
+          borderRadius: "6px",
+          padding: "4px 10px",
+          cursor: "pointer",
+          fontSize: "13px",
+          color: t.textSecondary,
+          marginLeft: "auto"
+        }
+      }, "\u2709\uFE0F", " Email")) : null);
+    })();
+    const subcodesBlock = e.subcodes && /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: "10px",
+        marginTop: "8px",
         paddingTop: "8px",
-        borderTop: `1px solid ${t.subtleBorder}`,
-        display: "flex",
-        alignItems: "center",
-        gap: "10px"
+        borderTop: `1px solid ${t.subtleBorder}`
       }
-    }, vote === "helpful" && flash ? /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: "12px",
-        color: t.successText
-      }
-    }, "\u2713", " Thanks!") : vote === "not_helpful" && flash ? /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: "12px",
-        color: t.warnText
-      }
-    }, "\u2717", " Noted \u2014 thanks for the feedback") : !vote ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: "11px",
-        color: t.textSecondary
-      }
-    }, "Helpful?"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => giveFeedback(activeBrand, e.code, e.desc, "helpful"),
-      style: {
-        background: "none",
-        border: `1px solid ${t.subtleBorder}`,
-        borderRadius: "6px",
-        padding: "4px 10px",
-        cursor: "pointer",
-        fontSize: "13px",
-        color: t.textSecondary
-      }
-    }, "\uD83D\uDC4D"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => giveFeedback(activeBrand, e.code, e.desc, "not_helpful"),
-      style: {
-        background: "none",
-        border: `1px solid ${t.subtleBorder}`,
-        borderRadius: "6px",
-        padding: "4px 10px",
-        cursor: "pointer",
-        fontSize: "13px",
-        color: t.textSecondary
-      }
-    }, "\uD83D\uDC4E"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => openFeedbackEmail(activeBrand, brand.name, e.code, e.desc, e.action),
-      style: {
-        background: "none",
-        border: `1px solid ${t.subtleBorder}`,
-        borderRadius: "6px",
-        padding: "4px 10px",
-        cursor: "pointer",
-        fontSize: "13px",
         color: t.textSecondary,
-        marginLeft: "auto"
+        letterSpacing: "1px",
+        marginBottom: "4px"
       }
-    }, "\u2709\uFE0F", " Email")) : null);
-  })(), e.subcodes && /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: "8px",
-      paddingTop: "8px",
-      borderTop: `1px solid ${t.subtleBorder}`
+    }, "SUBCODES"), e.subcodes.map(s => /*#__PURE__*/React.createElement("div", {
+      key: s.code,
+      style: {
+        display: "flex",
+        gap: "8px",
+        marginBottom: "3px",
+        alignItems: "baseline"
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "13px",
+        fontWeight: "700",
+        color: t.golden,
+        minWidth: "90px",
+        flexShrink: 0
+      }
+    }, s.code), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: "13px",
+        color: t.textTertiary
+      }
+    }, s.desc))));
+
+    // ── Header row (code badge + desc) — shared by both layouts ──
+    const headerRow = /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        marginBottom: hasDetails && !isExpanded ? "6px" : "6px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: brand.badgeBg,
+        border: `1px solid ${brand.badgeBorder}`,
+        borderRadius: "4px",
+        padding: "3px 8px",
+        fontSize: "15px",
+        fontWeight: "700",
+        color: brand.badgeText
+      }
+    }, e.code), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "14px",
+        color: brand.descText,
+        flex: 1
+      }
+    }, e.desc), hasDetails && /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: brand.accent,
+        fontSize: "18px",
+        flexShrink: 0
+      }
+    }, isExpanded ? "\u25BE" : "\u203A"));
+
+    // ── EXPANDABLE CARD (has details) ──
+    if (hasDetails) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: e.code,
+        style: {
+          marginBottom: "8px"
+        }
+      }, /*#__PURE__*/React.createElement("button", {
+        onClick: () => {
+          const newVal = isExpanded ? null : e.code;
+          setExpandedFault(newVal);
+          if (newVal) track('fault_detail_opened', {
+            brand: activeBrand,
+            code: e.code,
+            category: e.category
+          });
+        },
+        style: {
+          display: "block",
+          width: "100%",
+          textAlign: "left",
+          cursor: "pointer",
+          background: isExpanded ? brand.gradientFrom : brand.cardBg,
+          border: `1px solid ${isExpanded ? brand.accent : brand.borderColor}`,
+          borderLeft: `3px solid ${catColor}`,
+          borderRadius: isExpanded ? "8px 8px 0 0" : "8px",
+          padding: "14px 16px",
+          color: t.text,
+          fontFamily: "inherit"
+        }
+      }, headerRow, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "13px",
+          color: t.actionText,
+          lineHeight: "1.5"
+        }
+      }, "\u2192", " ", e.action), !isExpanded && /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "11px",
+          color: brand.accentLight,
+          marginTop: "6px",
+          letterSpacing: "0.5px"
+        }
+      }, "\u{1F50D}", " Tap for diagnostic details")), isExpanded && /*#__PURE__*/React.createElement("div", {
+        style: {
+          background: brand.bg,
+          border: `1px solid ${brand.accent}`,
+          borderTop: "none",
+          borderLeft: `3px solid ${catColor}`,
+          borderRadius: "0 0 8px 8px",
+          padding: "14px 16px"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginBottom: "16px"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "11px",
+          color: brand.accentLight,
+          letterSpacing: "1.5px",
+          marginBottom: "8px",
+          fontWeight: "700"
+        }
+      }, "WHAT THIS CODE MEANS"), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "14px",
+          color: t.textMuted,
+          lineHeight: "1.7"
+        }
+      }, e.details.meaning)), /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginBottom: "16px"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "11px",
+          color: brand.accentLight,
+          letterSpacing: "1.5px",
+          marginBottom: "8px",
+          fontWeight: "700"
+        }
+      }, "MOST COMMON CAUSES"), e.details.causes.map((c, i) => /*#__PURE__*/React.createElement("div", {
+        key: i,
+        style: {
+          display: "flex",
+          gap: "10px",
+          marginBottom: "8px",
+          alignItems: "flex-start"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          minWidth: "22px",
+          height: "22px",
+          borderRadius: "50%",
+          background: brand.borderColor,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "11px",
+          color: brand.accentLight,
+          fontWeight: "700",
+          flexShrink: 0,
+          marginTop: "1px"
+        }
+      }, c.rank), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "13px",
+          color: t.textMuted,
+          lineHeight: "1.6"
+        }
+      }, c.text)))), /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginBottom: "16px"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "11px",
+          color: brand.accentLight,
+          letterSpacing: "1.5px",
+          marginBottom: "8px",
+          fontWeight: "700"
+        }
+      }, "QUICK CHECKS"), e.details.checks.map((check, i) => /*#__PURE__*/React.createElement("div", {
+        key: i,
+        style: {
+          display: "flex",
+          gap: "10px",
+          marginBottom: "7px",
+          alignItems: "flex-start"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          minWidth: "20px",
+          height: "20px",
+          borderRadius: "3px",
+          background: brand.borderColor,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "11px",
+          color: brand.accentLight,
+          fontWeight: "700",
+          flexShrink: 0,
+          marginTop: "1px"
+        }
+      }, i + 1), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "13px",
+          color: t.textMuted,
+          lineHeight: "1.6"
+        }
+      }, check)))), e.details.branches && e.details.branches.length > 0 && /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginBottom: "12px"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "11px",
+          color: brand.accentLight,
+          letterSpacing: "1.5px",
+          marginBottom: "8px",
+          fontWeight: "700"
+        }
+      }, "DIAGNOSTIC BRANCHES"), e.details.branches.map((b, i) => /*#__PURE__*/React.createElement("div", {
+        key: i,
+        style: {
+          background: brand.cardBg,
+          border: `1px solid ${brand.borderColor}`,
+          borderLeft: `3px solid ${brand.accent}`,
+          borderRadius: "6px",
+          padding: "10px 12px",
+          marginBottom: "6px"
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "13px",
+          color: t.textStrong,
+          fontWeight: "600"
+        }
+      }, "If: ", b.condition), /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontSize: "13px",
+          color: t.actionText,
+          marginTop: "4px"
+        }
+      }, "\u2192", " ", b.target)))), feedbackBlock, subcodesBlock));
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: "11px",
-      color: t.textSecondary,
-      letterSpacing: "1px",
-      marginBottom: "4px"
-    }
-  }, "SUBCODES"), e.subcodes.map(s => /*#__PURE__*/React.createElement("div", {
-    key: s.code,
-    style: {
-      display: "flex",
-      gap: "8px",
-      marginBottom: "3px",
-      alignItems: "baseline"
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: "13px",
-      fontWeight: "700",
-      color: t.golden,
-      minWidth: "90px",
-      flexShrink: 0
-    }
-  }, s.code), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: "13px",
-      color: t.textTertiary
-    }
-  }, s.desc)))))), filteredErrors.length === 0 && /*#__PURE__*/React.createElement("div", {
+
+    // ── STATIC CARD (no details — original behavior) ──
+    return /*#__PURE__*/React.createElement("div", {
+      key: e.code,
+      style: {
+        ...S.card,
+        borderLeft: `3px solid ${catColor}`
+      }
+    }, headerRow, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: "13px",
+        color: t.actionText,
+        lineHeight: "1.5"
+      }
+    }, "\u2192", " ", e.action), feedbackBlock, subcodesBlock);
+  }), filteredErrors.length === 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "center",
       color: t.textSecondary,
@@ -7490,10 +8049,32 @@ const AppComponent = function VRFNavigator() {
     style: {
       color: t.ledRed
     }
-  }, l.led2), /*#__PURE__*/React.createElement("div", {
+  }, l.led2), l.cityMulti === "\u2014" ? /*#__PURE__*/React.createElement("div", {
     style: {
-      color: l.cityMulti === "—" ? t.textSecondary : t.golden,
+      color: t.textSecondary,
       fontWeight: "600"
+    }
+  }, "\u2014") : /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      setTab("errors");
+      setErrorSearch(l.cityMulti);
+      setExpandedFault(l.cityMulti);
+      track('led_to_fault_link', {
+        pCode: l.pCode,
+        cityMultiCode: l.cityMulti,
+        brand: 'mitsubishi'
+      });
+    },
+    style: {
+      background: "none",
+      border: "none",
+      color: t.golden,
+      fontWeight: "600",
+      cursor: "pointer",
+      textDecoration: "underline",
+      fontSize: "13px",
+      padding: 0,
+      fontFamily: "inherit"
     }
   }, l.cityMulti))), filteredLed.length === 0 && /*#__PURE__*/React.createElement("div", {
     style: {
